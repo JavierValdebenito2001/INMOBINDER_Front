@@ -2,5 +2,5 @@ function saludar() {
     console.log("Hola, Mundo");
   }
   
-  // Llamada a la función para que se ejecut
+  // Llamada a la función para que se ejecu
   saludar();
