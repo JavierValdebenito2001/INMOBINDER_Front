@@ -1,6 +1,7 @@
 import { Button, Image } from '@rneui/base';
-import { View, StyleSheet, Text } from 'react-native';
-
+import { View, Text } from 'react-native';
+import { styles } from './styles.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export  function Login() {
   return (
@@ -26,67 +27,3 @@ export  function Login() {
   );
 }
 
-const styles = StyleSheet.create({
-    container: {     
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: '25%',
-    },
-    containerButton: {
-        marginTop: '15%',
-        alignItems: 'center',       
-      },
-      containerImg:{
-        justifyContent: "flex-end",
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: '15%',
-      },
-      title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-      },
-      separator: {
-        marginVertical: 30,
-        height: 1,
-        width: '80%',
-      },
-      btn: {
-          backgroundColor: '#FFFFF',
-          borderColor: '#00000',
-          borderWidth: 2,
-          borderRadius: 40,
-          width: 236,
-          height: 70,
-      },
-      btnText: {
-          color: "#00000",
-          fontSize: 24,
-          fontWeight: "bold",
-          alignContent: "center",
-      },
-      btnContainer: {
-          alignItems: "center",
-          padding: 50,
-      },
-      img: {
-          resizeMode: "center",
-          width: 50,
-          height: 50,
-      },
-      logoText: {
-        color: '#00000',
-        fontSize: 32,
-        fontWeight: "bold",
-      },
-      logoImg: {
-        resizeMode: 'center',
-        width: 50,
-        height: 50,
-      },
-    });
-  

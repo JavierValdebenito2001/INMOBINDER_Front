@@ -1,10 +1,10 @@
 import { View } from 'react-native';
-import { Login } from './src/screens/LoginScreen.js'
+import { RegisterScreen } from './src/screens/RegisterScreen.js'
 
 export default function App() {
   return (
     <View >
-       <Login/>
+       <RegisterScreen/>
     </View>
   );
 }
