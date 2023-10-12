@@ -42,16 +42,11 @@ export function RegisterScreen() {
             </Button>
 
         <View style= {styles.footer}> 
-
             <Text> ¿Ya tienes cuenta? </Text> 
             <Text style={styles.textLogin}> Inicia sesión </Text>
-
         </View>
-            
-
-        </View>
-
         
+        </View>
     </View>
   )
 }
