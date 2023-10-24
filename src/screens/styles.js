@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     container: {     
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     header: {
         flexDirection: 'row',
@@ -110,6 +111,15 @@ export const styles = StyleSheet.create({
       },
       textLogin: {
         fontWeight: "900",
+      },
+      textBack: {
+        color: 'rgb(0,0,0)',
+        fontSize: 20,
+        fontWeight: "bold",
+      },
+      logoBack: {
+        color: 'rgb(0,0,0)',
+        marginRight: -10,
       },
 
 });
