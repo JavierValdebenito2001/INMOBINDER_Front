@@ -1,19 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen'; //ruta del dashboard
+import { View } from 'react-native';
+import { RegisterPersonScreen } from './src/screens/Register/RegisterPerson/RegisterPersonScreen';
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <HomeScreen/>
+    <View >
+      < RegisterPersonScreen />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
