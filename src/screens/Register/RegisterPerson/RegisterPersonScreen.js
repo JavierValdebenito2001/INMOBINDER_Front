@@ -12,7 +12,7 @@ export function RegisterPersonScreen() {
 
         <View style= {stylePerson.back}>
             <Ionicons name="chevron-back" size={45} style={styles.logoBack}  />
-            <Text style= {styles.textBack}> Atrás </Text>
+            <Text style= {styles.textBack}> Atráss </Text>
         </View>
 
         <View style={stylePerson.header}> 
