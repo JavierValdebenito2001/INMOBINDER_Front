@@ -2,28 +2,14 @@ import { StyleSheet } from "react-native";
 
 export const styleAgencyRE = StyleSheet.create({
 
-    back:{
-        flexDirection: "row",
-        marginRight: "auto",
-        marginTop: "15%",
-        alignItems: "center",
-    },
-
-    header:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: '5%',
-    },
-
     form:{
-        width: "90%",
-        marginTop: '5%',    
+        width: "90%",   
         marginBottom: '35%',
+        alignItems: "center",
     },
 
     textRegister: {
         fontSize: 24,
-        fontWeight: "bold",
         marginTop: "1%",
         textAlign: "center",
     },
@@ -41,7 +27,6 @@ export const styleAgencyRE = StyleSheet.create({
 
     textBtn: {
         color: 'rgb(255,255,255)',
-        fontWeight: "bold",
         fontSize: 14,
     },
 
@@ -56,6 +41,7 @@ export const styleAgencyRE = StyleSheet.create({
     titulo: {
         fontSize: 20,
         marginTop: "5%",
+        width: "90%",
     },
 
     scrollStyle: {
