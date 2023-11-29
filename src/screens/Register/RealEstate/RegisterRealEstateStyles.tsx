@@ -2,41 +2,31 @@ import { StyleSheet } from "react-native";
 
 export const styleRealEstate = StyleSheet.create({
 
-    back:{
-        flexDirection: "row",
-        marginRight: "auto",
-        marginTop: "15%",
-        alignItems: "center",
-    },
-
-    header:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: '10%',
-    },
-
     container:{
-        width: 310,
-        height: 350,
+        width: "90%",
+        height: "55%",
         borderRadius: 20,
-        borderColor: 'rgb(0,0,0)',
-        borderWidth: 1,
         alignItems: "center",
-        marginTop: '10%',
+        shadowOpacity: 1,
+        elevation: 4,
+        shadowRadius: 4,
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: 'rgb(255, 255, 255)',
     },
 
     textRegister:{
-        marginTop: '7%',
+        marginTop: '5%',
         fontSize: 28,
         color: 'rgb(9,27,43)',
-        fontWeight: "bold",
     },
 
     textRegisterEmail:{
         fontSize: 16,
-        fontWeight: "bold",
-        color: 'rgb(0,0,0)',
-        marginTop: '7%',
+        width: '90%',
     },
 
     inputEmail:{
@@ -44,18 +34,17 @@ export const styleRealEstate = StyleSheet.create({
         height: 45,
         borderColor: 'rgb(152,152,152)',
         borderWidth: 1,
-        marginTop: '7%',
+        marginTop: '5%',
     },
 
     text:{
         fontSize: 13,
         marginTop: '7%',
-        fontWeight: "normal",
+        width: '90%',
     },
 
     text1:{
-        fontSize:12,
-        fontWeight: "bold",
+        fontSize:13,
         textDecorationLine: "underline",
     },
 
@@ -77,7 +66,6 @@ export const styleRealEstate = StyleSheet.create({
 
     textBtn:{
         color: 'rgb(255,255,255)',
-        fontWeight: "bold",
         fontSize: 14,
     },
 

@@ -2,36 +2,25 @@ import { StyleSheet } from "react-native";
 
 export const styleProperty = StyleSheet.create({
 
-    back:{
-        flexDirection: "row",
-        marginRight: "auto",
-        marginTop: "15%",
-        alignItems: "center",
-    },
-
-    header:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: '10%',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
     containerOption: {
-        width: 330,
-        height: 450,
+        width: "90%",
+        height: "70%",
         borderRadius: 20,
-        borderColor: 'rgb(0,0,0)',
-        borderWidth: 1,
-        marginTop: '10%',
         alignItems: "center",
+        shadowOpacity: 1,
+        elevation: 4,
+        shadowRadius: 4,
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: 'rgb(255, 255, 255)',
     },
 
     textRegister:{
         marginTop: '5%',
-        fontSize: 28,
-        color: 'rgb(9,27,43)',
-        fontWeight: "bold",
+        fontSize: 30,
     },
 
     textRegisterEmail:{
@@ -52,45 +41,40 @@ export const styleProperty = StyleSheet.create({
     text:{
         fontSize: 13,
         marginTop: '7%',
-        fontWeight: "normal",
     },
 
     text1:{
-        fontSize:12,
-        fontWeight: "bold",
+        fontSize:13,
         textDecorationLine: "underline",
     },
 
     textOptionTitle:{
-        fontSize: 14.5,
-        fontWeight: "bold",
+        fontSize: 15,
         marginTop: '5%',
     },
 
     containerCheckBox:{
         flexDirection: "row",
         alignItems: "center", 
-        justifyContent: "space-between",
         marginTop: "1%",
         
     },
 
     textCheck:{
         fontSize: 16,
-        fontWeight: "bold",  
         marginLeft: "auto",
     },
 
     containerBtn:{
-        marginTop: '5%',
-        marginLeft: "55%",
+        alignItems: "center",
     },
 
     btnStyle:{
         backgroundColor: 'rgb(9,27,43)',
         borderRadius: 10,
-        width: 132,
-        height: 45,
+        width: 100,
+        height: 40,
+        justifyContent: "center",   
 
     },
 
@@ -100,7 +84,6 @@ export const styleProperty = StyleSheet.create({
 
     textBtn:{
         color: 'rgb(255,255,255)',
-        fontWeight: "bold",
         fontSize: 14,
     },
 
