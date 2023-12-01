@@ -10,7 +10,14 @@ const AccountStack = {
     agencyRealEstate: 'form agency/Real Estate',
     recoverPassword: 'Recover password'
   };
-  
+
+const HomeStack = {
+    home: 'home'
+}
+
+
+
   export const screen = {
-    account: AccountStack
+    account: AccountStack,
+    home: HomeStack
   };

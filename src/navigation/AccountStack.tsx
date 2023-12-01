@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils/ScreenName";
 import { LoginScreen } from "../screens/Login/LoginScreen";
-import { Home } from "../screens/Register/Home/HomeScreen";
+import { Home } from "../screens/Register/Welcome/WelcomeScreen";
 import { RegisterScreen } from "../screens/Register/RegisterScreen/RegisterScreen";
 import { RegisterPersonScreen } from "../screens/Register/RegisterPerson/RegisterPersonScreen";
 import { PersonIndependientScreen } from "../screens/Register/Forms Register/PersonIndependient/PersonIndependientScreen";

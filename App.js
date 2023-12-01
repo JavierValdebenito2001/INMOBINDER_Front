@@ -13,19 +13,12 @@ export default function App() {
   
   return (
 
-     
-  
-
         <NavigationContainer theme={myTheme}>
 
           <AppNavigationHome />
 
         </NavigationContainer>
        
-
-   
-   
-   
   );
 }
 

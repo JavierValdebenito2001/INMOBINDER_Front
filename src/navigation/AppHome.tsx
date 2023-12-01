@@ -19,11 +19,10 @@ export  function AppNavigationHome() {
             tabBarStyle: {
                 display: 'none',
             }
-            
-          
-            
+    
         })}>
 
+    
             <Tab.Screen name = {screen.account.tab} component={AccountStack}/>
         
 

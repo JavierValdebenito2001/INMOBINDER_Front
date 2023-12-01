@@ -1,7 +1,7 @@
 import { Button, Image } from '@rneui/base';
 import { View, Text, SafeAreaView } from 'react-native';
 import { styles } from '../../styles.tsx';
-import { stylesHome } from './HomeScreenStyles.tsx';
+import { stylesHome } from './WelcomeScreenStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Cairo_700Bold } from '@expo-google-fonts/cairo';
 import { screen } from '../../../utils/ScreenName.tsx';
@@ -30,7 +30,6 @@ export function Home() {
 
   return (
  
-
     <SafeAreaView style={styles.container}>
 
       <View style={stylesHome.header}>

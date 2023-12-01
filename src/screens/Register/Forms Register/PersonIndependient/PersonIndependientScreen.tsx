@@ -27,7 +27,7 @@ export function PersonIndependientScreen() {
     }
 
     function handleContinue(){
-      console.log("Continuar");
+      navigation.navigate(screen.home.home);
     }
 
   return (
