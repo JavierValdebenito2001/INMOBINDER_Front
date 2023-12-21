@@ -10,6 +10,7 @@ import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterProper
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
 import { HomeScreen } from "../screens/Home/HomeScreen";
+import Dashboard from "../screens/Home/Dashboard";
 
 
 // Crear un Stack Navigatorr
@@ -72,6 +73,12 @@ export function AccountStack() {
                 name={screen.account.homeScreen}
                 component={HomeScreen}
             />
+
+            <Stack.Screen 
+                name={screen.account.Dashboard}
+                component={Dashboard}
+            />
+
 
         </Stack.Navigator>    
     );

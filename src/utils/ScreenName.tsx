@@ -10,6 +10,7 @@ const AccountStack = {
     agencyRealEstate: 'form agency/Real Estate',
     recoverPassword: 'Recover password',
     homeScreen: 'HomeScreen',
+    Dashboard: 'Dashboard',
   };
 
 const HomeStack = {
