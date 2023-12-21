@@ -1,30 +1,19 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { screen } from "../utils/ScreenName";
+import { createStackNavigator } from '@react-navigation/stack';
+import React from 'react';
 
-//Importar pantallas
-importar Home, import dashboar 
+import { HomeScreen } from '../screens/Home/HomeScreen';
+import { Dashboard } from '../screens/Home/Dashboard';
 
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
-export function HomeStack() {
+function HomeStack() {
     return (
-
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-        }}>
-
-            <Stack.Screen 
-                name = {screen.home.home} 
-                component={home}        
-            />
-
-            
-        </Stack.Navigator>    
+        <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+        </Stack.Navigator>
     );
 }
 
-
-
-
-
+export default HomeStack;

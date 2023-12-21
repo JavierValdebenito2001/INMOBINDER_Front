@@ -9,63 +9,69 @@ import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/Registe
 import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
+import { HomeScreen } from "../screens/Home/HomeScreen";
 
 
-
+// Crear un Stack Navigatorr
 const Stack = createNativeStackNavigator();
 
+// Función que devuelve el Stack Navigator para la gestión de la navegación de la cuenta
 export function AccountStack() {
     return (
-
+        // Configuración del Stack Navigator
         <Stack.Navigator screenOptions={{
-            headerShown: false,
+            headerShown: false, // No mostrar el encabezado predeterminado en las pantallas
         }}>
-
+            {/* Definición de pantallas */}
             <Stack.Screen 
-                name = {screen.account.home} 
+                name={screen.account.home} 
                 component={Home}        
             />
 
             <Stack.Screen 
-                name = {screen.account.login} 
+                name={screen.account.login} 
                 component={LoginScreen} 
             />
 
             <Stack.Screen 
-                name = {screen.account.optionRegister}
+                name={screen.account.optionRegister}
                 component={RegisterScreen}            
             />
 
             <Stack.Screen
-                name= {screen.account.registerPerson}
+                name={screen.account.registerPerson}
                 component={RegisterPersonScreen}
             />
 
             <Stack.Screen 
-                name = {screen.account.personIndependient}
+                name={screen.account.personIndependient}
                 component={PersonIndependientScreen}
             />
 
             <Stack.Screen 
-                name = {screen.account.registerRealEstate}
+                name={screen.account.registerRealEstate}
                 component={RegisterRealEstateScreen}
             />
 
             <Stack.Screen
-                name = {screen.account.agencyRealEstate}
+                name={screen.account.agencyRealEstate}
                 component={AgencyREScreen}
             />
 
             <Stack.Screen
-                name= {screen.account.registerPropertyBroker}
+                name={screen.account.registerPropertyBroker}
                 component={RegisterPropertyBrokerScreen}
             />
 
             <Stack.Screen 
-                name= {screen.account.recoverPassword}
+                name={screen.account.recoverPassword}
                 component={RecoverPasswordScreen}
             />
-            
+
+            <Stack.Screen 
+                name={screen.account.homeScreen}
+                component={HomeScreen}
+            />
 
         </Stack.Navigator>    
     );

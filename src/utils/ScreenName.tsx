@@ -8,7 +8,8 @@ const AccountStack = {
     registerPropertyBroker: 'Register Property Broker',
     personIndependient : 'form person/independient',
     agencyRealEstate: 'form agency/Real Estate',
-    recoverPassword: 'Recover password'
+    recoverPassword: 'Recover password',
+    homeScreen: 'HomeScreen',
   };
 
 const HomeStack = {
