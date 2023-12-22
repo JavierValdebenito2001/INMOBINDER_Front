@@ -11,6 +11,9 @@ import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEst
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
 import { HomeScreen } from "../screens/Home/HomeScreen";
 import Dashboard from "../screens/Home/Dashboard";
+import Help from "../screens/Home/Help";
+import { MainDrawer } from "../components/MainDrawer";
+
 
 
 // Crear un Stack Navigatorr
@@ -75,8 +78,13 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-                name={screen.account.Dashboard}
-                component={Dashboard}
+                name={screen.account.MainDrawer}
+                component={MainDrawer}
+            />
+
+            <Stack.Screen 
+                name={screen.account.Help}
+                component={Help}
             />
 
 

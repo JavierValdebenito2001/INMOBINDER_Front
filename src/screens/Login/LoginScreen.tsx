@@ -81,7 +81,7 @@ export function LoginScreen() {
                     </Button>
                     
                     {/* Inicio de sesión con Google */}
-                    <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={() => navigation.navigate('Dashboard' as never)}> 
+                    <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={() => navigation.navigate('MainDrawer' as never)}> 
                         <Image source={require('../../../assets/images/google.png')} style={LoginStyles.imgGoogle}/>
                         <Text style={{ ...LoginStyles.loginGoogle, fontFamily: 'Cairo_700Bold'}} > Ingresar con Google</Text>           
                     </TouchableOpacity>

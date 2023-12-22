@@ -11,6 +11,8 @@ const AccountStack = {
     recoverPassword: 'Recover password',
     homeScreen: 'HomeScreen',
     Dashboard: 'Dashboard',
+    Help: 'Help',
+    MainDrawer: 'MainDrawer'
   };
 
 const HomeStack = {
