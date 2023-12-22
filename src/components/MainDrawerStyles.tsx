@@ -7,12 +7,22 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     avatar: {
+        backgroundColor: '#FFFFFF',
         width: 100,
         height: 100,      
         marginTop: 50,
         marginBottom: 50,
+        borderRadius: 50,
         alignSelf: 'center',
         resizeMode: 'contain'
+    },
+    avatarText: {
+        fontSize: 10,
+        fontWeight: 'bold',        // Negrita
+        color: '#FFFFFF',         // Color del texto
+        marginVertical: 5,      // Margen vertical (espacio arriba y abajo)
+        marginHorizontal: 5,     // Margen horizontal (espacio a los lados)
+        alignSelf: 'center'     // Posicionamiento propio en el extremo derecho
     },
     menuContainer: {
         marginVertical: 1,

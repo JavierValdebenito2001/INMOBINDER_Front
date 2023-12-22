@@ -35,8 +35,10 @@ const MenuInterno = ({ navigation}:DrawerContentComponentProps) => {
       <View style={styles.avatarContainer}>
         <Image
           style={styles.avatar}
-          source={require('../../assets/images/INMOBINDER-03.png')}
+          source={require('../../assets/images/Camara.jpg')}
         />
+        <Text style={styles.avatarText}>17.111.111-k</Text>
+        <Text style={styles.avatarText}>Nombre Nombre Apellido Apellido</Text>
       </View>
         <View style={ styles.menuContainer}>
             <TouchableOpacity
