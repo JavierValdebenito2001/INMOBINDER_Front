@@ -25,17 +25,17 @@ export const styles = StyleSheet.create({
         alignSelf: 'center'     // Posicionamiento propio en el extremo derecho
     },
     menuContainer: {
-        marginVertical: 1,
+        marginVertical: 0,
         paddingVertical: 1,
         paddingHorizontal: 10,
     },
 
     menuTexto: {
         flex: 2,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 'bold',
         color: '#000000',
-        marginVertical:20,
+        marginVertical:15,
         marginHorizontal: 0,
         alignSelf: 'flex-start'
 
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',        // Negrita
         color: '#000000',         // Color del texto
-        marginVertical: 60,      // Margen vertical (espacio arriba y abajo)
+        marginVertical: 50,      // Margen vertical (espacio arriba y abajo)
         marginHorizontal: 5,     // Margen horizontal (espacio a los lados)
         alignSelf: 'flex-start'     // Posicionamiento propio en el extremo derecho
     },
@@ -55,7 +55,21 @@ export const styles = StyleSheet.create({
         height: 100,      
         alignSelf: 'center',
         resizeMode: 'contain'
-    }
+    },
+
+    menuTextoDeteccionDianamica: {
+        fontSize: 12,
+        fontWeight: 'bold',        // Negrita
+        color: '#000000',         // Color del texto
+        marginVertical: 10,      // Margen vertical (espacio arriba y abajo)
+        marginHorizontal:0,     // Margen horizontal (espacio a los lados)
+        alignSelf: 'flex-start'     // Posicionamiento propio en el extremo derecho
+    },
+
+    switchContainer: {
+        alignSelf: 'center',
+        transform: [{ scaleX: 2 }, { scaleY: 2 }] // Aumentar el tamaño del botón
+   },
     
     
     
