@@ -1,35 +1,50 @@
 import { useNavigation } from '@react-navigation/native';
-import { Image, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-
+import MapView from 'react-native-maps';
 
 export function HomeScreen() {
-
   const navigation = useNavigation();
 
   return (
-    <View>
-      <Image source={require('../../../assets/images/INMOBINDER-03.png')}
-        style={{ width: 100, height: 100, alignSelf: 'center', resizeMode: 'contain'}}
-      />
-      <View>
-        <TextInput
-          placeholder=" Buscar"
-          style={{
-            backgroundColor: '#FFFFFF',
-            width: 300,
-            height: 40,
-            alignSelf: 'center',
-            borderRadius: 10,
-            marginTop: 20,
-            marginBottom: 20,
-            borderWidth: 1,
-            borderColor: '#000000', // Dark border color
-          }}
-        />
+    <View style={styles.container}>
+      <MapView style={styles.map} />
+      <View style={styles.overlayContainer}>
+        <Image source={require('../../../assets/images/INMOBINDER-03.png')} style={styles.logo} />
+        <TextInput placeholder=" Buscar" style={styles.inputTexto} />
       </View>
     </View>
-    
-
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
+  overlayContainer: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 100,
+    resizeMode:'center',
+    marginBottom: 1,
+  },
+  inputTexto: {
+    backgroundColor: '#FFFFFF',
+    width: 300,
+    height: 40,
+    borderRadius: 20,
+    marginTop: 20,
+    marginBottom: 500,
+    borderWidth: 2,
+    borderColor: '#000000', // Dark border color
+    fontSize: 15,
+    paddingHorizontal: 20,
+  },
+});
