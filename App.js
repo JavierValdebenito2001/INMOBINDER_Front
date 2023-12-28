@@ -1,5 +1,6 @@
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { AppNavigationHome } from './src/navigation/AppHome';
+import MisPublicaciones from './src/screens/Publicaciones/MisPublicaciones';
 
 export default function App() {
 
@@ -15,7 +16,8 @@ export default function App() {
 
         <NavigationContainer theme={myTheme}>
 
-          <AppNavigationHome />
+          {/*<AppNavigationHome />*/}
+          <MisPublicaciones />
 
         </NavigationContainer>
        
