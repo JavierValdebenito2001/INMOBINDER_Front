@@ -39,6 +39,7 @@
     "@types/react": "^18.2.27",
     "@types/react-navigation": "^3.4.0",
     "@types/react-test-renderer": "^18.0.3",
+    "expo-cli": "^6.3.10",
     "typescript": "^5.2.2"
   },
   "private": true
