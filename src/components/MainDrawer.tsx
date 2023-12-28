@@ -83,7 +83,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
       </View>
       <View style={styles.menuContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-          <Text style={styles.menuTexto}>Mi publicaciones</Text>
+          <Text style={styles.menuTexto}>Mis publicaciones</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
