@@ -12,7 +12,8 @@ const AccountStack = {
     homeScreen: 'HomeScreen',
     Dashboard: 'Dashboard',
     Help: 'Help',
-    MainDrawer: 'MainDrawer'
+    MainDrawer: 'MainDrawer',
+    AddHome: 'AddHome',
   };
 
 const HomeStack = {

@@ -38,16 +38,16 @@ export function Home() {
  
       <View style={stylesHome.containerButton}>
         <Button buttonStyle={stylesHome.btn} containerStyle={stylesHome.btnContainer} onPress={handleLogin} >
-          <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 24 }}> Iniciar sesión </Text>
+          <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 24, lineHeight: 48 }}> Iniciar sesión </Text>
         </Button>
         <Button buttonStyle={stylesHome.btn} containerStyle={stylesHome.btnContainer} onPress={handleRegister}>
-          <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 24 }}> Registrate </Text>
+          <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 24, lineHeight: 48}}> Registrate </Text>
         </Button>
       </View>
 
       <View style={stylesHome.containerImg}>
         <Image source={require('../../../../assets/images/328018094_873765637024565_895130923640996288_n-removebg-preview.png')} style={stylesHome.img} />
-        <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 16 }}>Creado por Agartha</Text>
+        <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 16, lineHeight: 32 }}>Creado por Agartha</Text>
       </View>
       
     </SafeAreaView>

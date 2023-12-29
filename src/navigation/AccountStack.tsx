@@ -13,6 +13,7 @@ import { HomeScreen } from "../screens/Home/HomeScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
 import { MainDrawer } from "../components/MainDrawer";
+import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 
 
 
@@ -85,6 +86,11 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.Help}
                 component={Help}
+            />
+
+            <Stack.Screen 
+                name={screen.account.AddHome}
+                component={AddHomeScreen}
             />
 
 
