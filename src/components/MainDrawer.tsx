@@ -92,7 +92,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Help')}>
+        <TouchableOpacity onPress={() => navigation.navigate('WishProperty')}>
           <Text style={styles.menuTexto}>Propiedad deseada</Text>
         </TouchableOpacity>
       </View>

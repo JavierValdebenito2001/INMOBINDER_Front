@@ -15,6 +15,7 @@ import Help from "../screens/Home/Help";
 import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
+import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
 
 
 
@@ -97,6 +98,11 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.MisPublicaciones}
                 component={MisPublicaciones}
+            />
+
+            <Stack.Screen 
+                name={screen.account.WishProperty}
+                component={WishPropertyScreen}
             />
 
         </Stack.Navigator>    

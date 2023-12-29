@@ -15,6 +15,7 @@ const AccountStack = {
     MainDrawer: 'MainDrawer',
     AddHome: 'AddHome',
     MisPublicaciones : 'MisPublicaciones',
+    WishProperty : 'WishProperty',
   };
 
 const HomeStack = {
