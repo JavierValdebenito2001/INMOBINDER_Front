@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'flex-start'     // Posicionamiento propio en el extremo derecho
     },
 
-    switchContainer: {
+    toggleSwitch: {
         alignSelf: 'center',
         transform: [{ scaleX: 2 }, { scaleY: 2 }] // Aumentar el tamaño del botón
    },

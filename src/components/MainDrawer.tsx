@@ -5,6 +5,7 @@ import { HomeScreen } from '../screens/Home/HomeScreen';
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,50 +26,44 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
   const [deteccionDinamica, setDeteccionDinamica] = useState(false);
 
   const toggleDeteccionDinamica = () => {
-    // Mensaje a mostrar antes de cambiar el estado
-    const mensajeAntes = deteccionDinamica
+    // Cambiar el estado de deteccionDinamica antes de mostrar el mensaje
+    setDeteccionDinamica((prev) => !prev);
+
+    // Mensaje a mostrar después de cambiar el estado
+    const mensajeDespues = !deteccionDinamica
       ? 'Se han encontrado X propiedades cercanas a ti. ¿Deseas verlas?'
       : 'Detección dinámica desactivada.';
-  
-    // Opciones de botón antes de cambiar el estado
-    const opcionesBotonAntes = deteccionDinamica
+
+    // Opciones de botón después de cambiar el estado
+    const opcionesBotonDespues = !deteccionDinamica
       ? [
           {
             text: 'Sí',
             onPress: () => {
               // Agregar lógica para la opción "Sí" aquí
               // Por ejemplo, mostrar propiedades cercanas
-              setDeteccionDinamica(true);
-  
-              // Mostrar mensaje de confirmación
-              Alert.alert('Mostrando propiedades cercanas');
-  
+              // ...
+
               // Por ejemplo, navegar a la pantalla de propiedades cercanas
-              navigation.navigate('Dashboard');
+              navigation.navigate('MisPublicaciones');
             },
           },
           {
             text: 'No',
             style: 'cancel',
             onPress: () => {
-              // Por ejemplo, desactivar la detección dinámica
-              setDeteccionDinamica(false);
-  
-              // Mostrar mensaje de confirmación
-              Alert.alert('Detección dinámica desactivada');
-  
+              // Agregar lógica para la opción "No" aquí
+              // ...
+
               // Volver a la pantalla de inicio
               navigation.navigate('HomeScreen');
             },
           },
         ]
-      : undefined; // Cambiado de null a undefined
-  
-    // Mostrar el mensaje con las opciones antes de cambiar el estado
-    Alert.alert(mensajeAntes, '', opcionesBotonAntes as any /* Cambiado de null a any */);
-  
-    // Cambiar el estado de deteccionDinamica después de mostrar el mensaje
-    setDeteccionDinamica((prev) => !prev);
+      : undefined;
+
+    // Mostrar el mensaje con las opciones después de cambiar el estado
+    Alert.alert(mensajeDespues, '', opcionesBotonDespues as any);
   };
 
   return (
@@ -121,11 +116,15 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
           <Text style={styles.menuTextoDeteccionDianamica}>
             ¿Desea activar o desactivar la detección dinámica?
           </Text>
-          <Switch
-            style={styles.switchContainer}
-            value={deteccionDinamica}
-            onValueChange={toggleDeteccionDinamica}
-          />
+          <View style={{ alignItems: 'center' }}>
+            <ToggleSwitch
+              onColor="#04c7f2"
+              offColor="#bbb8b8"
+              size="large"
+              isOn={deteccionDinamica}
+              onToggle={toggleDeteccionDinamica}
+            />
+          </View>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>
