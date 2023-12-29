@@ -14,6 +14,7 @@ const AccountStack = {
     Help: 'Help',
     MainDrawer: 'MainDrawer',
     AddHome: 'AddHome',
+    MisPublicaciones : 'MisPublicaciones',
   };
 
 const HomeStack = {

@@ -45,36 +45,34 @@ export function HomeScreen() {
   }
 
  
-  return (
-    <View style={styles.container}>
-      <MapView 
-      style={styles.map} 
-      initialRegion={{
-        latitude: origin.latitude,
-        longitude: origin.longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-      }}
-      > 
-        <Marker 
-          draggable={true}
-           coordinate={origin}
-          onDragEnd={(direction) => setOrigin({
-          ...origin,
-          latitude: direction.nativeEvent.coordinate.latitude,
-          longitude: direction.nativeEvent.coordinate.longitude,
-          })}
-          title="Mi ubicación"
-          description="Mi ubicación actual"
-          >
-          <Image
-            source={casaVerde}
-            style={{ width: 30, height: 30 }}
-        />
-        </Marker>
-
-      
-      </MapView>
+    return (
+      <View style={styles.container}>
+        <MapView 
+        style={styles.map} 
+        region={{
+          latitude: origin.latitude,
+          longitude: origin.longitude,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        }}
+        > 
+          <Marker 
+            draggable={true}
+            coordinate={origin}
+            onDragEnd={(direction) => setOrigin({
+              ...origin,
+              latitude: direction.nativeEvent.coordinate.latitude,
+              longitude: direction.nativeEvent.coordinate.longitude,
+            })}
+            title="Mi ubicación"
+            description="Mi ubicación actual"
+            >
+            <Image
+              source={casaVerde}
+              style={{ width: 30, height: 30 }}
+          />
+          </Marker>
+        </MapView>
       <View style={styles.overlayContainer}>
         <Image source={require('../../../assets/images/INMOBINDER-03.png')} style={styles.logo} />
         <TextInput placeholder=" Buscar" style={styles.inputTexto} />
