@@ -13,7 +13,9 @@ const AccountStack = {
     Dashboard: 'Dashboard',
     Help: 'Help',
     MainDrawer: 'MainDrawer',
-    AddHome: 'AddHome',
+    addHome: 'AddHome',
+    addHomeGallery: 'AddHomeGallery',
+    addHomeVideos: 'AddHomeVideos',
     MisPublicaciones : 'MisPublicaciones',
     WishProperty : 'WishProperty',
   };
@@ -24,7 +26,7 @@ const HomeStack = {
 
 
 
-  export const screen = {
-    account: AccountStack,
-    home: HomeStack
-  };
+export const screen = {
+  account: AccountStack,
+  home: HomeStack
+};

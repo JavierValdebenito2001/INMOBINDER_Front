@@ -97,6 +97,11 @@ export const AddHomeStyles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         margin: 4,
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontFamily: 'Cairo_700Bold',
+        fontSize: 15,
+        lineHeight: 30,
     },
 
     estado:{

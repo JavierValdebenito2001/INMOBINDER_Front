@@ -81,16 +81,24 @@ export function AddHomeScreen() {
     };
 
     const [fontsLoaded] = useFonts({
-        Cairo_700Bold,
-        Cairo_400Regular,
+      Cairo_700Bold,
+      Cairo_400Regular,
     });
     
     if (!fontsLoaded) {
-        return null;
+      return null;
     }
 
     function handleBack(){
-        navigation.navigate(screen.account.MainDrawer);
+      navigation.navigate(screen.account.MainDrawer);
+    }
+
+    function handleGallery(){
+      navigation.navigate(screen.account.addHomeGallery);
+    }
+
+    function handleVideos(){
+      navigation.navigate(screen.account.addHomeVideos);
     }
 
   return (
@@ -119,8 +127,7 @@ export function AddHomeScreen() {
 
               <View style={AddHomeStyles.gastosComunes}>
                 <Text style={AddHomeStyles.text2}> Incluye gastos comunes por </Text>
-                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={44} keyboardType='numeric'
-                value={value}></TextInput>
+                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric'></TextInput>
               </View>
 
               <View style = {AddHomeStyles.btnList3}>
@@ -198,8 +205,7 @@ export function AddHomeScreen() {
               </View>
 
               <Text style = {AddHomeStyles.text2}>Disponible por</Text>
-              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={44} keyboardType='numeric' 
-                value={value}>  
+              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric'>
               </TextInput>
 
               <View style={AddHomeStyles.btnList}>
@@ -251,12 +257,12 @@ export function AddHomeScreen() {
 
               <View style={{...AddHomeStyles.btnList2}}>
 
-                <TouchableOpacity style={AddHomeStyles.btnStyle2}>
+                <TouchableOpacity style={AddHomeStyles.btnStyle2} onPress = {handleVideos}>
                   <FontAwesomeIcon icon={faFilm} size={20} style={AddHomeStyles.btnIcons}/>
                   <Text style={{...AddHomeStyles.text2}}>Galeria de videos</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={AddHomeStyles.btnStyle2}>
+                <TouchableOpacity style={AddHomeStyles.btnStyle2} onPress={handleGallery}>
                   <FontAwesomeIcon icon={faImages} size={20} style={AddHomeStyles.btnIcons}/>
                   <Text style={AddHomeStyles.text2}>Galeria de fotos</Text>
                 </TouchableOpacity>

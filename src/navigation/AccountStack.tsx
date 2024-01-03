@@ -16,6 +16,8 @@ import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
 import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
+import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryScreen";
+import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
 
 
 
@@ -91,8 +93,18 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-                name={screen.account.AddHome}
+                name={screen.account.addHome}
                 component={AddHomeScreen}
+            />
+
+            <Stack.Screen 
+                name={screen.account.addHomeGallery}
+                component={AddHomeGalleryScreen}
+            />
+
+            <Stack.Screen 
+                name={screen.account.addHomeVideos}
+                component={AddHomeVideosScreen}
             />
 
             <Stack.Screen 
