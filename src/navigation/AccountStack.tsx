@@ -9,7 +9,7 @@ import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/Registe
 import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
-import { HomeScreen } from "../screens/Home/HomeScreen";
+import { MapScreen } from "../screens/Home/MapScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
 import { MainDrawer } from "../components/MainDrawer";
@@ -78,8 +78,8 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-                name={screen.account.homeScreen}
-                component={HomeScreen}
+                name={screen.account.MapScreen}
+                component={MapScreen}
             />
 
             <Stack.Screen 

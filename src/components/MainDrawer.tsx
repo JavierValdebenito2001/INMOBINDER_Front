@@ -1,21 +1,25 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import { Image, Switch, Text, TouchableOpacity, View, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { HomeScreen } from '../screens/Home/HomeScreen';
+import { MapScreen } from '../screens/Home/MapScreen';
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
 import ToggleSwitch from 'toggle-switch-react-native';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const Drawer = createDrawerNavigator();
+
 
 export const MainDrawer = () => {
   return (
     <Drawer.Navigator 
       drawerContent={(props) => <MenuInterno {...props} />}
-      initialRouteName='HomeScreen'
+      initialRouteName='MapScreen'
     >
-      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+      <Drawer.Screen name="MapScreen" component={MapScreen} />
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       <Drawer.Screen name="Help" component={Help} />
     </Drawer.Navigator>
@@ -42,7 +46,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
             onPress: () => {
               // Agregar lógica para la opción "Sí" aquí
               // Por ejemplo, mostrar propiedades cercanas
-              // ...
+             
 
               // Por ejemplo, navegar a la pantalla de propiedades cercanas
               navigation.navigate('MisPublicaciones');
@@ -53,10 +57,14 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
             style: 'cancel',
             onPress: () => {
               // Agregar lógica para la opción "No" aquí
-              // ...
+                 // Mostrar un mensaje al usuario
+                Alert.alert('Has elegido no ver las propiedades cercanas.');
+
+                 // Guardar el estado de deteccionDinamica en el almacenamiento persistente
+                //AsyncStorage.setItem('deteccionDinamica', JSON.stringify(true));
 
               // Volver a la pantalla de inicio
-              navigation.navigate('HomeScreen');
+              navigation.navigate('MapScreen');
             },
           },
         ]
@@ -64,7 +72,23 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
 
     // Mostrar el mensaje con las opciones después de cambiar el estado
     Alert.alert(mensajeDespues, '', opcionesBotonDespues as any);
+   
+
   };
+
+  const cerrarSesion = () => {
+
+    // Agregar lógica para cerrar sesión aquí
+  
+    // Mostrar un mensaje al usuario
+    Alert.alert('Has cerrado sesión.');
+
+  
+  
+    // Redirigir al usuario a la pantalla de inicio de sesión
+    navigation.navigate('login');
+  };
+  
 
   return (
     <DrawerContentScrollView>
@@ -107,8 +131,8 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         </TouchableOpacity>
       </View>
       <View>
-        <TouchableOpacity>
-          <Text style={styles.menuTextoCerrarSesion}>Cerrar sesión</Text>
+        <TouchableOpacity onPress={cerrarSesion}>
+        <Text style={styles.menuTextoCerrarSesion}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
