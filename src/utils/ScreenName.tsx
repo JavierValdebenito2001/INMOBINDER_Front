@@ -3,6 +3,7 @@ const AccountStack = {
     home: 'home',
     tab: 'tab',
     optionRegister: 'option register',
+    Config: 'Config',
     registerPerson: 'Register Person',
     registerRealEstate: 'Register Real Estate',
     registerPropertyBroker: 'Register Property Broker',

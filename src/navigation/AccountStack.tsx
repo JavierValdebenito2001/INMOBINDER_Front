@@ -12,6 +12,7 @@ import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswor
 import { MapScreen } from "../screens/Home/MapScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
+import Config from "../components/Config";
 import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
@@ -50,6 +51,11 @@ export function AccountStack() {
             <Stack.Screen
                 name={screen.account.registerPerson}
                 component={RegisterPersonScreen}
+            />
+
+            <Stack.Screen
+                name={screen.account.Config}
+                component={Config}
             />
 
             <Stack.Screen 
