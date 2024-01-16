@@ -6,6 +6,7 @@ import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
 import ToggleSwitch from 'toggle-switch-react-native';
+import CentroDeAyuda from './CentroDeAyuda';
 
 const Drawer = createDrawerNavigator();
 
@@ -102,7 +103,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Help')}>
+        <TouchableOpacity onPress={() => navigation.navigate('CentroDeAyuda')}>
           <Text style={styles.menuTexto}>Centro de ayuda</Text>
         </TouchableOpacity>
       </View>
