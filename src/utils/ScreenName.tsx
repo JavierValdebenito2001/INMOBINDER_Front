@@ -20,7 +20,7 @@ const AccountStack = {
     MisPublicaciones : 'MisPublicaciones',
     WishProperty : 'WishProperty',
     CentroDeAyuda : 'CentroDeAyuda',
-
+    Details:'Details',
     profile: 'Profile'
   };
 

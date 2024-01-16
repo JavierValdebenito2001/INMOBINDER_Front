@@ -16,6 +16,7 @@ const CentroDeAyuda = () => {
 
     return (
         <View>
+            <Text>Jonathan wekito</Text>
             <TouchableOpacity style={styles.back} onPress={handleBack}>
                 <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
                 <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
