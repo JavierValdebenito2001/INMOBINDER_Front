@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         alignSelf: 'center',
         resizeMode: 'contain'
+        
     },
     avatarText: {
         fontSize: 10,
