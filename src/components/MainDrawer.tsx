@@ -73,6 +73,9 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
           style={styles.avatar}
           source={require('../../assets/images/Camara.jpg')}
         />
+        <TouchableOpacity style={{position:'absolute', margin:20, alignSelf:'flex-end', marginVertical:90, paddingRight:10}} onPress={() => navigation.navigate('Profile')}>
+          <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
+        </TouchableOpacity>
         <Text style={styles.avatarText}>17.111.111-k</Text>
         <Text style={styles.avatarText}>Nombre Nombre Apellido Apellido</Text>
       </View>

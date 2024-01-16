@@ -13,6 +13,7 @@ import { HomeScreen } from "../screens/Home/HomeScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
 import Config from "../components/Config";
+import Profile from "../components/Profile";
 import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
@@ -41,6 +42,11 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.login} 
                 component={LoginScreen} 
+            />
+
+            <Stack.Screen 
+                name={screen.account.profile} 
+                component={Profile} 
             />
 
             <Stack.Screen 
