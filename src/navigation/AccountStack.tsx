@@ -9,20 +9,21 @@ import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/Registe
 import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
-import { MapScreen } from "../screens/Home/MapScreen";
+import { HomeScreen } from "../screens/Home/HomeScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
-import Config from "../components/Config";
-import Profile from "../components/Profile";
 import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
 import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
 import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryScreen";
 import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
+<<<<<<< HEAD
 import CentroDeAyuda from "../components/CentroDeAyuda";
 import Details from "../screens/Publicaciones/Details";
 
+=======
+>>>>>>> 63beca4a25122f5c90158881b0069657fb6a2745
 
 
 
@@ -48,6 +49,7 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
+<<<<<<< HEAD
                 name={screen.account.Details} 
                 component={Details} 
             />
@@ -58,6 +60,8 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
+=======
+>>>>>>> 63beca4a25122f5c90158881b0069657fb6a2745
                 name={screen.account.optionRegister}
                 component={RegisterScreen}            
             />
@@ -65,11 +69,6 @@ export function AccountStack() {
             <Stack.Screen
                 name={screen.account.registerPerson}
                 component={RegisterPersonScreen}
-            />
-
-            <Stack.Screen
-                name={screen.account.Config}
-                component={Config}
             />
 
             <Stack.Screen 
@@ -98,8 +97,8 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-                name={screen.account.MapScreen}
-                component={MapScreen}
+                name={screen.account.homeScreen}
+                component={HomeScreen}
             />
 
             <Stack.Screen 
@@ -135,10 +134,6 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.WishProperty}
                 component={WishPropertyScreen}
-            />
-             <Stack.Screen 
-                name={screen.account.CentroDeAyuda}
-                component={CentroDeAyuda}
             />
 
         </Stack.Navigator>    
