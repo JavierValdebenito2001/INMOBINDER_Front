@@ -9,9 +9,11 @@ import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/Registe
 import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
-import { HomeScreen } from "../screens/Home/HomeScreen";
+import { MapScreen } from "../screens/Home/MapScreen";
 import Dashboard from "../screens/Home/Dashboard";
 import Help from "../screens/Home/Help";
+import Config from "../components/Config";
+import Profile from "../components/Profile";
 import { MainDrawer } from "../components/MainDrawer";
 import { AddHomeScreen } from "../screens/AddHome/AddHomeScreen";
 import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
@@ -45,6 +47,11 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
+                name={screen.account.profile} 
+                component={Profile} 
+            />
+
+            <Stack.Screen 
                 name={screen.account.optionRegister}
                 component={RegisterScreen}            
             />
@@ -52,6 +59,11 @@ export function AccountStack() {
             <Stack.Screen
                 name={screen.account.registerPerson}
                 component={RegisterPersonScreen}
+            />
+
+            <Stack.Screen
+                name={screen.account.Config}
+                component={Config}
             />
 
             <Stack.Screen 
@@ -80,8 +92,8 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-                name={screen.account.homeScreen}
-                component={HomeScreen}
+                name={screen.account.MapScreen}
+                component={MapScreen}
             />
 
             <Stack.Screen 
