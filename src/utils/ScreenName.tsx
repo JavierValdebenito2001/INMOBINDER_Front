@@ -18,12 +18,9 @@ const AccountStack = {
     addHomeVideos: 'AddHomeVideos',
     MisPublicaciones : 'MisPublicaciones',
     WishProperty : 'WishProperty',
-<<<<<<< HEAD
     CentroDeAyuda : 'CentroDeAyuda',
     Details:'Details',
     profile: 'Profile'
-=======
->>>>>>> 63beca4a25122f5c90158881b0069657fb6a2745
   };
 
 const HomeStack = {

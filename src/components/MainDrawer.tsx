@@ -65,7 +65,6 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
     // Mostrar el mensaje con las opciones después de cambiar el estado
     Alert.alert(mensajeDespues, '', opcionesBotonDespues as any);
   };
-
   return (
     <DrawerContentScrollView>
       <View style={styles.avatarContainer}>
@@ -102,7 +101,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Help')}>
+        <TouchableOpacity onPress={() => navigation.navigate('CentroDeAyuda')}>
           <Text style={styles.menuTexto}>Centro de ayuda</Text>
         </TouchableOpacity>
       </View>

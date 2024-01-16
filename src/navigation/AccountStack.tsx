@@ -18,12 +18,9 @@ import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
 import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
 import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryScreen";
 import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
-<<<<<<< HEAD
 import CentroDeAyuda from "../components/CentroDeAyuda";
 import Details from "../screens/Publicaciones/Details";
 
-=======
->>>>>>> 63beca4a25122f5c90158881b0069657fb6a2745
 
 
 
@@ -51,11 +48,6 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.Details} 
                 component={Details} 
-            />
-
-            <Stack.Screen 
-                name={screen.account.profile} 
-                component={Profile} 
             />
 
             <Stack.Screen 
@@ -131,6 +123,10 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.WishProperty}
                 component={WishPropertyScreen}
+            />
+             <Stack.Screen 
+                name={screen.account.CentroDeAyuda}
+                component={CentroDeAyuda}
             />
 
         </Stack.Navigator>    
