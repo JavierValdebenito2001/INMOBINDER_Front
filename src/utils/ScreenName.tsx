@@ -10,7 +10,7 @@ const AccountStack = {
     personIndependient : 'form person/independient',
     agencyRealEstate: 'form agency/Real Estate',
     recoverPassword: 'Recover password',
-    homeScreen: 'HomeScreen',
+    MapScreen: 'MapScreen',
     Dashboard: 'Dashboard',
     Help: 'Help',
     MainDrawer: 'MainDrawer',
