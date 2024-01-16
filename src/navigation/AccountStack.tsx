@@ -49,7 +49,6 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-<<<<<<< HEAD
                 name={screen.account.Details} 
                 component={Details} 
             />
@@ -60,8 +59,6 @@ export function AccountStack() {
             />
 
             <Stack.Screen 
-=======
->>>>>>> 63beca4a25122f5c90158881b0069657fb6a2745
                 name={screen.account.optionRegister}
                 component={RegisterScreen}            
             />
