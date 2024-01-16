@@ -18,7 +18,6 @@ import MisPublicaciones from "../screens/Publicaciones/MisPublicaciones";
 import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
 import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryScreen";
 import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
-import Mensajes from "../components/Mensajes";
 
 
 
@@ -116,11 +115,6 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.WishProperty}
                 component={WishPropertyScreen}
-            />
-
-            <Stack.Screen 
-                name={screen.account.Mensajes}
-                component={Mensajes}
             />
 
         </Stack.Navigator>    
