@@ -21,38 +21,46 @@ const Details =()=>{
     function handleBack(){
         navigation.navigate(screen.account.MisPublicaciones);
       }
-
-      const  renderItem = ({ item }: { item: any }) => (
-        <View key={item.id}>
-          <Image source={item.imagen} style={styles.imagen} />
-        </View>
-      );
     
       const property = Data.find((property) => property.id === itemId);
 
     return(
         <View style={styles.container}>
             <TouchableOpacity style= {styles.back} onPress={handleBack}>
-            <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-            <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
-        </TouchableOpacity>
+                <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
+                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
+            </TouchableOpacity>
+            
         <View style={styles.containershadow}>
-                <Text>{property?.titulo}</Text>
-                <Text>{property?.precio}</Text>
+                <Text style={styles.title}>Propiedad</Text>
                 <View style={{ paddingTop:30, alignItems:'center'}}>
                     <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {itemId}</Text>
-                    <Text style={{color:'#C1C4CA'}}>Tipo de propiedad</Text>
+                    <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
                 </View>
-                <FlatList
-                    data={Data.filter((item) => item.id === itemId)}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}/>
-                    <Text>{itemId.titulo}</Text>
-                <TouchableOpacity
-                    style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'flex-end', margin:20, padding:5}}>
-                    <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>
-                    <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Image source={property?.imagen} style={styles.avatar}/>
+                    <TouchableOpacity
+                        style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'center', margin:20, padding:5}}>
+                        <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>
+                        <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
                 </TouchableOpacity>
+                </View>
+                <View>
+                    <Text>Incluye Gastos comunes por :{property?.gc}</Text>
+                    <Text>Estado:{property?.estado}</Text>
+                    <Text>{property?.mcc}</Text>
+                    <Text>Direccion</Text>
+                    <Text>Region</Text>
+                    <Text>{property?.region}</Text>
+                    <Text>Comuna</Text>
+                    <Text>{property?.comuna}</Text>
+                    <Text>Dsiponible por: {property?.precio}</Text>
+                    <Text>{property?.habitaciones}</Text>
+                    <Text>{property?.baños}</Text>
+                    <Text>Descripcion</Text>
+                    <Text>{property?.descripcion}</Text>
+                </View>
+                
                 
             </View>
         </View>
@@ -66,11 +74,11 @@ const styles = StyleSheet.create({
     title:{
         fontWeight:'bold',
         fontSize:30,
-        marginBottom:20,
         paddingBottom:15,
         borderBottomWidth:1, 
         width:ancho*0.7,
-        textAlign: 'center'    
+        textAlign: 'center',    
+        paddingTop:20
     },
     text:{
         fontSize:18,
