@@ -22,6 +22,7 @@ const AccountStack = {
     CentroDeAyuda : 'CentroDeAyuda',
     Details : 'Details',
     profile: 'Profile',
+    EditProfile: 'EditProfile',
     Mensajes: 'Mensajes',
   };
 

@@ -11,16 +11,12 @@ import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryS
 const ancho = Dimensions.get('window').width; 
 const alto = Dimensions.get('window').height; 
 
-const Profile =()=>{
+const EditProfile =()=>{
 
     const navigation = useNavigation();
 
 function handleBack(){
     navigation.navigate(screen.account.MainDrawer);
-  }
-  
-function EditProfile(){
-    navigation.navigate(screen.account.EditProfile);
   }
 
   const [text, onChangeText] = React.useState('');
@@ -36,15 +32,19 @@ function EditProfile(){
 
             <View style={styles.containershadow}>
                 <Text style={styles.title}>Perfil</Text>
+                <Text style={{fontSize:18, fontWeight:'bold', alignSelf:'flex-start', paddingLeft:50}}>Foto de perfil</Text>
                 <View style={{flexDirection:'row'}}>
+                    
                     <Image
                         style={styles.avatar}
                         source={require('../../assets/images/Camara.jpg')}
                         />
-                    <Ionicons style={{paddingRight:5, alignSelf:'center'}} size={30} name="calendar-outline"/>
                     <View style={{alignItems:'center', alignSelf:'center'}}>
-                        <Text style={{fontWeight:'bold', fontSize:12}}>Fecha en que se unio</Text>
-                        <Text style={{color:'#DDE0E5', fontSize:10}}>14 de Junio de 2018</Text>
+                    <TouchableOpacity
+                    style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', margin:20, padding:5}}>
+                    <Ionicons style={{paddingRight:5, alignItems:'center', color:'#100'}} size={30} name="camera"/>
+                    <Text style={{color:'#100', fontWeight:'bold'}}>Editar foto</Text>
+                </TouchableOpacity>
                     </View>
                 </View>
                 <View>
@@ -54,43 +54,62 @@ function EditProfile(){
                         value={text}
                         placeholder='Nombre Nombre Apellido Apellido'
                     />
+                    <Text style={styles.Subheading}>Nombre Completo</Text>
                     <TextInput
                         style={styles.input}
                         onChangeText={onChangeText}
                         value={text}
                         placeholder='Nombre_apellido@hotmail.com'
                     />
+                    <Text style={styles.Subheading}>Correo Electronico</Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
+                    <View>
                     <TextInput
                         style={styles.miniinput}
                         onChangeText={onChangeText}
                         value={text}
                         placeholder='9 00000000'
                     />
+                    <Text style={styles.Subheading}>Telefono</Text>
+                    </View>
+                    <View>
                     <TextInput
                         style={styles.miniinput}
                         onChangeText={onChangeText}
                         value={text}
                         placeholder='01.234.567-8'
                     />
-                </View>
-                <View style={{ paddingTop:30, alignItems:'center'}}>
-                    <Text style={{fontWeight:'bold', fontSize:15, paddingBottom:20}}>Registrado como:</Text>
-                    <Text style={{fontWeight:'bold', fontSize:30, color:'#C1C4CA'}}>[PERSONA NATURAL]</Text>
+                    <Text style={styles.Subheading}>RUT</Text>
+                    </View>
                 </View>
                 <TouchableOpacity
-                    onPress={EditProfile}
                     style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', margin:20, padding:5}}>
                     <Ionicons style={{paddingRight:5, alignItems:'center', color:'#100'}} size={30} name="pencil-outline"/>
-                    <Text style={{color:'#100', fontWeight:'bold'}}>Editar Perfil</Text>
+                    <Text style={{color:'#100', fontWeight:'bold'}}>Editar Informacion</Text>
                 </TouchableOpacity>
+                <View style={{flexDirection:'row'}}>
+                    <View style={{marginTop:10}}>
+                    <TextInput
+                        style={styles.miniinput}
+                        onChangeText={onChangeText}
+                        value={text}
+                        placeholder='XXXXXXXXXXX'
+                    />
+                    <Text style={styles.Subheading}>Contraseña</Text>
+                    </View>
+                    <TouchableOpacity
+                    style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', margin:20, padding:5}}>
+                    <Ionicons style={{paddingRight:5, alignItems:'center', color:'#100'}} size={30} name="pencil-outline"/>
+                    <Text style={{color:'#100', fontWeight:'bold'}}>Editar Contraseña</Text>
+                </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
 }
 
-export default Profile
+export default EditProfile
 
 const styles = StyleSheet.create({
     container:{
@@ -104,6 +123,10 @@ const styles = StyleSheet.create({
         borderBottomWidth:1, 
         width:ancho*0.7,
         textAlign: 'center'    
+    },
+    Subheading:{
+        fontWeight:'bold',
+        textAlign: 'center'
     },
     text:{
         fontSize:18,
@@ -145,7 +168,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: "70%",
         borderRadius: 20,
-        height:alto*0.75,
+        height:alto*0.85,
         alignSelf: "center",
         alignItems:'center',
         shadowOpacity: 1,
