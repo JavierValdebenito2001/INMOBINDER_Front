@@ -1,52 +1,95 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
+import { screen } from '../utils/ScreenName';
+import Constants from 'expo-constants'
 
 const Mensajes = () => {
-    return (
-<View style = {styles.container}>
-  <Text style = {styles.title} >Mensajes</Text>
-  <View style = {styles.subcontainer}>
-  <TouchableOpacity style={styles.chat}>
-        <Image source={require('C:\Users\betan\Downloads\Fotoprueba.jpg')} style={styles.avatar} />
-        <View style={styles.InnerOval}></View>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={styles.chat}>
-        <Image source={require('C:\Users\betan\Downloads\Fotoprueba.jpg')} style={styles.avatar} />
-          <View style={styles.InnerOval}></View>
-        </TouchableOpacity>
-  </View>
-</View>
+    const navigation = useNavigation();
+    function handleBack() {
+        navigation.navigate(screen.account.MainDrawer);
+    }
+
+    return (
+        <View style={styles.container2}>
+            <TouchableOpacity style={styles.back} onPress={handleBack}>
+                <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
+                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
+            </TouchableOpacity>
+            <View style={styles.container}>
+                <Text style={styles.title} >Mensajes</Text>
+                <View style={styles.subcontainer}>
+                    <TouchableOpacity style={styles.chat}>
+                        <View style={styles.InnerOval}>
+                            <Text style={styles.messageText}>3 mensajes nuevos</Text>
+                        </View>
+                        <View style={styles.innerCircle}></View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.chat}>
+                        <View style={styles.InnerOval}>
+                            <Text style={styles.messageText}>2 mensajes nuevos</Text>
+                        </View>
+                        <View style={styles.innerCircle}></View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.chat}>
+                        <View style={styles.InnerOval}>
+                            <Text style={styles.messageText}>3 mensajes nuevos</Text>
+                        </View>
+                        <View style={styles.innerCircle}></View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.chat}>
+                        <View style={styles.InnerOval}>
+                            <Text style={styles.messageText}>1 mensajes nuevos</Text>
+                        </View>
+                        <View style={styles.innerCircle}></View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.chat}>
+                        <View style={styles.InnerOval}>
+                            <Text style={styles.messageText}>4 mensajes nuevos</Text>
+                        </View>
+                        <View style={styles.innerCircle}></View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </View>
     )
 }
-  
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'flex-start', 
         alignItems: 'center',
-        paddingTop: 40, 
+        paddingTop: 50,
+    },
+    container2 : {
+        marginTop: Constants.statusBarHeight
     },
     title: {
-        fontSize: 24,
+        fontSize: 30,
         fontWeight: 'bold',
     },
     subcontainer: {
-        height: 50, 
-        width:'100%',
+        height: 50,
+        width: '100%',
         paddingVertical: 20,
         borderRadius: 100,
     },
     chat: {
         width: 400,
-        height: 150,
+        height: 130,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F0FFFF',
         borderRadius: 50,
         marginBottom: 10,
         borderWidth: 5,
-        borderColor: '#2F4F4F',
+        borderColor: '#A9A9A9',
         position: 'relative',
     },
     InnerOval: {
@@ -54,15 +97,36 @@ const styles = StyleSheet.create({
         height: 50, // Altura del óvalo interior
         backgroundColor: '#A9A9A9', // Color del óvalo interior
         borderRadius: 50, // Ajusta el valor para que sea la mitad del ancho o altura para que sea un óvalo
+        justifyContent: 'center', // Alinea el texto al centro verticalmente
+        alignItems: 'center',
         position: 'absolute', // Posiciona el óvalo interior en relación con el contenedor exterior
-        top: 50, // Ajusta según tus necesidades para centrar verticalmente
-        right: 35,
-      }, 
-      avatar: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginLeft: 20,   
+        top: 35, // Ajusta según tus necesidades para centrar verticalmente
+        right: 25,
+    },
+    innerCircle: {
+        width: 80,
+        height: 80,
+        backgroundColor: '#A9A9A9',
+        borderRadius: 50,
+        position: 'absolute',
+        top: 20,
+        left: 30,
+    },
+    messageText: {
+        color: 'black', // Cambia el color del texto según tus necesidades
+        fontSize: 16,
+    },
+    back: {
+        position: 'absolute',
+        top: 20,
+        left: 10,
+        zIndex: 1,
+        flexDirection: 'row',
+    },
+
+    logoBack: {
+        color: 'rgb(0,0,0)',
+        marginRight: -10,
     },
 });
 export default Mensajes
