@@ -45,19 +45,29 @@ const Details =()=>{
                         <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
                 </TouchableOpacity>
                 </View>
-                <View>
+                <View style={{alignItems:'center'}}>
                     <Text>Incluye Gastos comunes por :{property?.gc}</Text>
-                    <Text>Estado:{property?.estado}</Text>
+                    <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado:{property?.estado}</Text>
                     <Text>{property?.mcc}</Text>
-                    <Text>Direccion</Text>
-                    <Text>Region</Text>
+                    <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
+                    <Text>{property?.direccion}</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <View style={{marginHorizontal:40, marginVertical:15}}>
+                    <Text style={{fontWeight:'bold'}}>Region</Text>
                     <Text>{property?.region}</Text>
-                    <Text>Comuna</Text>
+                        </View>
+                        <View style={{marginHorizontal:40, marginVertical:15}}>
+                    <Text style={{fontWeight:'bold'}}>Comuna</Text>
                     <Text>{property?.comuna}</Text>
+                        </View>
+                    </View>
                     <Text>Dsiponible por: {property?.precio}</Text>
-                    <Text>{property?.habitaciones}</Text>
-                    <Text>{property?.baños}</Text>
-                    <Text>Descripcion</Text>
+                    <View style={{flexDirection:'row', }}>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.habitaciones}</Text>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.baños}</Text>
+                    </View>
+                    <Text style={{fontWeight:'bold'}}>Descripcion</Text>
+                    
                     <Text>{property?.descripcion}</Text>
                 </View>
                 
@@ -76,7 +86,7 @@ const styles = StyleSheet.create({
         fontSize:30,
         paddingBottom:15,
         borderBottomWidth:1, 
-        width:ancho*0.7,
+        width:ancho*0.8,
         textAlign: 'center',    
         paddingTop:20
     },
@@ -96,10 +106,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         },
     avatar: {
-        backgroundColor: '#DDE0E5',
-        width: 125,
-        height: 125,      
-        borderRadius: 50,
+        width: 200,
+        height: 150,      
         resizeMode: 'contain'
     },
     imagen: {
@@ -125,7 +133,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: "70%",
         borderRadius: 20,
-        height:alto*0.75,
+        height:alto*0.85,
         alignSelf: "center",
         alignItems:'center',
         shadowOpacity: 1,
