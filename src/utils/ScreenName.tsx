@@ -21,7 +21,8 @@ const AccountStack = {
     WishProperty : 'WishProperty',
     CentroDeAyuda : 'CentroDeAyuda',
     Details : 'Details',
-    profile: 'Profile'
+    profile: 'Profile',
+    Mensajes: 'Mensajes',
   };
 
 const HomeStack = {

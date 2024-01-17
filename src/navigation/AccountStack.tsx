@@ -22,6 +22,7 @@ import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryS
 import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
 import CentroDeAyuda from "../components/CentroDeAyuda";
 import Details from "../screens/Publicaciones/Details";
+import Mensajes from "../components/Mensajes";
 
 
 
@@ -139,6 +140,10 @@ export function AccountStack() {
              <Stack.Screen 
                 name={screen.account.CentroDeAyuda}
                 component={CentroDeAyuda}
+            />
+             <Stack.Screen 
+                name={screen.account.Mensajes}
+                component={Mensajes}
             />
 
         </Stack.Navigator>    
