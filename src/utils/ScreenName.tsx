@@ -19,9 +19,8 @@ const AccountStack = {
     addHomeVideos: 'AddHomeVideos',
     MisPublicaciones : 'MisPublicaciones',
     WishProperty : 'WishProperty',
-    Mensajes : 'Mensajes',
     CentroDeAyuda : 'CentroDeAyuda',
-
+    Details : 'Details',
     profile: 'Profile'
   };
 

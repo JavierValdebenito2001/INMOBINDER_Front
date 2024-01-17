@@ -14,29 +14,16 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils/ScreenName";
 import { styles } from "../styles";
+import Data from './Data';
+import Details from "./Details";
 
-const publicacionesData = [
-  {
-    id: "1",
-    titulo: "Propiedad 1",
-    imagen: require("../../../assets/images/propiedad1.png"),
-    precio: "$100,000",
-    direccion: "Calle Principal, Ciudad",
-  },
-  {
-    id: "2",
-    titulo: "Propiedad 2",
-    imagen: require("../../../assets/images/propiedad2.png"),
-    precio: "$150,000",
-    direccion: "Otra Calle, Otra Ciudad",
-  },
-];
+
 
 const MisPublicacionesScreen: React.FC = () => {
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
 
-  const renderItem = ({ item }: { item: any }) => (
-    <View style={PublicacionStyles.publicacionContainer}>
+  const  renderItem = ({ item }: { item: any }) => (
+    <View key={item.id} style={PublicacionStyles.publicacionContainer}>
       <Image source={item.imagen} style={PublicacionStyles.imagen} />
       <View style={PublicacionStyles.contenidoCentrado}>
         <Text style={PublicacionStyles.subtitulo}>{`Propiedad #${item.id}`}</Text>
@@ -44,7 +31,7 @@ const MisPublicacionesScreen: React.FC = () => {
         <Text style={PublicacionStyles.direccion}>{item.direccion}</Text>
         <TouchableOpacity
           style={PublicacionStyles.boton}
-          onPress={() => handleDetalles(item)}
+          onPress={() => verdetalles(item.id)}
         >
           <Text style={PublicacionStyles.textoBoton}>
             {" "}
@@ -63,6 +50,10 @@ const MisPublicacionesScreen: React.FC = () => {
     </View>
   );
   const navigation = useNavigation();
+
+  function verdetalles(itemId: string) {
+    navigation.navigate('Details', { itemId });
+  }
 
   const handleDetalles = (item: any) => {
     console.log(`Detalles de la propiedad ${item.id}`);
@@ -88,7 +79,7 @@ const MisPublicacionesScreen: React.FC = () => {
       </TouchableOpacity>
 
       <FlatList
-        data={publicacionesData}
+        data={Data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={() => (

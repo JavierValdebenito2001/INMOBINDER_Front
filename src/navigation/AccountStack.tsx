@@ -21,8 +21,8 @@ import { WishPropertyScreen } from "../screens/WishProperty/WishPropertyScreen";
 import { AddHomeGalleryScreen } from "../screens/AddHome/Gallery/AddHomeGalleryScreen";
 import { AddHomeVideosScreen } from "../screens/AddHome/Videos/AddHomeVideosScreen";
 import CentroDeAyuda from "../components/CentroDeAyuda";
+import Details from "../screens/Publicaciones/Details";
 
-import Mensajes from "../components/Mensajes";
 
 
 
@@ -45,6 +45,11 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.login} 
                 component={LoginScreen} 
+            />
+
+            <Stack.Screen 
+                name={screen.account.Details} 
+                component={Details} 
             />
 
             <Stack.Screen 
@@ -134,11 +139,6 @@ export function AccountStack() {
              <Stack.Screen 
                 name={screen.account.CentroDeAyuda}
                 component={CentroDeAyuda}
-            />
-
-            <Stack.Screen 
-                name={screen.account.Mensajes}
-                component={Mensajes}
             />
 
         </Stack.Navigator>    
