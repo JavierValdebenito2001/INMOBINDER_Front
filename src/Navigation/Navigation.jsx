@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Main from '../Structure/Main';
 import TypeLogin from '../Structure/Login/TypeLogin.jsx';
@@ -8,6 +9,7 @@ import LoginMain  from '../Structure/Login/LoginMain.jsx';
 import Login from '../Structure/Login/Login.jsx';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 function MainStack() {
   return (
@@ -50,16 +52,16 @@ function LoginStack() {
   );
 }
 
-function Stackk() {
+function App() {
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='LoginStack' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="LoginStack" component={LoginStack}  />
-            <Stack.Screen name="MainStack" component={MainStack} />
-        </Stack.Navigator>
+      <Drawer.Navigator initialRouteName='LoginStack'>
+        <Drawer.Screen name="LoginStack" component={LoginStack} />
+        <Drawer.Screen name="MainStack" component={MainStack} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
 
+export default App;
   
-  export default Stackk
