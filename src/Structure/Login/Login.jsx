@@ -10,10 +10,10 @@ export function Login() {
   const navigation = useNavigation();
 
 const goToStack = () => {
-    navigation.navigate('MainStack')
+    navigation.navigate('DrawerS')
     navigation.reset({
         index: 0,
-        routes: [{ name: 'MainStack' }],
+        routes: [{ name: 'DrawerS' }],
       });
 };
   return (

@@ -2,25 +2,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Constants from 'expo-constants'
-import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles'
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { screen } from '../utils/ScreenName';
-
 
 const Config =()=>{
 
-    const navigation = useNavigation();
-
-    function handleBack(){
-        navigation.navigate(screen.account.MainDrawer);
-      }
-    
     return(
         <View style={styles.container}>
-            <TouchableOpacity style= {styles.back} onPress={handleBack}>
-            <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-            <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
+            <TouchableOpacity style= {styles.back} >
+            <Text >atrás</Text>
         </TouchableOpacity>
             <Text style={styles.title}>Configuracion</Text>
             <View>
@@ -46,6 +34,7 @@ const Config =()=>{
         </View>
 
     )
+    
 }
 
 const styles = StyleSheet.create({

@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, TextInput}
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants'
-import { screen } from '../utils/ScreenName';
-import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
+
 
 
 
@@ -25,18 +24,16 @@ function handleBack(){
     return(
 
         <View >
+
             <TouchableOpacity style= {styles.back} onPress={handleBack}>
             <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-            <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
+            <Text >atrás</Text>
             </TouchableOpacity>
 
             <View style={styles.containershadow}>
                 <Text style={styles.title}>Perfil</Text>
                 <View style={{flexDirection:'row'}}>
-                    <Image
-                        style={styles.avatar}
-                        source={require('../../assets/images/Camara.jpg')}
-                        />
+                    
                     <Ionicons style={{paddingRight:5, alignSelf:'center'}} size={30} name="calendar-outline"/>
                     <View style={{alignItems:'center', alignSelf:'center'}}>
                         <Text style={{fontWeight:'bold', fontSize:12}}>Fecha en que se unio</Text>
@@ -83,6 +80,7 @@ function handleBack(){
             </View>
         </View>
     )
+    
 }
 
 export default Profile

@@ -7,21 +7,11 @@ import TypeLogin from '../Structure/Login/TypeLogin.jsx';
 import Register from '../Structure/Login/Register.jsx';
 import LoginMain  from '../Structure/Login/LoginMain.jsx';
 import Login from '../Structure/Login/Login.jsx';
+import Profile from '../Drawer/Components/Profile.jsx'; 
+import Config from '../Drawer/Components/Config.jsx';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-function MainStack() {
-  return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="Home" 
-                component={Main} 
-                options={{headerTitle:'Mapa', headerTitleAlign:'center'}}
-                />
-        </Stack.Navigator>
-  );
-}
 
 function LoginStack() {
   return (
@@ -54,20 +44,20 @@ function LoginStack() {
 
 function DrawerS() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName='LoginStack'>
-        <Drawer.Screen name="MainStack" component={MainStack} />
+      <Drawer.Navigator initialRouteName='Main'>
+        <Drawer.Screen name="Perfil" component={Profile} />
+        <Drawer.Screen name="Main" component={Main} />
+        <Drawer.Screen name="Config" component={Config} />
       </Drawer.Navigator>
-    </NavigationContainer>
   );
 }
 
 function Stackk() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='LoginStack'>
+      <Stack.Navigator initialRouteName='LoginStack' screenOptions={{headerShown: false}}>
       <Stack.Screen name="LoginStack" component={LoginStack} />
-      <Stack.Screen name="MainStack" component={MainStack} />
+      <Stack.Screen name="DrawerS" component={DrawerS} />
       </Stack.Navigator>
     </NavigationContainer>
   );
