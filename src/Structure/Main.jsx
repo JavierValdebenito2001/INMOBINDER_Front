@@ -1,9 +1,10 @@
 import React from 'react'
-import { View} from 'react-native'
+import { View, Text} from 'react-native'
 
 const Main = () => {
     return (
         <View>
+            <Text> Main </Text>
         </View>
     )
 }

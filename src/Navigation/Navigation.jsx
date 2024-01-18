@@ -52,7 +52,7 @@ function LoginStack() {
   );
 }
 
-function App() {
+function DrawerS() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName='LoginStack'>
@@ -62,5 +62,16 @@ function App() {
   );
 }
 
-export default App;
+function Stackk() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='LoginStack'>
+      <Stack.Screen name="LoginStack" component={LoginStack} />
+      <Stack.Screen name="MainStack" component={MainStack} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default Stackk;
   
