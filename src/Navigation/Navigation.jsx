@@ -56,7 +56,6 @@ function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName='LoginStack'>
-       
         <Drawer.Screen name="MainStack" component={MainStack} />
       </Drawer.Navigator>
     </NavigationContainer>
