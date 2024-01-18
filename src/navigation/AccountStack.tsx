@@ -10,6 +10,9 @@ import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterProper
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
 
+import Help from "../screens/Home/Help";
+import HomeScreen from "../screens/Home/HomeScreen";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -64,6 +67,17 @@ export function AccountStack() {
             <Stack.Screen 
                 name= {screen.account.recoverPassword}
                 component={RecoverPasswordScreen}
+            />
+
+<Stack.Screen 
+                name={screen.account.homeScreen}
+                component={HomeScreen}
+            />
+
+
+            <Stack.Screen 
+                name={screen.account.Help}
+                component={Help}
             />
             
 

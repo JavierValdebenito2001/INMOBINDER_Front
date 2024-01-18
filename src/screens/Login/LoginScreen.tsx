@@ -9,7 +9,7 @@ import { Input, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName';
 
-
+const HomeScreen = 'HomeScreen'; // Asegúrate de que 'HelpScreen' esté definido en tu navegación
 
 export function LoginScreen() {
 
@@ -25,23 +25,23 @@ export function LoginScreen() {
     }
 
     function handleBack(){
-        navigation.navigate(screen.account.home);
+        navigation.navigate(screen.account.home as never);
     }
 
     function  handleActivation(){
-        navigation.navigate(screen.account.optionRegister);
+        navigation.navigate(screen.account.optionRegister as never);
     }
 
     function handleLogin(){
-        console.log("Ingresar")
+        navigation.navigate(screen.account.Help as never);
     }
 
     function handleLoginWithGoogle(){
-        console.log("Ingresar con Google")
+        navigation.navigate(screen.account.homeScreen as never);
     }
 
     function handleRecoverPassword(){
-        navigation.navigate(screen.account.recoverPassword);
+        navigation.navigate(screen.account.recoverPassword as never);
     }
 
   return (
@@ -70,7 +70,7 @@ export function LoginScreen() {
                 <Text style={{ ...LoginStyles.textBtn, fontFamily: 'Cairo_700Bold'}}>Continuar </Text>
             </Button>
             
-            <TouchableOpacity style={LoginStyles.containerLoginGoogle} onPress={handleLoginWithGoogle}> 
+            <TouchableOpacity style={LoginStyles.containerLoginGoogle} onPress={handleLoginWithGoogle}>
                 <Image source={require('../../../assets/images/google.png')} style={LoginStyles.imgGoogle}/>
                 <Text style={{ ...LoginStyles.loginGoogle, fontFamily: 'Cairo_700Bold'}} > Ingresar con Google</Text>           
             </TouchableOpacity>
