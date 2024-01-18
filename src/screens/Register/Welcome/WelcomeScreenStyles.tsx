@@ -1,7 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const stylesHome = StyleSheet.create({
-    
+
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     btn: {
         backgroundColor: 'rgb(255, 255, 255)',
         borderColor: 'rgb(0,0,0)',
@@ -9,6 +15,7 @@ export const stylesHome = StyleSheet.create({
         borderRadius: 40,
         width: 236,
         height: 70,
+        maxWidth: 500, // Añade un ancho máximo para evitar que el botón sea demasiado ancho en pantallas grandes
 
         shadowColor: 'rgba(0, 0, 0, 1)',
         shadowOffset: {

@@ -2,20 +2,27 @@ import { StyleSheet } from "react-native";
 
 export const LoginStyles = StyleSheet.create({
 
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     containerLogin:{    
-            width: "90%",
-            height: "70%",
-            borderRadius: 20,
-            alignItems: "center",
-            shadowOpacity: 1,
-            elevation: 4,
-            shadowRadius: 4,
-            shadowOffset: {
-                width: 0,
-                height: 4
-            },
-            shadowColor: "rgba(0, 0, 0, 1)",
-            backgroundColor: 'rgb(255, 255, 255)',
+        width: "90%",
+        maxWidth: 500, // Añade un ancho máximo para evitar que el contenedor sea demasiado ancho en pantallas grandes
+        height: "70%",
+        borderRadius: 20,
+        alignItems: "center",
+        shadowOpacity: 1,
+        elevation: 4,
+        shadowRadius: 4,
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: 'rgb(255, 255, 255)',
     },
 
     textLogin:{
