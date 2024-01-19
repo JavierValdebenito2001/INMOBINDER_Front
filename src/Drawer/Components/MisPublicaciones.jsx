@@ -12,10 +12,11 @@ import {
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-//import { screen } from "../../utils/ScreenName";
-//import { styles } from "../styles";
-//import Data from './Data';
-//import Details from './Details';
+import { screen } from "../utils/ScreenName";
+import { styles } from "./Styles";
+import Data from "./Data.js";
+
+
 
 const MisPublicacionesScreen = () => {
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
@@ -72,10 +73,6 @@ const MisPublicacionesScreen = () => {
 
   return (
     <SafeAreaView style={PublicacionStyles.safeArea}>
-      <TouchableOpacity style={styles.back} onPress={handleBack}>
-        <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
-        <Text style={PublicacionStyles.backText}>atrás</Text>
-      </TouchableOpacity>
 
       <FlatList
         data={Data}
@@ -181,7 +178,8 @@ const PublicacionStyles = StyleSheet.create({
     fontFamily: "Cairo_700Bold",
     fontSize: 24,
     lineHeight: 48,
-  }
+  },
+
 });
 
 export default MisPublicacionesScreen;

@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList} 
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { screen } from '../../utils/ScreenName'
-import Data from './Data';
+import { screen } from '../utils/ScreenName.jsx'
+import Data from './Data.js';
 import { useRoute } from '@react-navigation/native';
+
 
 const ancho = Dimensions.get('window').width; 
 const alto = Dimensions.get('window').height; 
@@ -25,10 +26,6 @@ const Details =()=>{
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity style= {styles.back} onPress={handleBack}>
-                <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
-            </TouchableOpacity>
             
         <View style={styles.containershadow}>
                 <Text style={styles.title}>Propiedad</Text>
@@ -94,16 +91,6 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         margin:20
     },
-    logoBack: {
-        color: 'rgb(0,0,0)',
-        marginRight: -10,
-      },
-    back:{
-        marginTop: Constants.statusBarHeight,
-        flexDirection: "row",
-        marginRight: "auto",
-        alignItems: "center",
-        },
     avatar: {
         width: 200,
         height: 150,      

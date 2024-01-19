@@ -49,7 +49,7 @@ function DrawerS() {
   return (
       <Drawer.Navigator initialRouteName='Main'>
         <Drawer.Screen name="Perfil" component={Profile} />
-        <Drawer.Screen name="MisPublicaciones" component={CentroDeAyuda} />
+        <Drawer.Screen name="MisPublicaciones" component={MisPublicacionesScreen} />
         <Drawer.Screen name="Agregar Publicaciones" component={Config} />
         <Drawer.Screen name="Mis Clientes" component={Config} />
         <Drawer.Screen name="Mensajes" component={Mensajes} />
