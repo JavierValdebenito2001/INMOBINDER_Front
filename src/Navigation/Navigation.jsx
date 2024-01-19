@@ -52,11 +52,9 @@ function DrawerS() {
         <Drawer.Screen name="MisPublicaciones" component={CentroDeAyuda} />
         <Drawer.Screen name="Agregar Publicaciones" component={Config} />
         <Drawer.Screen name="Mis Clientes" component={Config} />
-        <Drawer.Screen name="Agenda" component={Config} />
         <Drawer.Screen name="Mensajes" component={Mensajes} />
         <Drawer.Screen name="Configuracion" component={Config} />
         <Drawer.Screen name="Centro de ayuda" component={CentroDeAyuda} />
-        <Drawer.Screen name= "Agencia" component={Main} />
         <Drawer.Screen name="Main" component={Main} />
         <Drawer.Screen name="Cerrar sesion" component={LoginStack} />
       </Drawer.Navigator>
