@@ -9,6 +9,9 @@ import LoginMain  from '../Structure/Login/LoginMain.jsx';
 import Login from '../Structure/Login/Login.jsx';
 import Profile from '../Drawer/Components/Profile.jsx'; 
 import Config from '../Drawer/Components/Config.jsx';
+import CentroDeAyuda from '../Drawer/Components/CentroDeAyuda.jsx';
+import Mensajes from '../Drawer/Components/Mensajes.jsx';
+import MisPublicacionesScreen from '../Drawer/Components/MisPublicaciones.jsx';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -46,8 +49,16 @@ function DrawerS() {
   return (
       <Drawer.Navigator initialRouteName='Main'>
         <Drawer.Screen name="Perfil" component={Profile} />
+        <Drawer.Screen name="MisPublicaciones" component={CentroDeAyuda} />
+        <Drawer.Screen name="Agregar Publicaciones" component={Config} />
+        <Drawer.Screen name="Mis Clientes" component={Config} />
+        <Drawer.Screen name="Agenda" component={Config} />
+        <Drawer.Screen name="Mensajes" component={Mensajes} />
+        <Drawer.Screen name="Configuracion" component={Config} />
+        <Drawer.Screen name="Centro de ayuda" component={CentroDeAyuda} />
+        <Drawer.Screen name= "Agencia" component={Main} />
         <Drawer.Screen name="Main" component={Main} />
-        <Drawer.Screen name="Config" component={Config} />
+        <Drawer.Screen name="Cerrar sesion" component={LoginStack} />
       </Drawer.Navigator>
   );
 }
