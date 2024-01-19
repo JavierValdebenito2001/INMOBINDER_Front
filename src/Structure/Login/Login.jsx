@@ -1,11 +1,11 @@
-import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput, Button } from 'react-native';
-import React, { useState } from 'react';
+import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput } from 'react-native';
+import React from 'react';
 import Constants from 'expo-constants'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 export function Login() {
   const navigation = useNavigation();
@@ -35,18 +35,19 @@ export function Login() {
  
     signInWithPopup(auth, provider).then(function(result) {
       // Este da un token de acceso de Google. Puedes usarlo para acceder a la API de Google.
-      var token = result.credential.accessToken;
+      // var token = result.credential.accessToken;
       // La información del usuario que inició sesión.
-      var user = result.user;
-      // ...
+      // var user = result.user;
+      // Navegar a la pantalla deseada después de iniciar sesión con Google
+      goToStack();
     }).catch(function(error) {
       // Maneja los errores aquí.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      // var errorCode = error.code;
+      // var errorMessage = error.message;
       // El correo electrónico de la cuenta del usuario que se utilizó.
-      var email = error.email;
+      // var email = error.email;
       // El tipo de firebase.auth.AuthCredential que se utilizó.
-      var credential = error.credential;
+      // var credential = error.credential;
       // ...
     });
   }
