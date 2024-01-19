@@ -85,7 +85,9 @@ export function Login() {
           </TouchableOpacity>
 
           {/* Enlace para recuperar contraseña */}
-          <Text style={{ ...LoginStyles.RecoverPassword}} > ¿Has olvidado tu contraseña? </Text>
+          <TouchableOpacity onPress={goToStack}>
+            <Text style={{ ...LoginStyles.RecoverPassword}} > ¿Has olvidado tu contraseña? </Text>
+          </TouchableOpacity>
         </View>
       </View>
 
