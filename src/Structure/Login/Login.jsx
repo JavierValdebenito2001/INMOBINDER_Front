@@ -1,13 +1,14 @@
-
-import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput, Alert } from 'react-native';
 import React from 'react';
 import Constants from 'expo-constants'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import { auth } from './Data/firebase-config';
+import { signInWithEmailAndPassword } from '@firebase/auth';
 
 
-export function Login() {
+const Login =()=> {
+
   const navigation = useNavigation();
 
   const goToStack = () => {
@@ -18,8 +19,24 @@ export function Login() {
     });
   };
 
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log('Usuario logueado')
+      const user = userCredential.user
+      console.log(user)
+      navigation.navigate('DrawerS')
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'DrawerS' }],
+      });
+    }).catch((error) => {
+      Alert.alert('Error', 'Usuario o contraseña incorrectos')})}
   
-  return (
+return (
     <SafeAreaView style={styles.container}>
     
       {/* Encabezado con el logo */}
@@ -34,12 +51,12 @@ export function Login() {
 
         <View style={{flexDirection:'row', marginTop: 18}}>
           <MaterialCommunityIcons name='at' size={25} style={{alignSelf:'center'}}/>
-          <TextInput onChange={(event) => setEmail(event.nativeEvent.text)} placeholder='Correo electrónico' style={{ ...LoginStyles.input}}/>
+          <TextInput onChangeText={(text) => setEmail(text)} placeholder='Correo electrónico' style={{ ...LoginStyles.input}}/>
         </View>
 
         <View style={{flexDirection:'row'}}>
           <MaterialCommunityIcons name='lock' size={25} style={{alignSelf:'center'}}/>
-          <TextInput onChange={(event) => setPassword(event.nativeEvent.text)} placeholder='Contraseña' style={LoginStyles.input}/>
+          <TextInput onChangeText={(text) => setPassword(text)} placeholder='Contraseña' style={LoginStyles.input}/>
         </View>
 
         <Text style={{ ...LoginStyles.text2}}>Mantener la sesión iniciada</Text>
@@ -47,7 +64,7 @@ export function Login() {
         {/* Botón de inicio de sesión */}
         <View>
           {/* Inicio de sesión con Google */}
-          <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={goToStack}> 
+          <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={handleSignIn}> 
             <Image source={require('./Data/google.png')} style={LoginStyles.imgGoogle}/>
             <Text style={{ ...LoginStyles.loginGoogle, }}>Ingresar con Google</Text>           
           </TouchableOpacity>
@@ -62,6 +79,8 @@ export function Login() {
     </SafeAreaView>
   );
 }
+
+export default Login;
 
 const styles = StyleSheet.create({
   container: {     
@@ -109,7 +128,7 @@ const styles = StyleSheet.create({
   },    
 })
 
-export default Login;
+
 
 const LoginStyles = StyleSheet.create({
 
@@ -216,4 +235,4 @@ const LoginStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: '7%',
   }
-});
+})
