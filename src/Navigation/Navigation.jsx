@@ -11,7 +11,7 @@ import Profile from '../Drawer/Components/Profile.jsx';
 import Config from '../Drawer/Components/Config.jsx';
 import CentroDeAyuda from '../Drawer/Components/CentroDeAyuda.jsx';
 import Mensajes from '../Drawer/Components/Mensajes.jsx';
-import MisPublicacionesScreen from '../Drawer/Components/MisPublicaciones.jsx';
+import MisPublicaciones from '../Drawer/Components/MisPublicaciones.jsx';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,7 +49,7 @@ function DrawerS() {
   return (
       <Drawer.Navigator initialRouteName='Main'>
         <Drawer.Screen name="Perfil" component={Profile} />
-        <Drawer.Screen name="MisPublicaciones" component={MisPublicacionesScreen} />
+        <Drawer.Screen name="MisPublicaciones" component={MisPublicaciones} />
         <Drawer.Screen name="Agregar Publicaciones" component={Config} />
         <Drawer.Screen name="Mis Clientes" component={Config} />
         <Drawer.Screen name="Mensajes" component={Mensajes} />
