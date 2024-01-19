@@ -13,7 +13,7 @@ import {
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../utils/ScreenName";
-import { styles } from "./Styles";
+import { styles } from "./Styles.jsx";
 import Data from "./Data.js";
 
 
