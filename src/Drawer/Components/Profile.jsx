@@ -23,13 +23,7 @@ function handleBack(){
 
     return(
 
-        <View >
-
-            <TouchableOpacity style= {styles.back} onPress={handleBack}>
-            <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-            <Text >atrás</Text>
-            </TouchableOpacity>
-
+        <View style={{marginTop:20}}>
             <View style={styles.containershadow}>
                 <Text style={styles.title}>Perfil</Text>
                 <View style={{flexDirection:'row'}}>

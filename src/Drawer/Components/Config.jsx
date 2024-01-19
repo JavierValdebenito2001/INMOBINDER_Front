@@ -7,9 +7,6 @@ const Config =()=>{
 
     return(
         <View style={styles.container}>
-            <TouchableOpacity style= {styles.back} >
-            <Text >atrás</Text>
-        </TouchableOpacity>
             <Text style={styles.title}>Configuracion</Text>
             <View>
                 <TouchableOpacity>
