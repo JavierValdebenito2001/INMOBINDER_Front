@@ -1,5 +1,4 @@
-import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput, Button, Alert } from 'react-native';
-import React, { useState } from 'react';
+
 import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput } from 'react-native';
 import React from 'react';
 import Constants from 'expo-constants'; 
@@ -8,12 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 import { auth } from './Data/firebase-config';
 
 
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-
 export function Login() {
   const navigation = useNavigation();
-/*
+
   const goToStack = () => {
     navigation.navigate('DrawerS')
     navigation.reset({
@@ -21,27 +17,8 @@ export function Login() {
       routes: [{ name: 'DrawerS' }],
     });
   };
-    const auth = getAuth(auth);
-    const provider = new GoogleAuthProvider();
- 
-    signInWithPopup(auth, provider).then(function(result) {
-      // Este da un token de acceso de Google. Puedes usarlo para acceder a la API de Google.
-      // var token = result.credential.accessToken;
-      // La información del usuario que inició sesión.
-      // var user = result.user;
-      // Navegar a la pantalla deseada después de iniciar sesión con Google
-      goToStack();
-    }).catch(function(error) {
-      // Maneja los errores aquí.
-      // var errorCode = error.code;
-      // var errorMessage = error.message;
-      // El correo electrónico de la cuenta del usuario que se utilizó.
-      // var email = error.email;
-      // El tipo de firebase.auth.AuthCredential que se utilizó.
-      // var credential = error.credential;
-      // ...
-    });
-  */
+
+  
   return (
     <SafeAreaView style={styles.container}>
     
@@ -70,7 +47,7 @@ export function Login() {
         {/* Botón de inicio de sesión */}
         <View>
           {/* Inicio de sesión con Google */}
-          <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={signInWithGoogle}> 
+          <TouchableOpacity style={LoginStyles.containerLoginGoogle}  onPress={goToStack}> 
             <Image source={require('./Data/google.png')} style={LoginStyles.imgGoogle}/>
             <Text style={{ ...LoginStyles.loginGoogle, }}>Ingresar con Google</Text>           
           </TouchableOpacity>
