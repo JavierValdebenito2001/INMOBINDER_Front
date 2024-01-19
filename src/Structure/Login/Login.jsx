@@ -1,15 +1,17 @@
-import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput, Button } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, StyleSheet, Text, Image, TextInput, Button, Alert } from 'react-native';
 import React, { useState } from 'react';
 import Constants from 'expo-constants'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
+import { auth } from './Data/firebase-config';
+
 
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
 
 export function Login() {
   const navigation = useNavigation();
-
+/*
   const goToStack = () => {
     navigation.navigate('DrawerS')
     navigation.reset({
@@ -17,20 +19,7 @@ export function Login() {
       routes: [{ name: 'DrawerS' }],
     });
   };
-
-  //Funcion para iniciar sesion con Google
-  async function signInWithGoogle() {
-    var config = {
-      apiKey: "AIzaSyDNu2t52GgXHdOupTmYH3zDWwK7Jt0mhJs",
-      authDomain: "agartha-marketing-agency.firebaseapp.com",
-      databaseURL: "https://agartha-marketing-agency-default-rtdb.firebaseio.com",
-      projectId: "agartha-marketing-agency",
-      storageBucket: "agartha-marketing-agency.appspot.com",
-      messagingSenderId: "122797123050",
-    };
-
-    const app = initializeApp(config);
-    const auth = getAuth(app);
+    const auth = getAuth(auth);
     const provider = new GoogleAuthProvider();
  
     signInWithPopup(auth, provider).then(function(result) {
@@ -49,8 +38,7 @@ export function Login() {
       var credential = error.credential;
       // ...
     });
-  }
-
+  */
   return (
     <SafeAreaView style={styles.container}>
     
