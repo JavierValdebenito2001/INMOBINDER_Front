@@ -12,7 +12,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import SelectDropdown from 'react-native-select-dropdown';
-import ToggleSwitch from 'toggle-switch-react-native'
+
 
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
@@ -76,7 +76,7 @@ export function AddHomeScreen() {
       console.log(result);
 
       if (!result.canceled) {
-        setImage(result.assets[0].uri);
+        const [image, setImage] = useState<string | undefined>();
       }
     };
 
@@ -90,15 +90,15 @@ export function AddHomeScreen() {
     }
 
     function handleBack(){
-      navigation.navigate(screen.account.MainDrawer);
+      navigation.navigate(screen.account.MainDrawer as never);
     }
 
     function handleGallery(){
-      navigation.navigate(screen.account.addHomeGallery);
+      navigation.navigate(screen.account.addHomeGallery as never);
     }
 
     function handleVideos(){
-      navigation.navigate(screen.account.addHomeVideos);
+      navigation.navigate(screen.account.addHomeVideos  as never);
     }
 
   return (
@@ -270,13 +270,7 @@ export function AddHomeScreen() {
               </View>
 
               <Text>¿Deseas activar la detección dinámica en esta publicación?</Text>
-              <ToggleSwitch
-                onColor="#04c7f2"
-                offColor="#bbb8b8"
-                size="large"
-                isOn={isOnLargeToggleSwitch}
-                onToggle={onToggle}
-              />
+             
 
               <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}}>
                 <FontAwesomeIcon icon = {faSquareCheck} size={20} style={AddHomeStyles.btnIcons}/>

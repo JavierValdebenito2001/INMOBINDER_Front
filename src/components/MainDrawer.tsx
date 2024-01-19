@@ -1,13 +1,14 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import { Image, Switch, Text, TouchableOpacity, View, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { MapScreen } from '../screens/Home/MapScreen';
+
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
-import ToggleSwitch from 'toggle-switch-react-native';
+
 import CentroDeAyuda from './CentroDeAyuda';
 import { useNavigation } from '@react-navigation/native';
+import MapScreen from '../screens/Home/MapScreen';
 
 
 
@@ -145,13 +146,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
             ¿Desea activar o desactivar la detección dinámica?
           </Text>
           <View style={{ alignItems: 'center' }}>
-            <ToggleSwitch
-              onColor="#04c7f2"
-              offColor="#bbb8b8"
-              size="large"
-              isOn={deteccionDinamica}
-              onToggle={toggleDeteccionDinamica}
-            />
+          
           </View>
         </TouchableOpacity>
       </View>

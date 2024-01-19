@@ -23,11 +23,11 @@ export function PersonIndependientScreen() {
     }
 
     function handleBack(){
-      navigation.navigate(screen.account.registerPerson);
+      navigation.navigate(screen.account.registerPerson as never);
     }
 
     function handleContinue(){
-      navigation.navigate(screen.home.home);
+      navigation.navigate(screen.home.home as never);
     }
 
   return (

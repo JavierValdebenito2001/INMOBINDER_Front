@@ -11,6 +11,7 @@ export const firebaseConfig = {
   projectId: "agartha-marketing-agency",
   storageBucket: "agartha-marketing-agency.appspot.com",
   messagingSenderId: "122797123050",
-  appId: "1:122797123050:web:3142f05845de544cbebe93"
+  appId: "1:122797123050:web:3142f05845de544cbebe93",
+  measurementId: "G-1EWNYSNECN"
 };
 
