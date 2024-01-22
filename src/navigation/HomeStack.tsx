@@ -1,8 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 
-import { MapScreen } from '../screens/Home/MapScreen';
+
 import Dashboard from '../screens/Home/Dashboard';
+import MapScreen from '../screens/Home/MapScreen';
 
 
 

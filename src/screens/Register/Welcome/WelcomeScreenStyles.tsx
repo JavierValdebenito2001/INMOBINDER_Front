@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const stylesHome = StyleSheet.create({
     
     btn: {
+        
         backgroundColor: 'rgb(255, 255, 255)',
         borderColor: 'rgb(0,0,0)',
         borderWidth: 2,
@@ -21,6 +22,7 @@ export const stylesHome = StyleSheet.create({
     },
 
     btnContainer: {
+   
         alignItems: "center",
         padding: 50,
     },
@@ -38,9 +40,10 @@ export const stylesHome = StyleSheet.create({
         height: 50,
     },
 
-    header:{
-        flexDirection: 'row',
-        alignItems: 'center',
+    header: {
+        flex: 1,
+        justifyContent: "center", // Alinea los elementos verticalmente al centro
+        alignItems: 'center', // Alinea los elementos horizontalmente al centro
         marginTop: '20%',
     },
 

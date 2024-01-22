@@ -77,6 +77,7 @@ export function LoginScreen() {
   // Función para manejar el inicio de sesión con Google
   const handleLoginWithGoogle = () => {
     console.log("Ingresar con Google");
+    navigation.navigate('MainDrawer' as never);
   };
 
   // Función para manejar la recuperación de contraseña
