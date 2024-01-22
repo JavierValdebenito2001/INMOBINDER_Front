@@ -31,8 +31,28 @@ export function LoginScreen() {
   }
 
   // Función para manejar el botón de retroceso
-  const handleBack = () => {
-    // navigation.navigate(screen.account.home);
+  const handleBack = async () => {
+    try {
+      // Verificar si el correo electrónico y la contraseña están presentes
+      if (!email || !password) {
+        console.error("Por favor, ingrese sus credenciales");
+        // Puedes mostrar un mensaje al usuario informándole que debe ingresar sus credenciales
+        return;
+      }
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("Inicio de sesión exitoso", user);
+
+      // Navegar a MainDrawer después del inicio de sesión exitoso
+      navigation.navigate('MainDrawer' as never);
+
+      // Aquí puedes realizar acciones adicionales después del inicio de sesión exitoso
+    } catch (error) {
+      console.error("Error al iniciar sesión");
+      // Aquí puedes manejar errores y proporcionar retroalimentación al usuario
+    }
   };
 
   // Función para manejar la activación de la cuenta
@@ -54,7 +74,7 @@ export function LoginScreen() {
 
       // Aquí puedes realizar acciones adicionales después del inicio de sesión exitoso
     } catch (error) {
-      console.error("Error al iniciar sesión", error.message);
+      console.error("Error al iniciar sesión");
       // Aquí puedes manejar errores y proporcionar retroalimentación al usuario
     }
   };
@@ -69,7 +89,7 @@ export function LoginScreen() {
       console.log("Registro exitoso", user);
       // Aquí puedes realizar acciones adicionales después del registro exitoso
     } catch (error) {
-      console.error("Error al registrar usuario", error.message);
+      console.error("Error al registrar usuario");
       // Aquí puedes manejar errores y proporcionar retroalimentación al usuario
     }
   };
