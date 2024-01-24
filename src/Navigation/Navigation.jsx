@@ -112,6 +112,17 @@ function CustomDrawerContent(props) {
 function verperfil(){
   navigation.navigate('ProfileStack');
   }
+
+function cerrarsesion(){
+  navigation.navigate('LoginStack');
+  navigation.reset({
+    index: 0,
+    routes: [{ name: 'LoginStack' }],
+  });
+};  
+
+
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#100', flex: 1 }}>
@@ -125,12 +136,7 @@ function verperfil(){
       <DrawerItemList {...props} />
       <DrawerItem
         label="Cerrar sesión"
-        onPress={() => {
-          props.navigation.reset({
-            index: 0,
-            routes: [{ name: 'LoginStack' }],
-          });
-        }}
+        onPress={cerrarsesion}        
       />
     </DrawerContentScrollView>
   );
