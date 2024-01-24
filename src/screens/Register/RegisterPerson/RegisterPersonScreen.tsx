@@ -1,88 +1,105 @@
-import { View, TouchableOpacity, SafeAreaView } from 'react-native'
-import React from 'react'
-import { styles } from '../../styles'
-import { stylePerson } from './RegisterPersonStyles.tsx'
+import React, { useState } from 'react';
+import { View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { styles } from '../../styles';
+import { stylePerson } from './RegisterPersonStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Image } from '@rneui/base';
-import { Input , Text} from '@rneui/themed';
+import { Button, Image, Input, Text } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../utils/ScreenName.tsx';
 
-
 export function RegisterPersonScreen() {
+  // Inicializar la navegación
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  // Cargar fuentes
+  const [fontsLoaded] = useFonts({
+    Cairo_700Bold,
+    Cairo_400Regular,
+  });
 
-    const [fontsLoaded] = useFonts({
-        Cairo_700Bold,
-        Cairo_400Regular,
-    });
-    
-    if (!fontsLoaded) {
-        return null;
-    }
+  // Estado local para almacenar el valor del campo de entrada
+  const [email, setEmail] = useState('');
 
-    function handleBack(){
-        navigation.navigate(screen.account.optionRegister);
-    }
+  // Verificar si las fuentes están cargadas
+  if (!fontsLoaded) {
+    return null;
+  }
 
-    function handleRegisterGoogle(){
-        console.log("Registro con google");
-    }
+  // Función para manejar la navegación hacia atrás
+  const handleBack = () => {
+    navigation.navigate(screen.account.optionRegister as never);
+  };
 
-    function handleTermsPress(){
-        console.log("Terminos y condiciones");
-    }
+  // Función para manejar el registro con Google
+  const handleRegisterGoogle = () => {
+    console.log("Registro con Google");
+  };
 
-    function handleContinuer(){
-        navigation.navigate(screen.account.personIndependient);
-    }
+  // Función para manejar la presión de "Términos y condiciones"
+  const handleTermsPress = () => {
+    console.log("Términos y condiciones");
+  };
 
+  // Función para manejar la navegación hacia la pantalla de registro independiente
+  const handleContinuer = () => {
+    // Imprimir el valor del campo de entrada en la consola
+    console.log('Correo electrónico:', email);
 
-      
+    // Navegar a la siguiente pantalla (puede ser a la pantalla de registro independiente en tu caso)
+    navigation.navigate(screen.account.personIndependient as never);
+  };
+
   return (
-
     <SafeAreaView style={styles.container}>
+      {/* Botón para navegar hacia atrás */}
+      <TouchableOpacity style={styles.back} onPress={handleBack}>
+        <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
+        <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 24 }}> atrás </Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style= {styles.back} onPress={handleBack}>
-            <Ionicons name="chevron-back" size={45} style={styles.logoBack}  />
-            <Text style= {{fontFamily: 'Cairo_700Bold', fontSize: 24}}> atrás </Text>
+      {/* Encabezado con el logo */}
+      <View style={styles.header}>
+        <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+      </View>
+
+      {/* Contenido principal del registro */}
+      <View style={stylePerson.registerContainer}>
+        <Text style={{ ...stylePerson.registerText, fontFamily: 'Cairo_700Bold' }}> Regístrate gratis </Text>
+
+        {/* Botón para registrar con Google */}
+        <TouchableOpacity style={stylePerson.registerGoogle} onPress={handleRegisterGoogle}>
+          <Image source={require('../../../../assets/images/google.png')} style={stylePerson.Img} />
+          <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 20 }}> Regístrate con Google</Text>
         </TouchableOpacity>
 
-        <View style={styles.header}> 
-            <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+        {/* Texto y enlace a "Términos y condiciones" */}
+        <Text style={{ ...stylePerson.text, fontFamily: 'Cairo_400Regular' }}>
+          Al hacer clic en Continuar, aceptas los
+          <Text style={{ ...stylePerson.text1, fontFamily: 'Cairo_700Bold' }} onPress={handleTermsPress}>
+            {' '}
+            Términos y condiciones de uso{' '}
+          </Text>
+          de Inmobinder.
+        </Text>
+
+        <View style={stylePerson.separator} />
+
+        {/* Registro con correo electrónico */}
+        <Text style={{ ...stylePerson.textRegisterEmail, fontFamily: 'Cairo_700Bold' }}>
+          Regístrate con tu correo electrónico
+        </Text>
+
+        {/* Campo de entrada de correo electrónico */}
+        <View style={stylePerson.inputRegisterEmail}>
+          <Input placeholder='Ingresa el correo electrónico.' onChangeText={(value) => setEmail(value)} />
         </View>
 
-        <View style={stylePerson.registerContainer}>
-
-            <Text style= {{ ...stylePerson.registerText, fontFamily: 'Cairo_700Bold'}}> Regístrate gratis </Text>
-
-            <TouchableOpacity style={stylePerson.registerGoogle} onPress={handleRegisterGoogle}> 
-                <Image source={require('../../../../assets/images/google.png')} style={stylePerson.Img}/>
-                <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 20}}> Registrate con Google</Text>
-            </TouchableOpacity>
-
-           
-            <Text style={{ ...stylePerson.text, fontFamily: 'Cairo_400Regular'}}> Al hacer clic en Continuar, aceptas los<Text style={{ ...stylePerson.text1, fontFamily: 'Cairo_700Bold'}} onPress={handleTermsPress}> Términos y condiciones de uso </Text>de Inmobinder.</Text>
-           
-            <View style= {stylePerson.separator} />
-                
-            
-            <Text style={{ ...stylePerson.textRegisterEmail, fontFamily: 'Cairo_700Bold'}}> Registrate con tu correo electrónico </Text>
-
-            <View style= {stylePerson.inputRegisterEmail}> 
-                 <Input placeholder='Ingresa el correo electrónico.'/> 
-            </View>
-
-            <Button buttonStyle= {stylePerson.btnContinuer} onPress={handleContinuer}> 
-                <Text style= {{ ...stylePerson.textBtn, fontFamily: 'Cairo_700Bold'}}> Continuar </Text>
-            </Button>
-
-        </View>
-      
-
+        {/* Botón para continuar */}
+        <Button buttonStyle={stylePerson.btnContinuer} onPress={handleContinuer}>
+          <Text style={{ ...stylePerson.textBtn, fontFamily: 'Cairo_700Bold' }}> Continuar </Text>
+        </Button>
+      </View>
     </SafeAreaView>
-  )
+  );
 }
-
