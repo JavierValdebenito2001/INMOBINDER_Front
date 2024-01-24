@@ -10,10 +10,6 @@ const anchopantalla = Dimensions.get('window').width;
 const CentroDeAyuda = () => {
     const navigation = useNavigation();
 
-    function handleBack() {
-        navigation.navigate(screen.account.MainDrawer);
-    }
-
 
 /*
 <TouchableOpacity style={styles.back} onPress={handleBack}>

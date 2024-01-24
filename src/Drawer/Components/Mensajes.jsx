@@ -6,10 +6,6 @@ import Constants from 'expo-constants'
 
 const Mensajes = () => {
 
-    const navigation = useNavigation();
-    function handleBack() {
-        navigation.navigate(screen.account.MainDrawer);
-    }
 
     return (
         <View style={styles.container2}>

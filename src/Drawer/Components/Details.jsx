@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList} 
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { screen } from '../utils/ScreenName.jsx'
 import Data from './Data.js';
 import { useRoute } from '@react-navigation/native';
 
@@ -18,9 +17,6 @@ const Details =()=>{
     const { itemId } = route.params;
     const navigation = useNavigation();
 
-    function handleBack(){
-        navigation.navigate(screen.account.MisPublicaciones);
-      }
     
       const property = Data.find((property) => property.id === itemId);
 

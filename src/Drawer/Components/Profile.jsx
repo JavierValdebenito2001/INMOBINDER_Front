@@ -19,10 +19,6 @@ const Profile =()=>{
     };
   
 
-function handleBack(){
-    navigation.navigate(screen.account.MainDrawer);
-  }
-
   const [text, onChangeText] = React.useState('');
 
 

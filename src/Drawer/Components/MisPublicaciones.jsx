@@ -12,8 +12,6 @@ import {
 } from "react-native";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { screen } from "../utils/ScreenName";
-import { styles } from "./Styles.jsx";
 import Data from "./Data.js";
 
 
@@ -52,7 +50,7 @@ const MisPublicacionesScreen = () => {
   const navigation = useNavigation();
 
   function verdetalles(itemId) {
-    navigation.navigate('Details', { itemId });
+    navigation.navigate('Detalles', { itemId });
   }
 
   const handleDetalles = (item) => {
@@ -67,9 +65,6 @@ const MisPublicacionesScreen = () => {
     setShowDeleteIcons(!showDeleteIcons);
   };
 
-  function handleBack() {
-    navigation.navigate(screen.account.MainDrawer);
-  }
 
   return (
     <SafeAreaView style={PublicacionStyles.safeArea}>
