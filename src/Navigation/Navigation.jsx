@@ -1,4 +1,5 @@
 import React from 'react';
+import { View , Text} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,6 +13,9 @@ import Config from '../Drawer/Components/Config.jsx';
 import CentroDeAyuda from '../Drawer/Components/CentroDeAyuda.jsx';
 import Mensajes from '../Drawer/Components/Mensajes.jsx';
 import MisPublicaciones from '../Drawer/Components/MisPublicaciones.jsx';
+import EditProfile from '../Drawer/Components/EditProfile.jsx';
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -45,22 +49,56 @@ function LoginStack() {
   );
 }
 
+function ProfileStack() {
+  return (
+        <Stack.Navigator
+          initialRouteName='Perfill'
+          screenOptions={{headerShown: false}}>
+            <Stack.Screen 
+                name="Perfill" 
+                component={Profile} 
+                options={{headerTitleAlign:'center'}}
+                />
+            <Stack.Screen 
+                name="EditProfile" 
+                component={EditProfile} 
+                options={{headerTitleAlign:'center'}}
+                />
+        </Stack.Navigator>
+
+  );
+}
+
+
 function DrawerS() {
   return (
-      <Drawer.Navigator initialRouteName='Main'>
-        <Drawer.Screen name="Perfil" component={Profile} />
-        <Drawer.Screen name="MisPublicaciones" component={MisPublicaciones} />
-        <Drawer.Screen name="Agregar Publicaciones" component={Config} />
-        <Drawer.Screen name="Mis Clientes" component={Config} />
-        <Drawer.Screen name="Mensajes" component={Mensajes} />
-        <Drawer.Screen name="Configuracion" component={Config} />
-        <Drawer.Screen name="Centro de ayuda" component={CentroDeAyuda} />
-        <Drawer.Screen name="Main" component={Main} />
+      <Drawer.Navigator initialRouteName='Mapa' drawerContent={CustomDrawerContent}>
+        <Drawer.Screen name="Perfil" component={ProfileStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}  />
+        <Drawer.Screen name="MisPublicaciones" component={MisPublicaciones} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
+        <Drawer.Screen name="Agregar" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
+        <Drawer.Screen name="Mis Clientes" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}} />
+        <Drawer.Screen name="Mensajes" component={Mensajes} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}} />
+        <Drawer.Screen name="Configuracion" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
+        <Drawer.Screen name="Centro de ayuda" component={CentroDeAyuda} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
+        <Drawer.Screen name="Mapa" component={Main} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
         <Drawer.Screen name="Cerrar sesion" component={LoginStack} />
       </Drawer.Navigator>
   );
 }
 
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor:'#100', flex:1}}>
+        <MaterialCommunityIcons name='camera' color={'#fff'} size={60} style={{alignSelf:'center', margin:20, marginTop:40}}/>
+        <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
+        <Text >17.111.111-k</Text>
+        <Text >Nombre Nombre Apellido Apellido</Text>
+      </View>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+  );
+}
 function Stackk() {
   return (
     <NavigationContainer>
