@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, TextInput}
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants'
-import { screen } from '../utils/ScreenName';
 
 
 
@@ -12,12 +11,7 @@ const alto = Dimensions.get('window').height;
 
 const EditProfile =()=>{
 
-    const navigation = useNavigation();
-
-function handleBack(){
-    navigation.navigate(screen.account.MainDrawer);
-  }
-
+    
   const [text, onChangeText] = React.useState('');
 
 

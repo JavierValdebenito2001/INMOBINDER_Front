@@ -1,5 +1,5 @@
 import React from 'react';
-import { View , Text} from 'react-native';
+import { View , Text, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,6 +16,8 @@ import MisPublicaciones from '../Drawer/Components/MisPublicaciones.jsx';
 import EditProfile from '../Drawer/Components/EditProfile.jsx';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import Details from '../Drawer/Components/Details.jsx';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,12 +71,32 @@ function ProfileStack() {
   );
 }
 
+function PublicacionesStack() {
+  return (
+    
+        <Stack.Navigator
+          initialRouteName='Publicaciones'
+          screenOptions={{headerShown: false}}>
+            <Stack.Screen 
+                name="Publicacioness" 
+                component={MisPublicaciones} 
+                options={{headerTitleAlign:'center'}}
+                />
+            <Stack.Screen 
+                name="Detalles" 
+                component={Details} 
+                options={{headerTitleAlign:'center'}}
+                />
+        </Stack.Navigator>
+
+  );
+}
 
 function DrawerS() {
   return (
       <Drawer.Navigator initialRouteName='Mapa' drawerContent={CustomDrawerContent}>
-        <Drawer.Screen name="Perfil" component={ProfileStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}  />
-        <Drawer.Screen name="MisPublicaciones" component={MisPublicaciones} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
+          {/* <Drawer.Screen name="Perfil" component={ProfileStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}  /> */}
+        <Drawer.Screen name="Publicaciones" component={PublicacionesStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
         <Drawer.Screen name="Agregar" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
         <Drawer.Screen name="Mis Clientes" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}} />
         <Drawer.Screen name="Mensajes" component={Mensajes} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}} />
@@ -87,11 +109,18 @@ function DrawerS() {
 }
 
 function CustomDrawerContent(props) {
+  const navigation = useNavigation();
+
+function verperfil(){
+  navigation.navigate('ProfileStack');
+  }
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor:'#100', flex:1}}>
         <MaterialCommunityIcons name='camera' color={'#fff'} size={60} style={{alignSelf:'center', margin:20, marginTop:40}}/>
+        <TouchableOpacity onPress={verperfil}>
         <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
+        </TouchableOpacity>
         <Text >17.111.111-k</Text>
         <Text >Nombre Nombre Apellido Apellido</Text>
       </View>
@@ -99,12 +128,18 @@ function CustomDrawerContent(props) {
     </DrawerContentScrollView>
   );
 }
+
+
+
+
+
 function Stackk() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='LoginStack' screenOptions={{headerShown: false}}>
       <Stack.Screen name="LoginStack" component={LoginStack} />
       <Stack.Screen name="DrawerS" component={DrawerS} />
+      <Stack.Screen name="ProfileStack" component={ProfileStack} />
       </Stack.Navigator>
     </NavigationContainer>
   );
