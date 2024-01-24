@@ -94,7 +94,7 @@ function PublicacionesStack() {
 
 function DrawerS() {
   return (
-      <Drawer.Navigator initialRouteName='Mapa' drawerContent={CustomDrawerContent}>
+      <Drawer.Navigator initialRouteName="Mapa" drawerContent={CustomDrawerContent}>
           {/* <Drawer.Screen name="Perfil" component={ProfileStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}  /> */}
         <Drawer.Screen name="Publicaciones" component={PublicacionesStack} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
         <Drawer.Screen name="Agregar" component={Config} options={{headerTitleAlign:'center', headerTitleStyle:{fontSize:25, fontWeight:'bold'}}}/>
