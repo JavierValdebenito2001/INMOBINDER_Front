@@ -9,22 +9,13 @@ const anchopantalla = Dimensions.get('window').width;
 
 const CentroDeAyuda = () => {
     const navigation = useNavigation();
-
-
-/*
-<TouchableOpacity style={styles.back} onPress={handleBack}>
-                <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
-                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
-            </TouchableOpacity>
-            */
-
-
     return (
         <View>
+            {/*}
             <View style={styles.titleContainer}>
                 <Text style={styles.title}>Centro de Ayuda</Text>
-            </View>
-
+            </View>*/}
+            
             <View style={styles.optionsContainer}>
                 <TouchableWithoutFeedback onPress={() => Alert.alert('Ayuda con problemas de seguridad')}>
                     <Text style={styles.option}>Ayuda con problemas de seguridad</Text>

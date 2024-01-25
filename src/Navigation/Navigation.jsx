@@ -8,12 +8,12 @@ import TypeLogin from '../Structure/Login/TypeLogin.jsx';
 import Register from '../Structure/Login/Register.jsx';
 import LoginMain from '../Structure/Login/LoginMain.jsx';
 import Login from '../Structure/Login/Login.jsx';
-import Profile from '../Drawer/Components/Profile.jsx';
+import Profile from '../Drawer/Components/Profile/Profile.jsx';
 import Config from '../Drawer/Components/Config.jsx';
 import CentroDeAyuda from '../Drawer/Components/CentroDeAyuda.jsx';
 import Mensajes from '../Drawer/Components/Mensajes.jsx';
 import MisPublicaciones from '../Drawer/Components/Publicaciones/MisPublicaciones.jsx';
-import EditProfile from '../Drawer/Components/EditProfile.jsx';
+import EditProfile from '../Drawer/Components/Profile/EditProfile.jsx';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { DrawerItem } from '@react-navigation/drawer';
@@ -75,8 +75,7 @@ function PublicacionesStack() {
   return (
     
         <Stack.Navigator
-          initialRouteName='Publicaciones'
-          screenOptions={{headerShown: false}}>
+          initialRouteName='Publicaciones'>
             <Stack.Screen 
                 name="Publicacioness" 
                 component={MisPublicaciones} 

@@ -6,9 +6,11 @@ import Constants from 'expo-constants'
 const Config =()=>{
 
     return(
+        
         <View style={styles.container}>
-            <Text style={styles.title}>Configuracion</Text>
-            <View>
+            {/*
+            <Text style={styles.title}>Configuracion</Text>*/}
+             <View>
                 <TouchableOpacity>
                 <Text style={styles.text}>Inicio de sesion y seguridad</Text>
                 </TouchableOpacity>
