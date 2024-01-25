@@ -16,8 +16,18 @@ export function RegisterPropertyBrokerScreen() {
 
     const [checked, setChecked] = React.useState(false);
     const [checked1, setChecked1] = React.useState(false)
-    const toggleCheckbox = () => setChecked(!checked);
-    const toggleCheckbox1 = () => setChecked1(!checked1);
+    const toggleCheckbox = () => {
+        setChecked(!checked);
+        setChecked1(false);
+    };
+    const toggleCheckbox1 = () => {
+        setChecked1(!checked1);
+        setChecked(false);
+        if (!checked) {
+            // Navegar a la vista correspondiente cuando checkbox1 está marcado
+            navigation.navigate(screen.account.ProfileVerificationScreen as never);
+        }
+    };
 
     
     const [fontsLoaded] = useFonts({
@@ -30,7 +40,7 @@ export function RegisterPropertyBrokerScreen() {
     }
 
     function handleBack(){
-        navigation.navigate(screen.account.optionRegister);
+        navigation.navigate(screen.account.optionRegister as never);
     }
 
     function handleTermsPress(){
@@ -38,7 +48,7 @@ export function RegisterPropertyBrokerScreen() {
     }
 
     function handleContinuer(){
-        console.log("Continuar a formulario");
+        navigation.navigate(screen.account.ProfileVerificationScreen as never);
     }
 
 

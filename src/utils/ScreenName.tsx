@@ -24,6 +24,8 @@ const AccountStack = {
     profile: 'Profile',
     EditProfile: 'EditProfile',
     Mensajes: 'Mensajes',
+    ProfileVerificationScreen: 'ProfileVerificationScreen',
+
   };
 
 const HomeStack = {

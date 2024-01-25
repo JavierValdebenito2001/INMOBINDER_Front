@@ -25,6 +25,7 @@ import Details from "../screens/Publicaciones/Details";
 import Mensajes from "../components/Mensajes";
 import EditProfile from "../components/EditProfile";
 import MapScreen from "../screens/Home/MapScreen";
+import ProfileVerificationScreen from "../screens/Register/Profile Verification/ProfileVerificationScreen";
 
 
 
@@ -151,6 +152,10 @@ export function AccountStack() {
              <Stack.Screen 
                 name={screen.account.Mensajes}
                 component={Mensajes}
+            />
+            <Stack.Screen 
+                name={screen.account.ProfileVerificationScreen}
+                component={ProfileVerificationScreen}
             />
 
         </Stack.Navigator>    
