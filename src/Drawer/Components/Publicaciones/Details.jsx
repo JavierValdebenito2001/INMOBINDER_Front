@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList} 
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import Data from './Data.js';
+import Data from './Data';
 import { useRoute } from '@react-navigation/native';
 
 
@@ -15,7 +15,6 @@ const Details =()=>{
 
     const route = useRoute();
     const { itemId } = route.params;
-    const navigation = useNavigation();
 
     
       const property = Data.find((property) => property.id === itemId);

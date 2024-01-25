@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
         height:alto*0.85,
         alignSelf: "center",
         alignItems:'center',
+        justifyContent:'center',
         shadowOpacity: 1,
         elevation: 4,
         shadowRadius: 4,

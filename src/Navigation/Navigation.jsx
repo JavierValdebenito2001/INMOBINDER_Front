@@ -12,12 +12,12 @@ import Profile from '../Drawer/Components/Profile.jsx';
 import Config from '../Drawer/Components/Config.jsx';
 import CentroDeAyuda from '../Drawer/Components/CentroDeAyuda.jsx';
 import Mensajes from '../Drawer/Components/Mensajes.jsx';
-import MisPublicaciones from '../Drawer/Components/MisPublicaciones.jsx';
+import MisPublicaciones from '../Drawer/Components/Publicaciones/MisPublicaciones.jsx';
 import EditProfile from '../Drawer/Components/EditProfile.jsx';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { DrawerItem } from '@react-navigation/drawer';
-import Details from '../Drawer/Components/Details.jsx';
+import Details from '../Drawer/Components/Publicaciones/Details.jsx';
 import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
@@ -55,8 +55,7 @@ function LoginStack() {
 function ProfileStack() {
   return (
     <Stack.Navigator
-      initialRouteName='Perfill'
-      screenOptions={{ headerShown: false }}>
+      initialRouteName='Perfill'>
       <Stack.Screen
         name="Perfill"
         component={Profile}
@@ -84,7 +83,7 @@ function PublicacionesStack() {
                 options={{headerTitleAlign:'center'}}
                 />
             <Stack.Screen 
-                name="Detalles" 
+                name="PublicacionesDetails" 
                 component={Details} 
                 options={{headerTitleAlign:'center'}}
                 />
@@ -96,7 +95,7 @@ function PublicacionesStack() {
 function DrawerS() {
   return (
     <Drawer.Navigator initialRouteName="Mapa" drawerContent={CustomDrawerContent}>
-      <Drawer.Screen name="Mis Publicaciones" component={MisPublicaciones} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
+      <Drawer.Screen name="Mis Publicaciones" component={PublicacionesStack} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Añadir Propiedad" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Propiedad Deseada" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Mensajes" component={Mensajes} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
