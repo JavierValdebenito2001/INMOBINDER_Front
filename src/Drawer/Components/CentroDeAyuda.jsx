@@ -21,9 +21,6 @@ const CentroDeAyuda = () => {
 
     return (
         <View>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Centro de Ayuda</Text>
-            </View>
 
             <View style={styles.optionsContainer}>
                 <TouchableWithoutFeedback onPress={() => Alert.alert('Ayuda con problemas de seguridad')}>

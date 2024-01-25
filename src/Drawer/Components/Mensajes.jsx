@@ -10,7 +10,6 @@ const Mensajes = () => {
     return (
         <View style={styles.container2}>
             <View style={styles.container}>
-                <Text style={styles.title} >Mensajes</Text>
                 <View style={styles.subcontainer}>
                     <TouchableOpacity style={styles.chat}>
                         <View style={styles.InnerOval}>
@@ -55,11 +54,6 @@ const Mensajes = () => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        paddingTop: 50,
-        
-    },
-    container2: {
-        marginTop: Constants.statusBarHeight
         
     },
     title: {
