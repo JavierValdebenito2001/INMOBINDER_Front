@@ -10,13 +10,13 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import Data from "./Data.js";
 
 
 
-const MisPublicacionesScreen = () => {
+const MisPublicaciones = () => {
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
 
   const renderItem = ({ item }) => (
@@ -45,17 +45,13 @@ const MisPublicacionesScreen = () => {
         )}
       </View>
     </View>
-  );
+  );''
 
   const navigation = useNavigation();
 
   function verdetalles(itemId) {
-    navigation.navigate('Detalles', { itemId });
+    navigation.navigate("PublicacionesDetails", { itemId });
   }
-
-  const handleDetalles = (item) => {
-    console.log(`Detalles de la propiedad ${item.id}`);
-  };
 
   const handleEliminarPropiedad = (id) => {
     console.log(`Propiedad eliminada: ${id}`);
@@ -177,4 +173,4 @@ const PublicacionStyles = StyleSheet.create({
 
 });
 
-export default MisPublicacionesScreen;
+export default MisPublicaciones;

@@ -24,7 +24,7 @@ const Profile =()=>{
 
     return(
 
-        <View style={{marginTop:20}}>
+        <View style={{marginTop:10}}>
             <View style={styles.containershadow}>
                 <Text style={styles.title}>Perfil</Text>
                 <View style={{flexDirection:'row'}}>
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
         height:alto*0.75,
         alignSelf: "center",
         alignItems:'center',
+        justifyContent:'center',
         shadowOpacity: 1,
         elevation: 4,
         shadowRadius: 4,
