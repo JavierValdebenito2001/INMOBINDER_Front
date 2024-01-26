@@ -19,6 +19,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { DrawerItem } from '@react-navigation/drawer';
 import Details from '../Drawer/Components/Publicaciones/Details.jsx';
 import { useNavigation } from '@react-navigation/native';
+import AddItems from '../Drawer/Components/AddItems.jsx';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -95,7 +96,7 @@ function DrawerS() {
   return (
     <Drawer.Navigator initialRouteName="Mapa" drawerContent={CustomDrawerContent}>
       <Drawer.Screen name="Mis Publicaciones" component={PublicacionesStack} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
-      <Drawer.Screen name="Añadir Propiedad" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
+      <Drawer.Screen name="Añadir Propiedad" component={AddItems} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Propiedad Deseada" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Mensajes" component={Mensajes} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Configuracion" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
