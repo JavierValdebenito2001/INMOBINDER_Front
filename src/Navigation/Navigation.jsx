@@ -19,7 +19,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { DrawerItem } from '@react-navigation/drawer';
 import Details from '../Drawer/Components/Publicaciones/Details.jsx';
 import { useNavigation } from '@react-navigation/native';
-import AddItems from '../Drawer/Components/AddItems.jsx';
+import AddItems from '../Drawer/Components/Publicaciones/AddItems.jsx';
+import WishProperty from '../Drawer/Components/Publicaciones/WishProperty.jsx';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -97,7 +98,7 @@ function DrawerS() {
     <Drawer.Navigator initialRouteName="Mapa" drawerContent={CustomDrawerContent}>
       <Drawer.Screen name="Mis Publicaciones" component={PublicacionesStack} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Añadir Propiedad" component={AddItems} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
-      <Drawer.Screen name="Propiedad Deseada" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
+      <Drawer.Screen name="Propiedad Deseada" component={WishProperty} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Mensajes" component={Mensajes} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Configuracion" component={Config} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
       <Drawer.Screen name="Centro de ayuda" component={CentroDeAyuda} options={{ headerTitleAlign: 'center', headerTitleStyle: { fontSize: 25, fontWeight: 'bold' } }} />
@@ -125,12 +126,14 @@ function cerrarsesion(){
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#100', flex: 1 }}>
-        <MaterialCommunityIcons name='camera' color={'#fff'} size={60} style={{ alignSelf: 'center', margin: 20, marginTop: 40 }} />
-        <TouchableOpacity onPress={verperfil}>
+
+        <MaterialCommunityIcons name='camera' color={'#fff'} size={50} style={{ alignSelf: 'center',color:'#100', margin: 20, marginTop: 40, padding:20, backgroundColor:'#CEC9C8', borderRadius:100 }} />
+        <TouchableOpacity onPress={verperfil} style={{alignSelf:'center', justifyContent:'center', position:'absolute', justifyContent:'flex-end', alignSelf:'flex-end', paddingRight:20, paddingBottom:30}}>
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver perfil</Text>
         </TouchableOpacity>
-        <Text>17.111.111-k</Text>
-        <Text>Nombre Nombre Apellido Apellido</Text>
+  
+        <Text style={{color:'#fff'}}>17.111.111-k</Text>
+        <Text style={{color:'#fff', marginBottom:20}}>Nombre Nombre Apellido Apellido</Text>
       </View>
       <DrawerItemList {...props} />
       <DrawerItem
