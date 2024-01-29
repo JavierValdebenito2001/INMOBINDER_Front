@@ -4,9 +4,9 @@ import { Text, View, SafeAreaView} from 'react-native';
 import { Button, Image } from '@rneui/base';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
-import { styles } from '../../styles';
+import { styles } from '../../../styles';
 import { styleIndependient } from './ProfileVerificationStyles';
-import { screen } from '../../../utils/ScreenName';
+import { screen } from '../../../../utils/ScreenName';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { Roboto_700Bold } from '@expo-google-fonts/roboto';
 
@@ -38,17 +38,17 @@ export default function ProfileVerificationScreen() {
   // Función para seleccionar un archivo
   const seleccionarArchivo = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-    if (result.output !== 'cancel') {
-      setDocumento(result.output);
+    if (!result.canceled && result.assets.length > 0) {
+      setDocumento(result.assets[0] as DocumentoType);
     }
   }
-
+  
   // Renderiza el componente
   return (
     <SafeAreaView style={styles.container}>
 
       <View style={styles.header}> 
-          <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+          <Image source={require('../../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
       </View>
 
       <View style={styleIndependient.containerOption}> 
@@ -57,10 +57,10 @@ export default function ProfileVerificationScreen() {
       <Text style= {{ ...styleIndependient.titulo, fontFamily: 'Cairo_400Regular'}}>Fotocopia de carnet</Text>
 
       <View style={styleIndependient.containerbtnarchivo}>
-            <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle}>
+            <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
                 <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
             </Button>
-            <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> Ningun Archivo Seleccionado</Text>
+            <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
       </View>
 
       <View style={styleIndependient.contenttext}>

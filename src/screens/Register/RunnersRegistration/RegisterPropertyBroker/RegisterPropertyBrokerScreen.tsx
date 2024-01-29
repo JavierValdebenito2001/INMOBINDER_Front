@@ -1,13 +1,13 @@
 import { View, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
-import { styles } from '../../styles'
+import { styles } from '../../../styles'
 import { styleProperty } from './RegisterPropertyBrokerStyles'
 import { Ionicons } from '@expo/vector-icons';
 import { Input, CheckBox, Text } from '@rneui/themed';
 import { Button, Image } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
-import { screen } from '../../../utils/ScreenName';
+import { screen } from '../../../../utils/ScreenName';
 
 
 export function RegisterPropertyBrokerScreen() {
@@ -16,6 +16,7 @@ export function RegisterPropertyBrokerScreen() {
 
     const [checked, setChecked] = React.useState(false);
     const [checked1, setChecked1] = React.useState(false)
+
     const toggleCheckbox = () => {
         setChecked(!checked);
         setChecked1(false);
@@ -23,13 +24,8 @@ export function RegisterPropertyBrokerScreen() {
     const toggleCheckbox1 = () => {
         setChecked1(!checked1);
         setChecked(false);
-        if (!checked) {
-            // Navegar a la vista correspondiente cuando checkbox1 está marcado
-            navigation.navigate(screen.account.ProfileVerificationScreen as never);
-        }
     };
 
-    
     const [fontsLoaded] = useFonts({
         Cairo_700Bold,
         Cairo_400Regular,
@@ -38,21 +34,26 @@ export function RegisterPropertyBrokerScreen() {
     if (!fontsLoaded) {
         return null;
     }
-
+    
     function handleBack(){
-        navigation.navigate(screen.account.optionRegister as never);
+        navigation.navigate(screen.account.optionRegister as never );
     }
 
     function handleTermsPress(){
         console.log("Terminos y condiciones");
     }
-
-    function handleContinuer(){
-        navigation.navigate(screen.account.ProfileVerificationScreen as never);
+    function handleContinuer() {
+        if (checked) {
+            navigation.navigate(screen.account.BrokerageAgencyScreen as never);
+        } else if (checked1) {
+        navigation.navigate(screen.account.IndependentBrokerScreen as never);
+        } else {
+            console.log("Por favor, selecciona al menos una opción.");
+        }
     }
 
 
-  return (
+return (
     <SafeAreaView style= {styles.container}>
 
         <TouchableOpacity style= {styles.back} onPress={handleBack}>
@@ -61,11 +62,10 @@ export function RegisterPropertyBrokerScreen() {
         </TouchableOpacity>
 
         <View style={styles.header}> 
-            <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
-        </View>
-
+                <Image source={require('../../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+            </View>
         <View style={styleProperty.containerOption}> 
-           
+        
             <Text style={{ ...styleProperty.textRegister, fontFamily: 'Cairo_700Bold'}}> Regístrate </Text>
             <Text style={{ ...styleProperty.textRegisterEmail, fontFamily: 'Cairo_700Bold'}}> Registro mediante correo electrónico</Text>
             <Input placeholder='Ingresa el correo electrónico.' containerStyle={styleProperty.inputEmail}/>
@@ -110,5 +110,5 @@ export function RegisterPropertyBrokerScreen() {
         </View>
 
     </SafeAreaView>
-  )
+)
 }

@@ -6,7 +6,7 @@ import { RegisterScreen } from "../screens/Register/RegisterScreen/RegisterScree
 import { RegisterPersonScreen } from "../screens/Register/RegisterPerson/RegisterPersonScreen";
 import { PersonIndependientScreen } from "../screens/Register/Forms Register/PersonIndependient/PersonIndependientScreen";
 import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/RegisterRealEstateScreen";
-import { RegisterPropertyBrokerScreen } from "../screens/Register/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
+import { RegisterPropertyBrokerScreen } from "../screens/Register/RunnersRegistration/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
 import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
 
@@ -25,7 +25,9 @@ import Details from "../screens/Publicaciones/Details";
 import Mensajes from "../components/Mensajes";
 import EditProfile from "../components/EditProfile";
 import MapScreen from "../screens/Home/MapScreen";
-import ProfileVerificationScreen from "../screens/Register/Profile Verification/ProfileVerificationScreen";
+import ProfileVerificationScreen from "../screens/Register/RunnersRegistration/ProfileVerificationIB/ProfileVerificationScreen";
+import { IndependentBrokerScreen } from "../screens/Register/RunnersRegistration/IndependentBroker/IndependentBrokerScreen";
+import { BrokerageAgencyScreen } from "../screens/Register/RunnersRegistration/BrokerageAgency/BrokerageAgencyScreen";
 
 
 
@@ -145,17 +147,25 @@ export function AccountStack() {
                 name={screen.account.WishProperty}
                 component={WishPropertyScreen}
             />
-             <Stack.Screen 
+            <Stack.Screen 
                 name={screen.account.CentroDeAyuda}
                 component={CentroDeAyuda}
             />
-             <Stack.Screen 
+            <Stack.Screen 
                 name={screen.account.Mensajes}
                 component={Mensajes}
             />
             <Stack.Screen 
                 name={screen.account.ProfileVerificationScreen}
                 component={ProfileVerificationScreen}
+            />
+            <Stack.Screen 
+                name={screen.account.IndependentBrokerScreen}
+                component={IndependentBrokerScreen}
+            />
+            <Stack.Screen 
+                name={screen.account.BrokerageAgencyScreen}
+                component={BrokerageAgencyScreen}
             />
 
         </Stack.Navigator>    

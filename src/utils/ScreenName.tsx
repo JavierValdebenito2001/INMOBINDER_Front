@@ -25,7 +25,8 @@ const AccountStack = {
     EditProfile: 'EditProfile',
     Mensajes: 'Mensajes',
     ProfileVerificationScreen: 'ProfileVerificationScreen',
-
+    IndependentBrokerScreen: 'IndependentBrokerScreen',  
+    BrokerageAgencyScreen: 'BrokerageAgencyScreen',
   };
 
 const HomeStack = {
