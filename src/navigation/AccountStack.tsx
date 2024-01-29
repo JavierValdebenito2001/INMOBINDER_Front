@@ -28,6 +28,7 @@ import MapScreen from "../screens/Home/MapScreen";
 import ProfileVerificationScreen from "../screens/Register/RunnersRegistration/ProfileVerificationIB/ProfileVerificationScreen";
 import { IndependentBrokerScreen } from "../screens/Register/RunnersRegistration/IndependentBroker/IndependentBrokerScreen";
 import { BrokerageAgencyScreen } from "../screens/Register/RunnersRegistration/BrokerageAgency/BrokerageAgencyScreen";
+import ProfileVerificationBA from "../screens/Register/RunnersRegistration/ProfileVerificationBA/ProfileVerificationBA";
 
 
 
@@ -166,6 +167,10 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.BrokerageAgencyScreen}
                 component={BrokerageAgencyScreen}
+            />
+            <Stack.Screen 
+                name={screen.account.ProfileVerificationBA}
+                component={ProfileVerificationBA}
             />
 
         </Stack.Navigator>    

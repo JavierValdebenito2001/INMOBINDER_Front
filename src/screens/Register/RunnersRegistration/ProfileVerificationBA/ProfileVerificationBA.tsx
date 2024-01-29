@@ -1,14 +1,13 @@
 // Importa las bibliotecas necesarias
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView} from 'react-native'; 
+import { Text, View, SafeAreaView, TouchableOpacity} from 'react-native'; 
 import { Button, Image } from '@rneui/base';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../../styles';
 import { styleIndependient } from './ProfileVerificationBAStyles';
 import { screen } from '../../../../utils/ScreenName';
-import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
-import { Roboto_700Bold } from '@expo-google-fonts/roboto';
+import { Ionicons } from '@expo/vector-icons';
 
 // Define el tipo para el documento
 type DocumentoType = {
@@ -20,10 +19,8 @@ type DocumentoType = {
   output?: any;
 }
 
-
-
 // Componente de la pantalla de verificación de perfil
-export default function ProfileVerificationScreen() {
+export default function ProfileVerificationBA() {
   
   function handleContinuer(){
     navigation.navigate('MainDrawer' as never);
@@ -38,45 +35,72 @@ export default function ProfileVerificationScreen() {
   // Función para seleccionar un archivo
   const seleccionarArchivo = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-    if (result.output !== 'cancel') {
-      setDocumento(result.output);
+    if (!result.canceled && result.assets.length > 0) {
+      setDocumento(result.assets[0] as DocumentoType);
     }
   }
-
+  
   // Renderiza el componente
   return (
     <SafeAreaView style={styles.container}>
 
-      <View style={styles.header}> 
-          <Image source={require('../../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+      <View style={styleIndependient.header}> 
+        <Image source={require('../../../../../assets/images/INMOBINDER-03.png')} style={styleIndependient.imgLogo} />
       </View>
 
       <View style={styleIndependient.containerOption}> 
+    
+        <Text style={{ ...styleIndependient.textRegister, fontFamily: 'Cairo_700Bold'}}>Verificación de perfil</Text>
 
-      <Text style={{ ...styleIndependient.textRegister, fontFamily: 'Cairo_700Bold'}}>Verificación de perfil</Text>
-      <Text style= {{ ...styleIndependient.titulo, fontFamily: 'Cairo_400Regular'}}>Fotocopia de carnet</Text>
-
-      <View style={styleIndependient.containerbtnarchivo}>
-            <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle}>
-                <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
-            </Button>
-            <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> Ningun Archivo Seleccionado</Text>
-      </View>
-
-      <View style={styleIndependient.contenttext}>
-        <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
-        <Text style={{ ...styleIndependient.text}}>Tamaño máximo de archivo: 2MB</Text>
-      </View>
-
-      <View style={styleIndependient.containerbtns}>
-        <View >
-            <Text style={{ ...styleIndependient.textOmitir}}> Omitir</Text>
+        {/* Bloque de código para subir un archivo */}
+        <Text style= {{ ...styleIndependient.titulo, fontFamily: 'Cairo_400Regular'}}>Documento </Text>
+        <View style={styleIndependient.containerbtnarchivo}>
+          <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
+            <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
+          </Button>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
         </View>
-        <Button containerStyle={styleIndependient.containerBtn2} buttonStyle={styleIndependient.btnStyle2} onPress={handleContinuer}>
-                <Text style={{ ...styleIndependient.textBtn2, fontFamily: 'Cairo_700Bold'}}> Enviar</Text>
-        </Button>
-      </View>
+        <View style={styleIndependient.contenttext}>
+          <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
+          <Text style={{ ...styleIndependient.text}}>Tamaño máximo de archivo: 2MB</Text>
+        </View>
 
+        {/* Bloque de código para subir un archivo */}
+        <Text style= {{ ...styleIndependient.titulo, fontFamily: 'Cairo_400Regular'}}>Documento </Text>
+        <View style={styleIndependient.containerbtnarchivo}>
+          <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
+            <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
+          </Button>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
+        </View>
+        <View style={styleIndependient.contenttext}>
+          <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
+          <Text style={{ ...styleIndependient.text}}>Tamaño máximo de archivo: 2MB</Text>
+        </View>
+
+        {/* Bloque de código para subir un archivo */}
+        <Text style= {{ ...styleIndependient.titulo, fontFamily: 'Cairo_400Regular'}}>Documento </Text>
+        <View style={styleIndependient.containerbtnarchivo}>
+          <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
+            <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
+          </Button>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
+        </View>
+        <View style={styleIndependient.contenttext}>
+          <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
+          <Text style={{ ...styleIndependient.text}}>Tamaño máximo de archivo: 2MB</Text>
+        </View>
+
+        {/* Botones para omitir y enviar */}
+        <View style={styleIndependient.containerbtns}>
+          <View >
+            <Text style={{ ...styleIndependient.textOmitir}}> Omitir</Text>
+          </View>
+          <Button buttonStyle={styleIndependient.btnStyle2} onPress={handleContinuer}>
+            <Text style={{ ...styleIndependient.textBtn2, fontFamily: 'Cairo_700Bold'}}> Enviar</Text>
+          </Button>
+        </View>
+        
       </View>
     </SafeAreaView>
   );

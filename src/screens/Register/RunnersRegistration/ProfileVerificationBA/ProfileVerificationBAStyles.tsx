@@ -3,9 +3,8 @@ import { StyleSheet } from "react-native";
 export const styleIndependient = StyleSheet.create({
 
   containerOption: {
-    marginTop: '25%',
     width: '92%',
-    height: '45%',
+    height: '70%',
     borderRadius: 20,
     alignItems: "center",
     shadowOpacity: 1,
@@ -21,20 +20,20 @@ export const styleIndependient = StyleSheet.create({
 
   textRegister:{
     marginTop: '5%',
-    fontSize: 35,
+    fontSize: 25,
     textDecorationLine: 'underline',
   },
 
   titulo: {
-    fontSize: 30,
-    marginTop: "5%",
-    width: "90%",
+    fontSize: 20,
+    marginTop: "2%",
+    width: "80%",
   },
   containerbtnarchivo:{
     flexDirection: "row",
     alignItems: "center", 
-    marginTop: "5%",
-    width: "90%",
+    marginTop: "2%",
+    width: "80%",
   },
   
   containerBtn:{
@@ -49,49 +48,58 @@ export const styleIndependient = StyleSheet.create({
   },
   textBtn:{
     color: 'rgba(0, 0, 0, 1)',
-    fontSize: 17,
+    fontSize: 12,
   },
   textContainer: {
     justifyContent: 'center', 
-    fontSize: 13,
+    fontSize: 12,
     color: 'rgba(152, 152, 152, 1)',
     marginLeft: "3%",   
   },
   contenttext:{
-    marginTop: '5%',
+    marginTop: '2%',
+    width: '80%',
   },
   text:{
     textAlign: 'left',
     fontFamily: 'Cairo_400Regular',
     color: 'rgba(152, 152, 152, 1)',
-    fontSize: 14,
-    left: -20,
+    fontSize: 11,
   },
   containerbtns:{
     flexDirection: "row",
     alignItems: "center", 
     marginTop: "5%",
-    width: "90%",
+    width: "80%",
     justifyContent: 'space-between',
   },
   containerBtn2:{
     alignItems: "center",
   },
   textOmitir:{
-    color: 'rgba(9, 27, 43, 1)',
     fontSize: 20,
     fontFamily: 'Cairo_700Bold',
-
   },
   btnStyle2:{
-    backgroundColor: 'rgba(9, 27, 43, 1)',
-    justifyContent: 'center',   
-    borderWidth: 1,
+    backgroundColor: 'rgb(9,27,43)',
     borderRadius: 10,
-    width: 100,
+    width: 100, 
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: 'rgba(152, 152, 152, 1)',
   },
   textBtn2:{
-    color: 'rgba(255, 255, 255, 1)',
+    color: 'rgb(255,255,255)',
     fontSize: 17,
+  },
+  header:{
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  imgLogo: {
+    marginTop: '70%',
+    resizeMode: 'center',
+    width: 100,
+    height: 100,
   },
 });
