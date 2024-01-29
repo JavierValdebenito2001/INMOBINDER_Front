@@ -27,6 +27,28 @@ export function AddHomeScreen() {
     const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
     const estados = ['Disponible', 'No disponible'];
 
+    const [state, setState] = useState({
+      titulo: '',
+      gastosComunes: '', 
+      estado: '',
+      metrosCuadrados: '',
+      region: '',
+      comuna: '',
+      direccion: '',
+      precio: '',
+      habitaciones: '',
+      sanitarios: '',
+      descripcion: '',
+    });
+
+    function handleLog(){
+      console.log(state);
+    };
+
+    const handleChangeText = (name: string, value: any) => {
+      setState({...state, [name]: value});
+    };
+
     const [regionSelected, setRegionSelected] = useState("");
     const [comunaSelected, setComunaSelected] = useState("");
 
@@ -120,6 +142,7 @@ export function AddHomeScreen() {
               <Text style= {AddHomeStyles.textAddHomeTitle}> Agregar Propiedades </Text>
 
               <Text style= {AddHomeStyles.text2}> Titulo </Text>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('titulo', value)}></TextInput>
 
               <TouchableOpacity onPress={pickImage} style={AddHomeStyles.imgUpload}>
                 <Image source={image ? { uri: image } : require('../../../assets/images/ImageUploadIcon.png')} style={AddHomeStyles.imgUploadSize} />
@@ -127,7 +150,7 @@ export function AddHomeScreen() {
 
               <View style={AddHomeStyles.gastosComunes}>
                 <Text style={AddHomeStyles.text2}> Incluye gastos comunes por </Text>
-                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric'></TextInput>
+                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeText('gastosComunes', value)}></TextInput>
               </View>
 
               <View style = {AddHomeStyles.btnList3}>
@@ -135,7 +158,8 @@ export function AddHomeScreen() {
                 <SelectDropdown
                   data={estados}
                   onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index);
+                    console.log(selectedItem);
+                    handleChangeText('estado', selectedItem);
                   }}
                   defaultButtonText={'Estado'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -147,17 +171,17 @@ export function AddHomeScreen() {
                   buttonStyle={AddHomeStyles.dropdown2BtnStyle}
                   buttonTextStyle={AddHomeStyles.text2}
                   dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
-                  rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
+                  rowStyle={AddHomeStyles.dropdown2RowStyle}
                   rowTextStyle={AddHomeStyles.text2}
                 />
 
               </View>
 
               <Text style = {AddHomeStyles.text2}> Metros cuadrados construidos </Text>
-              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric'></TextInput>
+              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric' onChangeText={(value)=>handleChangeText('metrosCuadrados', value)}></TextInput>
 
               <Text style = {AddHomeStyles.text2}>Dirección</Text>
-              <TextInput style={AddHomeStyles.input}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('direccion', value)}></TextInput>
 
               <View style={AddHomeStyles.btnList}>
 
@@ -166,6 +190,7 @@ export function AddHomeScreen() {
                   data={regionSelected ? regionCommunes[regionSelected as keyof typeof regionCommunes] : []}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
+                    handleChangeText('comuna', selectedItem);
                   }}
                   defaultButtonText={comunaSelected || 'Comuna'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -187,6 +212,7 @@ export function AddHomeScreen() {
                     setRegionSelected(selectedItem as Region);
                     setComunaSelected("");
                     console.log(selectedItem, index);
+                    handleChangeText('region', selectedItem);
                   }}
                   defaultButtonText={'Región'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -205,7 +231,7 @@ export function AddHomeScreen() {
               </View>
 
               <Text style = {AddHomeStyles.text2}>Disponible por</Text>
-              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric'>
+              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeText('precio', value)}>
               </TextInput>
 
               <View style={AddHomeStyles.btnList}>
@@ -214,6 +240,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
+                    handleChangeText('habitaciones', selectedItem)
                   }}
                   defaultButtonText={'Habitaciones'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -233,6 +260,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
+                    handleChangeText('sanitarios', selectedItem);
                   }}
                   defaultButtonText={'Baños'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -249,11 +277,9 @@ export function AddHomeScreen() {
                 />
 
               </View>
-
-              <TextInput style={AddHomeStyles.input}></TextInput>
-              <TextInput style={AddHomeStyles.input}></TextInput>
-
+              
               <Text style = {AddHomeStyles.text2}>Descripción</Text>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('descripcion', value)}></TextInput>
 
               <View style={{...AddHomeStyles.btnList2}}>
 
@@ -271,12 +297,10 @@ export function AddHomeScreen() {
 
               <Text>¿Deseas activar la detección dinámica en esta publicación?</Text>
              
-
-              <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}}>
+              <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}} onPress={handleLog}>
                 <FontAwesomeIcon icon = {faSquareCheck} size={20} style={AddHomeStyles.btnIcons}/>
                 <Text style={AddHomeStyles.text2}> Guardar propiedad </Text>
               </TouchableOpacity>
-
 
             </View>
 

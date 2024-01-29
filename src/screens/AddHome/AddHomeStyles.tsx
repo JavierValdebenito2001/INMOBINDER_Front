@@ -179,6 +179,7 @@ export const AddHomeStyles = StyleSheet.create({
 
     btnList3:{
         flex:1,
+        width: '80%',
         margin:4,
     },
 
@@ -189,6 +190,7 @@ export const AddHomeStyles = StyleSheet.create({
         borderRadius: 4,
         width: '45%',
         height: '100%',
+        alignSelf: 'center',
     },
     dropdown2BtnTxtStyle: {
         color: '#FFF',
