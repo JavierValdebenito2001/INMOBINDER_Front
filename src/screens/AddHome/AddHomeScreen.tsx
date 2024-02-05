@@ -18,110 +18,104 @@ import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons/faSquareCheck'
 
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from '../../../firebase-config';
+
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
 export function AddHomeScreen() {
 
-    const navigation = useNavigation();
+  //ESTADO LOCAL
 
-    const [image, setImage] = useState(null);
+  const [state, setState] = useState({
+    titulo: '',
+    gastosComunes: '', 
+    estado: '',
+    metrosCuadrados: '',
+    region: '',
+    comuna: '',
+    direccion: '',
+    precio: '',
+    habitaciones: '',
+    sanitarios: '',
+    descripcion: '',
+  });
 
-    const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
-    const estados = ['Disponible', 'No disponible'];
+  const handleChangeState = (name: string, value: any) => {
+    setState({...state, [name]: value});
+  };
 
-    const [state, setState] = useState({
-      titulo: '',
-      gastosComunes: '', 
-      estado: '',
-      metrosCuadrados: '',
-      region: '',
-      comuna: '',
-      direccion: '',
-      precio: '',
-      habitaciones: '',
-      sanitarios: '',
-      descripcion: '',
+  //FOTO PRINCIPAL
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
-    function handleLog(){
-      console.log(state);
-    };
+    console.log(result);
 
-    const handleChangeText = (name: string, value: any) => {
-      setState({...state, [name]: value});
-    };
-
-    const [regionSelected, setRegionSelected] = useState("");
-    const [comunaSelected, setComunaSelected] = useState("");
-
-    const [isOnLargeToggleSwitch, setIsOnLargeToggleSwitch] = useState(false);
-
-    const onToggle = (val: boolean) => {
-      setIsOnLargeToggleSwitch(val);
+    if (!result.canceled) {
+      const [image, setImage] = useState<string | undefined>();
     }
+  };
 
-    const [value, setValue] = useState<string>('');
+  //CONEXION A FIRESTORE
 
-    type Region = 'Arica y Parinacota' | 'Tarapacá' | 'Antofagasta' | 'Atacama' | 'Coquimbo' | 'Valparaíso' | 'Metropolitana' | 'O’Higgins' | 'Maule' | 'Ñuble' | 'Biobío' | 'Araucanía' | 'Los Ríos' | 'Los Lagos' | 'Aysén' | 'Magallanes';
-    type Commune = string;
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const querySnapshot = getDocs(collection(db, "Pais"));
 
-    const regions = ['Arica y Parinacota', 'Tarapacá', 'Antofagasta', 'Atacama', 'Coquimbo', 
-    'Valparaíso', 'Metropolitana', 'O’Higgins', 'Maule', 'Ñuble', 'Biobío', 'Araucanía', 
-    'Los Ríos', 'Los Lagos', 'Aysén', 'Magallanes'];
+  const regionComuna = new Map();
+  const regiones = new Array();
 
-    const regionCommunes: Record<Region, Commune[]> = {
-      'Arica y Parinacota': ['Arica', 'Putre'],
-      'Tarapacá': ['Iquique', 'Alto Hospicio', 'Pozo Almonte'],
-      'Antofagasta': ['Antofagasta', 'Mejillones', 'Sierra Gorda', 'Calama', 'Ollagüe', 'San Pedro de Atacama'],
-      'Atacama': ['Copiapó', 'Chañaral', 'Diego de Almagro', 'Vallenar'],
-      'Coquimbo': ['La Serena', 'Coquimbo', 'Vicuña', 'Illapel', 'Los Vilos', 'Punitaqui', 'Salamanca', 'Andacollo', 'La Higuera', 'Paiguano', 'Viña del Mar', 'Quintero', 'Valparaíso', 'Quillota', 'Calera', 'Hijuelas', 'La Cruz', 'Limache', 'Olmué', 'Quilpué', 'Villa Alemana'],
-      'Valparaíso': ['Valparaíso', 'Viña del Mar', 'Quilpué', 'Casablanca', 'Concón', 'Juan Fernández', 'Isla de Pascua', 'Los Andes', 'San Antonio', 'San Felipe', 'Cartagena', 'El Quisco', 'El Tabo', 'Hijuelas', 'La Calera', 'La Ligua', 'Nogales', 'Panquehue', 'Petorca', 'Quillota', 'San Esteban', 'San Felipe', 'Santo Domingo', 'Zapallar'],
-      'Metropolitana': ['Buin', 'Calera de Tango', 'Colina', 'Curacaví', 'El Bosque', 'Estación Central', 'Huechuraba', 'Independencia', 'Isla de Maipo', 'Lampa', 'Lo Barnechea', 'Las Condes', 'Lo Espejo', 'Macul', 'Malloa', 'Melipilla', 'Padre Hurtado', 'Peñaflor', 'Pudahuel', 'Quilicura', 'Quinta Normal', 'Renca', 'San Bernardo', 'San Francisco de Borja', 'San José de Maipo', 'San Miguel', 'San Pedro', 'San Ramón', 'Santiago', 'Talagante', 'Tiltil', 'Vitacura'],
-      'O’Higgins': ['Rancagua', 'Codegua', 'Coinco', 'Coltauco', 'Doñihue', 'Graneros', 'Las Cabras', 'Machalí', 'Malloa', 'Mostazal', 'Olivar', 'Peumo', 'Pichidegua', 'Quinta de Tilcoco', 'Rengo', 'Requínoa', 'San Vicente', 'Pichilemu', 'La Estrella', 'Litueche', 'Marchihue', 'Navidad', 'Paredones', 'Peralillo', 'Pichilemu', 'San Fernando', 'Chépica', 'Chimbarongo', 'Lolol', 'Nancagua', 'Palmilla', 'Pumanque', 'San Fernando', 'Santa Cruz'],
-      'Maule': ['Talca', 'Constitución', 'Curepto', 'Empedrado', 'Maule', 'Pelarco', 'Pencahue', 'Río Claro', 'San Clemente', 'San Rafael', 'Cauquenes', 'Chanco', 'Pelluhue', 'Linares', 'Colbún', 'Longaví', 'Parral', 'Retiro', 'San Javier', 'Villa Alegre', 'Yerbas Buenas', 'Concepción', 'Coronel', 'Chiguayante', 'Florida', 'Hualpén', 'Hualqui', 'Lebu', 'Los Ángeles', 'Lota', 'Penco', 'San Pedro de la Paz', 'Santa Bárbara', 'Talcahuano', 'Tomé', 'Hualqui'],
-      'Ñuble': ['Diguillín', 'Itata', 'Punilla', 'Bulnes', 'Chillán', 'Chillán Viejo', 'Cobquecura', 'Coelemu', 'Coihueco', 'El Carmen', 'Ninhue', 'Ñiquén', 'Pemuco', 'Pinto', 'Portezuelo', 'Quillón', 'Quirihue', 'Ránquil', 'San Carlos', 'San Fabián', 'San Ignacio', 'San Nicolás', 'Trehuaco', 'Yungay'],
-      'Biobío': ['Concepción', 'Chiguayante', 'Florida', 'Hualpén', 'Laja', 'Los Ángeles', 'Mulchén', 'Nacimiento', 'Negrete', 'Penco', 'Quilaco', 'Quilleco', 'San Pedro de la Paz', 'Santa Bárbara', 'Tomé', 'Coronel', 'Lebu', 'Cabrero', 'Chillán', 'Bulnes', 'Cobquecura', 'Coelemu', 'Coihueco', 'El Carmen', 'Ninhue', 'Ñiquén', 'Pemuco', 'Pinto', 'Portezuelo', 'Quillón', 'Quirihue', 'Ránquil', 'San Carlos', 'San Fabián', 'San Ignacio', 'San Nicolás', 'Trehuaco', 'Yungay'],
-      'Araucanía': ['Temuco', 'Carahue', 'Cunco', 'Curacautín', 'Freire', 'Galvarino', 'Lautaro', 'Loncoche', 'Melipeuco', 'Nueva Imperial', 'Padre Las Casas', 'Perquenco', 'Pitrufquén', 'Pucón', 'Saavedra', 'Teodoro Schmidt', 'Victoria', 'Vilcún'],
-      'Los Ríos': ['Valdivia', 'Corral', 'Lanco', 'Los Lagos', 'Mariquina', 'Paillaco', 'Panguipulli', 'La Unión', 'Futrono', 'Río Bueno', 'Río Negro', 'Puren'],
-      'Los Lagos': ['Puerto Montt', 'Calbuco', 'Cochamó', 'Fresia', 'Frutillar', 'Los Muermos', 'Llanquihue', 'Maullín', 'Puerto Varas', 'Castro', 'Ancud', 'Chonchi', 'Curaco de Vélez', 'Dalcahue', 'Puqueldón', 'Queilén', 'Quemchi', 'Quellón', 'Quinchao', 'Osorno', 'Puyehue', 'Río Negro', 'San Juan de la Costa', 'San Pablo'],
-      'Aysén': ['Coyhaique', 'Aisén', 'Cisnes', 'Guaitecas', 'Cochrane', 'O\'Higgins', 'Tortel', 'Chile Chico', 'Río Ibáñez'],
-      'Magallanes': ['Punta Arenas', 'Laguna Blanca', 'Río Verde', 'San Gregorio', 'Cabo de Hornos', 'Antártica', 'Porvenir', 'Primavera', 'Timaukel', 'Natales', 'Torres del Paine']
-    }
-
-    const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      console.log(result);
-
-      if (!result.canceled) {
-        const [image, setImage] = useState<string | undefined>();
-      }
-    };
-
-    const [fontsLoaded] = useFonts({
-      Cairo_700Bold,
-      Cairo_400Regular,
+  querySnapshot.then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      regionComuna.set(doc.data().region, doc.data().comunas);
+      regiones.push(doc.data().region);
     });
-    
-    if (!fontsLoaded) {
-      return null;
-    }
+  });
 
-    function handleBack(){
-      navigation.navigate(screen.account.MainDrawer as never);
-    }
+  const [comunasData, setComunasData] = useState([]);
+  const [regionSelected, setRegionSelected] = useState("");
+  const [comunaSelected, setComunaSelected] = useState("");
 
-    function handleGallery(){
-      navigation.navigate(screen.account.addHomeGallery as never);
-    }
+  const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
+  const estados = ['Disponible', 'No disponible'];
 
-    function handleVideos(){
-      navigation.navigate(screen.account.addHomeVideos  as never);
-    }
+  const [fontsLoaded] = useFonts({
+    Cairo_700Bold,
+    Cairo_400Regular,
+  });
+  
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  function handleLog(){
+    console.log(state);
+  };
+
+  //NAVEGACION
+
+  const navigation = useNavigation();
+
+  function handleBack(){
+    navigation.navigate(screen.account.MainDrawer as never);
+  }
+
+  function handleGallery(){
+    navigation.navigate(screen.account.addHomeGallery as never);
+  }
+
+  function handleVideos(){
+    navigation.navigate(screen.account.addHomeVideos  as never);
+  }
 
   return (
 
@@ -142,7 +136,7 @@ export function AddHomeScreen() {
               <Text style= {AddHomeStyles.textAddHomeTitle}> Agregar Propiedades </Text>
 
               <Text style= {AddHomeStyles.text2}> Titulo </Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('titulo', value)}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('titulo', value)}></TextInput>
 
               <TouchableOpacity onPress={pickImage} style={AddHomeStyles.imgUpload}>
                 <Image source={image ? { uri: image } : require('../../../assets/images/ImageUploadIcon.png')} style={AddHomeStyles.imgUploadSize} />
@@ -150,7 +144,7 @@ export function AddHomeScreen() {
 
               <View style={AddHomeStyles.gastosComunes}>
                 <Text style={AddHomeStyles.text2}> Incluye gastos comunes por </Text>
-                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeText('gastosComunes', value)}></TextInput>
+                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeState('gastosComunes', value)}></TextInput>
               </View>
 
               <View style = {AddHomeStyles.btnList3}>
@@ -159,7 +153,7 @@ export function AddHomeScreen() {
                   data={estados}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem);
-                    handleChangeText('estado', selectedItem);
+                    handleChangeState('estado', selectedItem);
                   }}
                   defaultButtonText={'Estado'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -178,19 +172,43 @@ export function AddHomeScreen() {
               </View>
 
               <Text style = {AddHomeStyles.text2}> Metros cuadrados construidos </Text>
-              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric' onChangeText={(value)=>handleChangeText('metrosCuadrados', value)}></TextInput>
+              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric' onChangeText={(value)=>handleChangeState('metrosCuadrados', value)}></TextInput>
 
               <Text style = {AddHomeStyles.text2}>Dirección</Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('direccion', value)}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('direccion', value)}></TextInput>
 
               <View style={AddHomeStyles.btnList}>
 
                 <SelectDropdown
-                  key={regionSelected}
-                  data={regionSelected ? regionCommunes[regionSelected as keyof typeof regionCommunes] : []}
+                  data={regiones}
+                  onSelect={(selectedItem, index) => {
+                    setRegionSelected(selectedItem as string);
+                    setComunaSelected("");
+                    setComunasData(regionComuna.get(selectedItem));
+                    console.log(selectedItem, index);
+                    handleChangeState('region', selectedItem);
+                  }}
+                  defaultButtonText={regionSelected || 'Región'}
+                  buttonTextAfterSelection={(selectedItem, index) => {
+                    console.log(selectedItem, index);
+                    return selectedItem;
+                  }}
+                  rowTextForSelection={(item, index) => {
+                    return item;
+                  }}
+                  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
+                  buttonTextStyle={AddHomeStyles.text2}
+                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
+                  rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
+                  rowTextStyle={AddHomeStyles.text2}
+                />
+
+                <SelectDropdown
+                  data={comunasData}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
-                    handleChangeText('comuna', selectedItem);
+                    setComunaSelected(selectedItem);
+                    handleChangeState('comuna', selectedItem);
                   }}
                   defaultButtonText={comunaSelected || 'Comuna'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -206,32 +224,10 @@ export function AddHomeScreen() {
                   rowTextStyle={AddHomeStyles.text2}
                 />
 
-                <SelectDropdown
-                  data={Object.keys(regionCommunes)}
-                  onSelect={(selectedItem, index) => {
-                    setRegionSelected(selectedItem as Region);
-                    setComunaSelected("");
-                    console.log(selectedItem, index);
-                    handleChangeText('region', selectedItem);
-                  }}
-                  defaultButtonText={'Región'}
-                  buttonTextAfterSelection={(selectedItem, index) => {
-                    return selectedItem;
-                  }}
-                  rowTextForSelection={(item, index) => {
-                    return item;
-                  }}
-                  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
-                  buttonTextStyle={AddHomeStyles.text2}
-                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
-                  rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
-                  rowTextStyle={AddHomeStyles.text2}
-                  
-                />
               </View>
 
               <Text style = {AddHomeStyles.text2}>Disponible por</Text>
-              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeText('precio', value)}>
+              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeState('precio', value)}>
               </TextInput>
 
               <View style={AddHomeStyles.btnList}>
@@ -240,7 +236,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
-                    handleChangeText('habitaciones', selectedItem)
+                    handleChangeState('habitaciones', selectedItem)
                   }}
                   defaultButtonText={'Habitaciones'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -260,7 +256,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
-                    handleChangeText('sanitarios', selectedItem);
+                    handleChangeState('sanitarios', selectedItem);
                   }}
                   defaultButtonText={'Baños'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -279,7 +275,7 @@ export function AddHomeScreen() {
               </View>
               
               <Text style = {AddHomeStyles.text2}>Descripción</Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeText('descripcion', value)}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('descripcion', value)}></TextInput>
 
               <View style={{...AddHomeStyles.btnList2}}>
 
