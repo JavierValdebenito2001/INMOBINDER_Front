@@ -13,7 +13,6 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import SelectDropdown from 'react-native-select-dropdown';
 
-
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons/faSquareCheck'
@@ -25,25 +24,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 export function AddHomeScreen() {
 
-  //ESTADO LOCAL
-
-  const [state, setState] = useState({
-    titulo: '',
-    gastosComunes: '', 
-    estado: '',
-    metrosCuadrados: '',
-    region: '',
-    comuna: '',
-    direccion: '',
-    precio: '',
-    habitaciones: '',
-    sanitarios: '',
-    descripcion: '',
-  });
-
-  const handleChangeState = (name: string, value: any) => {
-    setState({...state, [name]: value});
-  };
+  const navigation = useNavigation();
 
   //FOTO PRINCIPAL
 
@@ -88,6 +69,26 @@ export function AddHomeScreen() {
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
   const estados = ['Disponible', 'No disponible'];
 
+  //ESTADO LOCAL
+
+  const [state, setState] = useState({
+    titulo: '',
+    gastosComunes: '', 
+    estado: '',
+    metrosCuadrados: '',
+    region: '',
+    comuna: '',
+    direccion: '',
+    precio: '',
+    habitaciones: '',
+    sanitarios: '',
+    descripcion: '',
+  });
+
+  const handleChangeState = (name: string, value: any) => {
+    setState({...state, [name]: value});
+  };
+
   const [fontsLoaded] = useFonts({
     Cairo_700Bold,
     Cairo_400Regular,
@@ -102,8 +103,6 @@ export function AddHomeScreen() {
   };
 
   //NAVEGACION
-
-  const navigation = useNavigation();
 
   function handleBack(){
     navigation.navigate(screen.account.MainDrawer as never);
