@@ -7,19 +7,35 @@ import { Button, Image, Input, Text } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../utils/ScreenName.tsx';
+import { auth } from '../../../../firebase-config.js';
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth';
 
 export function RegisterPersonScreen() {
   // Inicializar la navegación
   const navigation = useNavigation();
 
+  
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [name, setName] = React.useState('')
+  const [phone, setPhone] = React.useState('')
+  const [rut, setRut] = React.useState('')
+
+
+  const handleCreateAccount = () => {
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+          console.log('Usuario creado')
+          const user= userCredential.user
+          console.log(user)    }   
+      )}
+    
   // Cargar fuentes
   const [fontsLoaded] = useFonts({
     Cairo_700Bold,
     Cairo_400Regular,
   });
 
-  // Estado local para almacenar el valor del campo de entrada
-  const [email, setEmail] = useState('');
 
   // Verificar si las fuentes están cargadas
   if (!fontsLoaded) {
@@ -41,14 +57,6 @@ export function RegisterPersonScreen() {
     console.log("Términos y condiciones");
   };
 
-  // Función para manejar la navegación hacia la pantalla de registro independiente
-  const handleContinuer = () => {
-    // Imprimir el valor del campo de entrada en la consola
-    console.log('Correo electrónico:', email);
-
-    // Navegar a la siguiente pantalla (puede ser a la pantalla de registro independiente en tu caso)
-    navigation.navigate(screen.account.personIndependient as never);
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -92,11 +100,14 @@ export function RegisterPersonScreen() {
 
         {/* Campo de entrada de correo electrónico */}
         <View style={stylePerson.inputRegisterEmail}>
-          <Input placeholder='Ingresa el correo electrónico.' onChangeText={(value) => setEmail(value)} />
+          <Input placeholder='Ingresa el correo electrónico.' onChangeText={(text) => setEmail(text)} />
+        </View>
+        <View style={stylePerson.inputRegisterEmail}>
+          <Input placeholder='Ingrese una contraseña' onChangeText={(text) => setPassword(text)} />
         </View>
 
         {/* Botón para continuar */}
-        <Button buttonStyle={stylePerson.btnContinuer} onPress={handleContinuer}>
+        <Button buttonStyle={stylePerson.btnContinuer} onPress={handleCreateAccount}>
           <Text style={{ ...stylePerson.textBtn, fontFamily: 'Cairo_700Bold' }}> Continuar </Text>
         </Button>
       </View>
