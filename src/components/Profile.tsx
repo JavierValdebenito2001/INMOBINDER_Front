@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, TextInput} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants'
 import { screen } from '../utils/ScreenName';
 import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
+import{ firebase } from '../../firebase-config';
 
 
 
@@ -12,6 +13,8 @@ const ancho = Dimensions.get('window').width;
 const alto = Dimensions.get('window').height; 
 
 const Profile =()=>{
+
+//Recuperar nombre de usuario
 
     const navigation = useNavigation();
 
@@ -48,18 +51,12 @@ function EditProfile(){
                     </View>
                 </View>
                 <View>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeText}
-                        value={text}
-                        placeholder='Nombre Nombre Apellido Apellido'
-                    />
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={onChangeText}
-                        value={text}
-                        placeholder='Nombre_apellido@hotmail.com'
-                    />
+                <Text style={styles.avatarText}>
+                {rut.rut}
+                 </Text>
+                <Text style={styles.avatarText}>
+                {name.name}
+                </Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
                     <TextInput

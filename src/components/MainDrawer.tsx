@@ -1,6 +1,6 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import { Image, Switch, Text, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
@@ -91,21 +91,16 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
     navigation.navigate('login');
   };
 
-//Recuperar nombre de usuario
-const [name, setName] = useState('')
-  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
-                                                                                                          setName(snapshot.data()) } 
-                                                                                                          else { 
-                                                                                                          console.log('No data available'); } })
-                                                                                                      
 
-//Recuperar Rut
-const [rut, setRut] = useState('')
-  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
-                                                                                                          setRut(snapshot.data()) } 
-                                                                                                          else { 
-                                                                                                          console.log('No data available'); } })
-
+  const [name, setName] = useState('')
+  const [rut, setRut] = useState('')
+  useEffect(() => {
+    firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
+                                                                                                            setName(snapshot.data())
+                                                                                                            setRut(snapshot.data()) } 
+                                                                                                            else { 
+                                                                                                            console.log('No data available'); } })}, []);
+  
                                                                                                           
                                                                                                       
 
@@ -120,11 +115,11 @@ const [rut, setRut] = useState('')
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
         </TouchableOpacity>
         <Text style={styles.avatarText}>
-          {rut.rut}
-        </Text>
-        <Text style={styles.avatarText}>
-          {name.name}
-        </Text>
+                {rut.rut}
+                 </Text>
+                <Text style={styles.avatarText}>
+                {name.name}
+                </Text>
       </View>
       <View style={styles.menuContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>
