@@ -14,14 +14,29 @@ export default function MapScreen() {
 
   // Estado para almacenar la ubicación actual
   const [origin, setOrigin] = React.useState({
-    latitude: -36.611228,
-    longitude: -72.100980,
+    latitude: -37.723066,
+    longitude: -72.237227,
   })
   // Estado para almacenar la ubicación de destino
   const [destination, setDestination] = React.useState({
     latitude: -36.605294,
     longitude: -72.102584,
   })
+  const [arriendo, setArriendo] = React.useState({
+    latitude: -37.273062,
+    longitude: -72.715934,
+  })
+
+  const [joaco, setjoaco] = React.useState({
+    latitude: -36.822411,
+    longitude: -73.047658,
+  })
+
+  const [nico, setnico] = React.useState({
+    latitude: -36.803737,
+    longitude: -73.097912,
+  })
+
 
   return (
     <View style={style.container}>
@@ -51,6 +66,30 @@ export default function MapScreen() {
           onDragEnd={(Direction) => setDestination({ latitude: Direction.nativeEvent.coordinate.latitude, longitude: Direction.nativeEvent.coordinate.longitude })}
         >
           <Image source={VentaImage} style={{ height: 30, width: 30 }} />
+        </Marker>
+
+        <Marker
+          draggable
+          coordinate={arriendo}
+          onDragEnd={(Direction) => setArriendo({ latitude: Direction.nativeEvent.coordinate.latitude, longitude: Direction.nativeEvent.coordinate.longitude })}
+          >
+          <Image source={ArriendoYVentaImage} style={{ height: 30, width: 30 }} />
+        </Marker>
+
+        <Marker
+          draggable
+          coordinate={joaco}
+          onDragEnd={(Direction) => setjoaco({ latitude: Direction.nativeEvent.coordinate.latitude, longitude: Direction.nativeEvent.coordinate.longitude })}
+          >
+          <Image source={VentaImage} style={{ height: 30, width: 30 }} />
+        </Marker>
+
+        <Marker
+          draggable 
+          coordinate={nico}
+          onDragEnd={(Direction) => setnico({ latitude: Direction.nativeEvent.coordinate.latitude, longitude: Direction.nativeEvent.coordinate.longitude })}
+          >
+          <Image source={ArriendoYVentaImage} style={{ height: 30, width: 30 }} />
         </Marker>
 
         
