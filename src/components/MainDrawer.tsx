@@ -9,7 +9,7 @@ import { styles } from './MainDrawerStyles';
 import CentroDeAyuda from './CentroDeAyuda';
 import { useNavigation } from '@react-navigation/native';
 import MapScreen from '../screens/Home/MapScreen';
-
+import{ firebase } from '../../firebase-config';
 
 
 const Drawer = createDrawerNavigator();
@@ -90,7 +90,24 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
     // Redirigir al usuario a la pantalla de inicio de sesión
     navigation.navigate('login');
   };
-  
+
+//Recuperar nombre de usuario
+const [name, setName] = useState('')
+  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
+                                                                                                          setName(snapshot.data()) } 
+                                                                                                          else { 
+                                                                                                          console.log('No data available'); } })
+                                                                                                      
+
+//Recuperar Rut
+const [rut, setRut] = useState('')
+  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
+                                                                                                          setRut(snapshot.data()) } 
+                                                                                                          else { 
+                                                                                                          console.log('No data available'); } })
+
+                                                                                                          
+                                                                                                      
 
   return (
     <DrawerContentScrollView>
@@ -102,8 +119,12 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         <TouchableOpacity style={{position:'absolute', margin:20, alignSelf:'flex-end', marginVertical:90, paddingRight:10}} onPress={() => navigation.navigate('Profile')}>
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
         </TouchableOpacity>
-        <Text style={styles.avatarText}>17.111.111-k</Text>
-        <Text style={styles.avatarText}>Nombre Nombre Apellido Apellido</Text>
+        <Text style={styles.avatarText}>
+          {rut.rut}
+        </Text>
+        <Text style={styles.avatarText}>
+          {name.name}
+        </Text>
       </View>
       <View style={styles.menuContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>

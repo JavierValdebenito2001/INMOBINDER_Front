@@ -7,9 +7,8 @@ import { LoginStyles } from './LoginScreenStyles';
 import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons';
 import { Input, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../../../firebase-config';
-import { signInWithEmailAndPassword } from '@firebase/auth';
 import { screen } from '../../utils/ScreenName.tsx';
+import { firebase } from '../../../firebase-config.js';
 
 export function LoginScreen() {
 
@@ -20,16 +19,17 @@ export function LoginScreen() {
     navigation.goBack();
   };
 
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('Usuario logueado')
-      const user = userCredential.user
-      console.log(user)
-      navigation.navigate('MainDrawer');
-    }).catch((error) => {
-      Alert.alert('Error', 'Usuario o contraseña incorrectos')})}
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
 
+  LoginUser = async (email, password) => {
+  try{
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+    Alert.alert('Usuario autenticado correctamente.');
+    navigation.navigate('MainDrawer' as never);
+  }catch(error){
+    Alert.alert('Error al autenticar el usuario: ' + error.message);
+  }}
 
 
   // Cargar fuentes
@@ -38,9 +38,6 @@ export function LoginScreen() {
     Cairo_400Regular,
   });
 
-  // Estado para almacenar el correo electrónico y la contraseña
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
 
   // Si las fuentes no están cargadas, se devuelve nulo
   if (!fontsLoaded) {
@@ -78,7 +75,7 @@ export function LoginScreen() {
 
         {/* Botón de inicio de sesión */}
         <View>
-          <Button containerStyle={LoginStyles.containerBtn} buttonStyle={LoginStyles.btnStyle}  onPress={handleSignIn}>
+          <Button containerStyle={LoginStyles.containerBtn} buttonStyle={LoginStyles.btnStyle}  onPress={()=> LoginUser(email,password)}>
             <Text style={{ ...LoginStyles.textBtn, fontFamily: 'Cairo_700Bold' }}>Continuar </Text>
           </Button>
 
