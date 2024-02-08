@@ -19,11 +19,10 @@ export function RegisterPersonScreen() {
   const [name, setName] = React.useState('')
   const [phone, setPhone] = React.useState('')
   const [rut, setRut] = React.useState('')
-
-  registerUser = async (email, password, name, phone, rut) => {
+  registerUser = async (email, password, name, phone, rut, type, status) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({name, phone, rut, email});
+      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({name, phone, rut, email, type:'1', status:'0' });
       Alert.alert('Usuario registrado correctamente.');
     } catch (error) {
       Alert.alert('Error al registrar el usuario: ' + error.message);

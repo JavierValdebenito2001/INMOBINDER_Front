@@ -6,6 +6,7 @@ import Constants from 'expo-constants'
 import { screen } from '../utils/ScreenName';
 import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
 import{ firebase } from '../../firebase-config';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 
 
@@ -18,6 +19,30 @@ const Profile =()=>{
 
     const navigation = useNavigation();
 
+    function getTypeDescription(type) {
+        switch(type) {
+          case 1:
+            return "Persona Natural";
+          case 2:
+            return "Inmobiliaria";
+          case 3:
+            return "Corredor de propiedades";
+          default:
+            return "Tipo desconocido";
+        }
+      };
+
+      function getStatus(status) {
+        switch(status) {
+          case 0:
+            return "Cuenta no verificada";
+          case 1:
+            return "Cuenta verificada";
+          default:
+            return "Tipo desconocido";
+        }
+      };
+
 function handleBack(){
     navigation.navigate(screen.account.MainDrawer);
   }
@@ -27,6 +52,30 @@ function EditProfile(){
   }
 
   const [text, onChangeText] = React.useState('');
+
+  const [name, setName] = useState('')
+  const [rut, setRut] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [type, setType] = useState('')
+  const [status, setStatus] = useState('')
+
+  
+  useEffect(() => {
+    firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { 
+      if (snapshot.exists) {
+        const data = snapshot.data();
+        setName(data.name);
+        setRut(data.rut);
+        setEmail(data.email);
+        setPhone(data.phone);
+        setType(Number(data.type));
+        setStatus(Number(data.status)); // Convierte type a un número
+      } else { 
+        console.log('No data available'); 
+      } 
+    });
+  }, []);
 
 
     return(
@@ -50,31 +99,26 @@ function EditProfile(){
                         <Text style={{color:'#DDE0E5', fontSize:10}}>14 de Junio de 2018</Text>
                     </View>
                 </View>
-                <View>
-                <Text style={styles.avatarText}>
-                {rut.rut}
-                 </Text>
-                <Text style={styles.avatarText}>
-                {name.name}
+                <Text style={{marginTop:-40, alignSelf:'center', paddingLeft:40}}>{getStatus(status)}</Text>
+                <View style={{marginVertical:10}}>
+                <Text style={styles.box}>
+                {name}
                 </Text>
+                <Text style={styles.box}>
+                {email}
+                 </Text>
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <TextInput
-                        style={styles.miniinput}
-                        onChangeText={onChangeText}
-                        value={text}
-                        placeholder='9 00000000'
-                    />
-                    <TextInput
-                        style={styles.miniinput}
-                        onChangeText={onChangeText}
-                        value={text}
-                        placeholder='01.234.567-8'
-                    />
+                    <Text style={styles.box}>
+                        {phone}
+                    </Text>
+                    <Text style={styles.box}>
+                        {rut}
+                    </Text>
                 </View>
                 <View style={{ paddingTop:30, alignItems:'center'}}>
                     <Text style={{fontWeight:'bold', fontSize:15, paddingBottom:20}}>Registrado como:</Text>
-                    <Text style={{fontWeight:'bold', fontSize:30, color:'#C1C4CA'}}>[PERSONA NATURAL]</Text>
+                    <Text style={{fontWeight:'bold', fontSize:30, color:'#C1C4CA'}}>{getTypeDescription(type)}</Text>
                 </View>
                 <TouchableOpacity
                     onPress={EditProfile}
@@ -101,6 +145,12 @@ const styles = StyleSheet.create({
         borderBottomWidth:1, 
         width:ancho*0.7,
         textAlign: 'center'    
+    },
+    box:{
+        borderWidth:1,
+        padding:10,
+        marginVertical:20,
+        marginHorizontal:20,
     },
     text:{
         fontSize:18,
@@ -140,9 +190,8 @@ const styles = StyleSheet.create({
     },
     containershadow:{    
         width: "90%",
-        height: "70%",
+        height: "90%",
         borderRadius: 20,
-        height:alto*0.75,
         alignSelf: "center",
         alignItems:'center',
         shadowOpacity: 1,
