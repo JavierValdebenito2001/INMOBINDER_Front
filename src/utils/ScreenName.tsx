@@ -1,3 +1,5 @@
+import Profile from "../components/Profile";
+
 const AccountStack = {
     login: 'login',
     home: 'home',
@@ -28,6 +30,8 @@ const AccountStack = {
     IndependentBrokerScreen: 'IndependentBrokerScreen',  
     BrokerageAgencyScreen: 'BrokerageAgencyScreen',
     ProfileVerificationBA: 'ProfileVerificationBA',
+    ProfileVerificationRE: 'ProfileVerificationRE',
+    ProfileVerificationNPScreen: 'ProfileVerificationNPScreen',
   };
 
 const HomeStack = {

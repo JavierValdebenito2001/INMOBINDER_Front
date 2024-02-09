@@ -3,11 +3,11 @@ import { screen } from "../utils/ScreenName";
 import { LoginScreen } from "../screens/Login/LoginScreen";
 import { Home } from "../screens/Register/Welcome/WelcomeScreen";
 import { RegisterScreen } from "../screens/Register/RegisterScreen/RegisterScreen";
-import { RegisterPersonScreen } from "../screens/Register/RegisterPerson/RegisterPersonScreen";
-import { PersonIndependientScreen } from "../screens/Register/Forms Register/PersonIndependient/PersonIndependientScreen";
-import { RegisterRealEstateScreen } from "../screens/Register/RealEstate/RegisterRealEstateScreen";
+import { RegisterPersonScreen } from "../screens/Register/NaturalPersonRegistration/RegisterNaturalPerson/RegisterPersonScreen";
+import { PersonIndependientScreen } from "../screens/Register/NaturalPersonRegistration/PersonIndependient/PersonIndependientScreen";
+import { RegisterRealEstateScreen } from "../screens/Register/RealEstateRegistration/RegisterRealEstate/RegisterRealEstateScreen";
 import { RegisterPropertyBrokerScreen } from "../screens/Register/RunnersRegistration/RegisterPropertyBroker/RegisterPropertyBrokerScreen";
-import { AgencyREScreen } from "../screens/Register/Forms Register/AgencyRealEstate/AgencyRScreen";
+import { AgencyREScreen } from "../screens/Register/RealEstateRegistration/AgencyRealEstate/AgencyRScreen";
 import { RecoverPasswordScreen } from "../screens/RecoverPassword/RecoverPasswordScreen";
 
 import Dashboard from "../screens/Home/Dashboard";
@@ -29,6 +29,8 @@ import ProfileVerificationScreen from "../screens/Register/RunnersRegistration/P
 import { IndependentBrokerScreen } from "../screens/Register/RunnersRegistration/IndependentBroker/IndependentBrokerScreen";
 import { BrokerageAgencyScreen } from "../screens/Register/RunnersRegistration/BrokerageAgency/BrokerageAgencyScreen";
 import ProfileVerificationBA from "../screens/Register/RunnersRegistration/ProfileVerificationBA/ProfileVerificationBA";
+import ProfileVerificationRE from "../screens/Register/RealEstateRegistration/ProfileVerificationRE/ProfileVerificationRE";
+import ProfileVerificationNPScreen from "../screens/Register/NaturalPersonRegistration/ProfileVerificationNP/ProfileVerificationNPScreen";
 
 
 
@@ -172,7 +174,15 @@ export function AccountStack() {
                 name={screen.account.ProfileVerificationBA}
                 component={ProfileVerificationBA}
             />
-
+                <Stack.Screen 
+                name={screen.account.ProfileVerificationRE}
+                component={ProfileVerificationRE}
+            />
+                <Stack.Screen 
+                name={screen.account.ProfileVerificationNPScreen}
+                component={ProfileVerificationNPScreen}
+            />
+            
         </Stack.Navigator>    
     );
 }

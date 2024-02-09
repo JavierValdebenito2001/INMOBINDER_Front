@@ -46,12 +46,6 @@ export const styleAgencyRE = StyleSheet.create({
 
     scrollStyle: {
         justifyContent: 'center',
-         alignItems: 'center',
+        alignItems: 'center',
     },
-
-
-
-
-
-    
 })
