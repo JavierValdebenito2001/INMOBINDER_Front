@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { styles } from '../../../styles'
 import { styleAgencyRE } from './AgencyREStyle'
 import { Input, Button, Text } from '@rneui/themed'
@@ -17,17 +17,30 @@ export function AgencyREScreen() {
     Cairo_700Bold,
     Cairo_400Regular,
   });
-
+  
+  // Estado local para almacenar los valores de los campos de entrada
+  const [state, setState] = useState({
+    nomb: '',
+    rut: '',
+    telefono: '',
+    clave: '',
+    clave2: '',
+  });
   if (!fontsLoaded) {
     return null;
   }
 
   function handleBack(){
-    navigation.navigate(screen.account.registerRealEstate);
+    navigation.navigate(screen.account.registerRealEstate as never);
   }
 
+  const handleChange = (name: string, value: string | number) => {
+    setState({ ...state, [name]: value });
+  };
+
   function handleContinue(){
-    console.log("Botón continuar");
+    console.log('Valores del estado:', state);
+    navigation.navigate(screen.account.ProfileVerificationRE  as never);
   }
 
   return (
@@ -55,24 +68,44 @@ export function AgencyREScreen() {
               
 
                 <Text style= {{ ...styleAgencyRE.titulo, fontFamily: 'Cairo_400Regular'}}> Nombre empresa </Text>
-                <Input placeholder='Agartha Marketing Agency' containerStyle={styleAgencyRE.input}/>
+                <Input 
+                placeholder='Agartha Marketing Agency' 
+                containerStyle={styleAgencyRE.input}
+                onChangeText={(value) => handleChange('nomb', value)}
+                />
 
                 <Text style= {{ ...styleAgencyRE.titulo, fontFamily: 'Cairo_400Regular'}}> RUT empresa </Text>
-                <Input placeholder='00.000.000-0' containerStyle={styleAgencyRE.input}/>
+                <Input 
+                placeholder='00.000.000-0' 
+                containerStyle={styleAgencyRE.input}
+                onChangeText={(value) => handleChange('rut', value)}
+                />
 
                 <Text style= {{ ...styleAgencyRE.titulo, fontFamily: 'Cairo_400Regular'}}> Teléfono empresa </Text>
-                <Input placeholder='900000000' containerStyle={styleAgencyRE.input}/>
+                <Input 
+                placeholder='900000000' 
+                containerStyle={styleAgencyRE.input}
+                onChangeText={(value) => handleChange('telefono', value)}
+                />
 
                 <Text style= {{ ...styleAgencyRE.titulo, fontFamily: 'Cairo_400Regular'}}> Contraseña </Text>
-                <Input placeholder='12345678' containerStyle={styleAgencyRE.input} secureTextEntry={true}/>
+                <Input 
+                placeholder='12345678' 
+                containerStyle={styleAgencyRE.input} secureTextEntry={true}
+                onChangeText={(value) => handleChange('clave', value)}
+                />
 
                 <Text style= {{ ...styleAgencyRE.titulo, fontFamily: 'Cairo_400Regular'}}> Confirmar contraseña </Text>
-                <Input placeholder='12345678' containerStyle={styleAgencyRE.input} secureTextEntry={true}/>
+                <Input 
+                placeholder='12345678' 
+                containerStyle={styleAgencyRE.input} secureTextEntry={true}
+                onChangeText={(value) => handleChange('clave2', value)}
+                />
 
                 <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={handleContinue}> 
                     <Text style={{ ...styleAgencyRE.textBtn, fontFamily: 'Cairo_700Bold'}}>Registrarse</Text> 
                 </Button>
-             
+            
         </View>
 
         </ScrollView>

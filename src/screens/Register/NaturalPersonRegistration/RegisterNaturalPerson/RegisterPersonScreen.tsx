@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, SafeAreaView } from 'react-native';
-import { styles } from '../../styles';
+import { styles } from '../../../styles.tsx';
 import { stylePerson } from './RegisterPersonStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Image, Input, Text } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
-import { screen } from '../../../utils/ScreenName.tsx';
+import { screen } from '../../../../utils/ScreenName.tsx';
 
 export function RegisterPersonScreen() {
   // Inicializar la navegación
@@ -60,7 +60,7 @@ export function RegisterPersonScreen() {
 
       {/* Encabezado con el logo */}
       <View style={styles.header}>
-        <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+        <Image source={require('../../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
       </View>
 
       {/* Contenido principal del registro */}
@@ -69,7 +69,7 @@ export function RegisterPersonScreen() {
 
         {/* Botón para registrar con Google */}
         <TouchableOpacity style={stylePerson.registerGoogle} onPress={handleRegisterGoogle}>
-          <Image source={require('../../../../assets/images/google.png')} style={stylePerson.Img} />
+          <Image source={require('../../../../../assets/images/google.png')} style={stylePerson.Img} />
           <Text style={{ fontFamily: 'Cairo_700Bold', fontSize: 20 }}> Regístrate con Google</Text>
         </TouchableOpacity>
 
