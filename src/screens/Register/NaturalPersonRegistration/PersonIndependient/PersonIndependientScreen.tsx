@@ -44,11 +44,9 @@ export function PersonIndependientScreen() {
 
   // Función para manejar la navegación hacia adelante (puede ser a la página de inicio en tu caso)
   const handleContinue = () => {
-    // Imprimir los valores del estado en la consola
     console.log('Valores del estado:', state);
 
-    // Navegar a la siguiente pantalla (puede ser a la página de inicio en tu caso)
-    navigation.navigate(screen.home.home as never);
+    navigation.navigate(screen.account.ProfileVerificationNPScreen as never);
   };
 
   // Renderizar el componente
