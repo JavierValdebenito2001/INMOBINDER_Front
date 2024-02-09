@@ -52,6 +52,12 @@ export const stylePerson = StyleSheet.create({
         fontSize: 13,
         marginTop: '7%',
     },
+    input: {  
+        color: '#333', 
+        paddingVertical: 10, 
+        paddingRight: 10, 
+        fontSize: 16, 
+    }, 
 
     text1:{
         fontSize:13,
@@ -76,6 +82,7 @@ export const stylePerson = StyleSheet.create({
         marginTop: '7%',
         borderColor: 'rgb(152,152,152)',
         borderWidth: 1,
+        flexDirection: "row"
     },
 
     btnContinuer:{

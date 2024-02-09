@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, Alert, TextInput } from 'react-native';
 import { styles } from '../../styles';
 import { stylePerson } from './RegisterPersonStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/ca
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../utils/ScreenName.tsx';
 import {firebase } from '../../../../firebase-config.js';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 export function RegisterPersonScreen() {
   // Inicializar la navegación
@@ -16,9 +17,17 @@ export function RegisterPersonScreen() {
   
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => { 
+    setShowPassword(!showPassword); 
+}; 
+
   const [name, setName] = React.useState('')
   const [phone, setPhone] = React.useState('')
   const [rut, setRut] = React.useState('')
+
+
   registerUser = async (email, password, name, phone, rut, type, status) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -85,7 +94,24 @@ export function RegisterPersonScreen() {
           <Input placeholder='Ingresa el correo electrónico.' onChangeText={(text) => setEmail(text)} />
         </View>
         <View style={stylePerson.inputRegisterEmail}>
-          <Input placeholder='Ingrese una contraseña' onChangeText={(text) => setPassword(text)} />
+        <TextInput 
+  
+  // Set secureTextEntry prop to hide  
+  //password when showPassword is false 
+  secureTextEntry={!showPassword} 
+  value={password} 
+  onChangeText={setPassword} 
+  style={stylePerson.input} 
+  placeholder="Ingresa tu contraseña."
+  placeholderTextColor="#aaa"
+/> 
+<MaterialCommunityIcons 
+                    name={showPassword ? 'eye-off' : 'eye'} 
+                    size={24} 
+                    color="#aaa"
+                    style={{alignSelf: 'center', position: 'absolute', right: 10, top: 10, zIndex: 1}} 
+                    onPress={toggleShowPassword} 
+                /> 
         </View>
 
         <View style={stylePerson.inputRegisterEmail}>
