@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../utils/ScreenName.tsx';
 import {firebase } from '../../../../firebase-config.js';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import {validateRut, cleanRut } from 'rutlib'
 
 export function RegisterPersonScreen() {
   // Inicializar la navegación
@@ -29,9 +30,23 @@ export function RegisterPersonScreen() {
 
 
   registerUser = async (email, password, name, phone, rut, type, status) => {
+    if (!validateRut(rut)) { // Verificar si el RUT es válido
+      Alert.alert('El RUT ingresado no es válido.');
+      return;
+    }
+    
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({name, phone, rut, email, type:'1', status:'0' });
+      const creationDate = new Date(); // Obtener la fecha y hora actual
+      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({
+        name, 
+        phone, 
+        rut: cleanRut(rut), 
+        email, 
+        type:'1', 
+        status:'0',
+        creationDate: creationDate.toISOString() // Guardar la fecha de creación en formato ISO
+      });
       Alert.alert('Usuario registrado correctamente.');
     } catch (error) {
       Alert.alert('Error al registrar el usuario: ' + error.message);

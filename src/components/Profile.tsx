@@ -59,6 +59,7 @@ function EditProfile(){
   const [phone, setPhone] = useState('')
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
+  const [creationDate, setCreationDate] = useState('')
 
   
   useEffect(() => {
@@ -71,6 +72,7 @@ function EditProfile(){
         setPhone(data.phone);
         setType(Number(data.type));
         setStatus(Number(data.status)); // Convierte type a un número
+        setCreationDate(data.creationDate);
       } else { 
         console.log('No data available'); 
       } 
@@ -96,7 +98,7 @@ function EditProfile(){
                     <Ionicons style={{paddingRight:5, alignSelf:'center'}} size={30} name="calendar-outline"/>
                     <View style={{alignItems:'center', alignSelf:'center'}}>
                         <Text style={{fontWeight:'bold', fontSize:12}}>Fecha en que se unio</Text>
-                        <Text style={{color:'#DDE0E5', fontSize:10}}>14 de Junio de 2018</Text>
+                        <Text style={{color:'#DDE0E5', fontSize:10}}>{new Date(creationDate).toLocaleDateString()}</Text>
                     </View>
                 </View>
                 <Text style={{marginTop:-40, alignSelf:'center', paddingLeft:40}}>{getStatus(status)}</Text>
