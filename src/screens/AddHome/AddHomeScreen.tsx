@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, SafeAreaView, TextInput} from 'react-native'
+import { View, TouchableOpacity, SafeAreaView, TextInput, Alert} from 'react-native'
 import React, { useState } from 'react'
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { styles } from '../styles';
@@ -16,92 +16,58 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons/faSquareCheck'
+import { firebase } from '../../../firebase-config.js';
 
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../../../firebase-config';
-
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 export function AddHomeScreen() {
 
+  const [Titulo, setTitulo] = useState('');
+  const [GastosComunes, setGastosComunes] = useState('');
+  const [Estado, setEstado] = useState('');
+  const [MetrosCuadrados, setMetrosCuadrados] = useState('');
+  const [Region, setRegion] = useState('');
+  const [Comuna, setComuna] = useState('');
+  const [Direccion, setDireccion] = useState('');
+  const [Precio, setPrecio] = useState('');
+  const [Habitaciones, setHabitaciones] = useState('');
+  const [Sanitarios, setSanitarios] = useState('');
+  const [Descripcion, setDescripcion] = useState('');
+  
+
   const navigation = useNavigation();
-
-  //FOTO PRINCIPAL
-
-  const [image, setImage] = useState(null);
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      const [image, setImage] = useState<string | undefined>();
-    }
-  };
-
-  //CONEXION A FIRESTORE
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const querySnapshot = getDocs(collection(db, "Pais"));
-
-  const regionComuna = new Map();
-  const regiones = new Array();
-
-  querySnapshot.then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      regionComuna.set(doc.data().region, doc.data().comunas);
-      regiones.push(doc.data().region);
-    });
-  });
-
-  const [comunasData, setComunasData] = useState([]);
-  const [regionSelected, setRegionSelected] = useState("");
-  const [comunaSelected, setComunaSelected] = useState("");
 
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
   const estados = ['Disponible', 'No disponible'];
 
   //ESTADO LOCAL
 
-  const [state, setState] = useState({
-    titulo: '',
-    gastosComunes: '', 
-    estado: '',
-    metrosCuadrados: '',
-    region: '',
-    comuna: '',
-    direccion: '',
-    precio: '',
-    habitaciones: '',
-    sanitarios: '',
-    descripcion: '',
-  });
-
-  const handleChangeState = (name: string, value: any) => {
-    setState({...state, [name]: value});
-  };
-
-  const [fontsLoaded] = useFonts({
-    Cairo_700Bold,
-    Cairo_400Regular,
-  });
-  
-  if (!fontsLoaded) {
-    return null;
+  const saveProperty = async () => {
+    console.log(Titulo, GastosComunes, Estado, MetrosCuadrados, Region, Comuna, Direccion, Precio, Habitaciones, Sanitarios, Descripcion);
+    try {
+      const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+      const userId = firebase.auth().currentUser?.uid;
+      const data = {
+        Titulo,
+        GastosComunes,
+        Estado,
+        MetrosCuadrados,
+        Region,
+        Comuna,
+        Direccion,
+        Precio,
+        Habitaciones,
+        Sanitarios,
+        Descripcion,
+        createdAt: timestamp,
+        userId,
+      };
+      await firebase.firestore().collection('properties').add(data);
+      Alert.alert('Propiedad guardada correctamente.');
+    } catch (error) {
+      Alert.alert('Error al guardar la propiedad: ' + error.message);
+    }
   }
-
-  function handleLog(){
-    console.log(state);
-  };
-
+  
   //NAVEGACION
 
   function handleBack(){
@@ -135,15 +101,10 @@ export function AddHomeScreen() {
               <Text style= {AddHomeStyles.textAddHomeTitle}> Agregar Propiedades </Text>
 
               <Text style= {AddHomeStyles.text2}> Titulo </Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('titulo', value)}></TextInput>
-
-              <TouchableOpacity onPress={pickImage} style={AddHomeStyles.imgUpload}>
-                <Image source={image ? { uri: image } : require('../../../assets/images/ImageUploadIcon.png')} style={AddHomeStyles.imgUploadSize} />
-              </TouchableOpacity>
-
+              <TextInput style={AddHomeStyles.input} onChangeText={(text) => setTitulo(text)}></TextInput>
               <View style={AddHomeStyles.gastosComunes}>
                 <Text style={AddHomeStyles.text2}> Incluye gastos comunes por </Text>
-                <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeState('gastosComunes', value)}></TextInput>
+                <TextInput style={AddHomeStyles.inputGastosComunes}onChangeText={(text) => setGastosComunes(text)} keyboardType='numeric'></TextInput>
               </View>
 
               <View style = {AddHomeStyles.btnList3}>
@@ -152,7 +113,8 @@ export function AddHomeScreen() {
                   data={estados}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem);
-                    handleChangeState('estado', selectedItem);
+                    setEstado(selectedItem);
+                    ;
                   }}
                   defaultButtonText={'Estado'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -171,62 +133,18 @@ export function AddHomeScreen() {
               </View>
 
               <Text style = {AddHomeStyles.text2}> Metros cuadrados construidos </Text>
-              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric' onChangeText={(value)=>handleChangeState('metrosCuadrados', value)}></TextInput>
+              <TextInput style={AddHomeStyles.inputMetros} keyboardType='numeric' onChangeText={(text) => setMetrosCuadrados(text)} ></TextInput>
 
               <Text style = {AddHomeStyles.text2}>Dirección</Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('direccion', value)}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(text) => setDireccion(text)} ></TextInput>
 
               <View style={AddHomeStyles.btnList}>
 
-                <SelectDropdown
-                  data={regiones}
-                  onSelect={(selectedItem, index) => {
-                    setRegionSelected(selectedItem as string);
-                    setComunaSelected("");
-                    setComunasData(regionComuna.get(selectedItem));
-                    console.log(selectedItem, index);
-                    handleChangeState('region', selectedItem);
-                  }}
-                  defaultButtonText={regionSelected || 'Región'}
-                  buttonTextAfterSelection={(selectedItem, index) => {
-                    console.log(selectedItem, index);
-                    return selectedItem;
-                  }}
-                  rowTextForSelection={(item, index) => {
-                    return item;
-                  }}
-                  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
-                  buttonTextStyle={AddHomeStyles.text2}
-                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
-                  rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
-                  rowTextStyle={AddHomeStyles.text2}
-                />
-
-                <SelectDropdown
-                  data={comunasData}
-                  onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index);
-                    setComunaSelected(selectedItem);
-                    handleChangeState('comuna', selectedItem);
-                  }}
-                  defaultButtonText={comunaSelected || 'Comuna'}
-                  buttonTextAfterSelection={(selectedItem, index) => {
-                    return selectedItem;
-                  }}
-                  rowTextForSelection={(item, index) => {
-                    return item;
-                  }}
-                  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
-                  buttonTextStyle={AddHomeStyles.text2}
-                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
-                  rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
-                  rowTextStyle={AddHomeStyles.text2}
-                />
-
+                
               </View>
 
               <Text style = {AddHomeStyles.text2}>Disponible por</Text>
-              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeState('precio', value)}>
+              <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' onChangeText={(text) => setPrecio(text)} keyboardType='numeric' >
               </TextInput>
 
               <View style={AddHomeStyles.btnList}>
@@ -235,7 +153,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
-                    handleChangeState('habitaciones', selectedItem)
+                    setHabitaciones(selectedItem);
                   }}
                   defaultButtonText={'Habitaciones'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -255,7 +173,7 @@ export function AddHomeScreen() {
                   data={numbers}
                   onSelect={(selectedItem, index) => {
                     console.log(selectedItem, index);
-                    handleChangeState('sanitarios', selectedItem);
+                    setSanitarios(selectedItem);
                   }}
                   defaultButtonText={'Baños'}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -274,7 +192,7 @@ export function AddHomeScreen() {
               </View>
               
               <Text style = {AddHomeStyles.text2}>Descripción</Text>
-              <TextInput style={AddHomeStyles.input} onChangeText={(value)=>handleChangeState('descripcion', value)}></TextInput>
+              <TextInput style={AddHomeStyles.input} onChangeText={(text) => setDescripcion(text)} ></TextInput>
 
               <View style={{...AddHomeStyles.btnList2}}>
 
@@ -292,7 +210,7 @@ export function AddHomeScreen() {
 
               <Text>¿Deseas activar la detección dinámica en esta publicación?</Text>
              
-              <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}} onPress={handleLog}>
+              <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}} onPress={saveProperty}>
                 <FontAwesomeIcon icon = {faSquareCheck} size={20} style={AddHomeStyles.btnIcons}/>
                 <Text style={AddHomeStyles.text2}> Guardar propiedad </Text>
               </TouchableOpacity>
