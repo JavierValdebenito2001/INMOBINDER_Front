@@ -1,6 +1,6 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import { Image, Switch, Text, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
@@ -9,7 +9,7 @@ import { styles } from './MainDrawerStyles';
 import CentroDeAyuda from './CentroDeAyuda';
 import { useNavigation } from '@react-navigation/native';
 import MapScreen from '../screens/Home/MapScreen';
-import{ firebase } from '../../firebase-config';
+import { firebase } from '../../firebase-config';
 
 
 const Drawer = createDrawerNavigator();
@@ -17,16 +17,11 @@ const Drawer = createDrawerNavigator();
 
 export const MainDrawer = () => {
   return (
-    <Drawer.Navigator 
+    <Drawer.Navigator
       drawerContent={(props) => <MenuInterno {...props} />}
       initialRouteName='MapScreen'
     >
-      <Drawer.Screen name="MapScreen" 
-        component={MapScreen} 
-        options={{ 
-          title: '', // Oculta el título
-          headerTransparent: true, // Hace que el encabezado sea transparente
-        }} />
+      <Drawer.Screen name="MapScreen" component={MapScreen} />
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       <Drawer.Screen name="Help" component={Help} />
     </Drawer.Navigator>
@@ -48,71 +43,71 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
     // Opciones de botón después de cambiar el estado
     const opcionesBotonDespues = !deteccionDinamica
       ? [
-          {
-            text: 'Sí',
-            onPress: () => {
-              // Agregar lógica para la opción "Sí" aquí
-              // Por ejemplo, mostrar propiedades cercanas
-             
+        {
+          text: 'Sí',
+          onPress: () => {
+            // Agregar lógica para la opción "Sí" aquí
+            // Por ejemplo, mostrar propiedades cercanas
 
-              // Por ejemplo, navegar a la pantalla de propiedades cercanas
-              navigation.navigate('MisPublicaciones');
-            },
+
+            // Por ejemplo, navegar a la pantalla de propiedades cercanas
+            navigation.navigate('MisPublicaciones');
           },
-          {
-            text: 'No',
-            style: 'cancel',
-            onPress: () => {
-              // Agregar lógica para la opción "No" aquí
-                 // Mostrar un mensaje al usuario
-                Alert.alert('Has elegido no ver las propiedades cercanas.');
+        },
+        {
+          text: 'No',
+          style: 'cancel',
+          onPress: () => {
+            // Agregar lógica para la opción "No" aquí
+            // Mostrar un mensaje al usuario
+            Alert.alert('Has elegido no ver las propiedades cercanas.');
 
-                 // Guardar el estado de deteccionDinamica en el almacenamiento persistente
-                //AsyncStorage.setItem('deteccionDinamica', JSON.stringify(true));
+            // Guardar el estado de deteccionDinamica en el almacenamiento persistente
+            //AsyncStorage.setItem('deteccionDinamica', JSON.stringify(true));
 
-              // Volver a la pantalla de inicio
-              navigation.navigate('MapScreen');
-            },
+            // Volver a la pantalla de inicio
+            navigation.navigate('MapScreen');
           },
-        ]
+        },
+      ]
       : undefined;
 
     // Mostrar el mensaje con las opciones después de cambiar el estado
     Alert.alert(mensajeDespues, '', opcionesBotonDespues as any);
-   
+
 
   };
 
   const cerrarSesion = () => {
 
     // Agregar lógica para cerrar sesión aquí
-  
+
     // Mostrar un mensaje al usuario
     Alert.alert('Has cerrado sesión.');
 
-  
-  
+
+
     // Redirigir al usuario a la pantalla de inicio de sesión
     navigation.navigate('login');
   };
 
-//Recuperar nombre de usuario
-const [name, setName] = useState('')
-  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
-                                                                                                          setName(snapshot.data()) } 
-                                                                                                          else { 
-                                                                                                          console.log('No data available'); } })
-                                                                                                      
 
-//Recuperar Rut
-const [rut, setRut] = useState('')
-  firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => { if (snapshot.exists) {
-                                                                                                          setRut(snapshot.data()) } 
-                                                                                                          else { 
-                                                                                                          console.log('No data available'); } })
+  const [name, setName] = useState('')
+  const [rut, setRut] = useState('')
+  useEffect(() => {
+    firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).get().then((snapshot) => {
+      if (snapshot.exists) {
+        setName(snapshot.data())
+        setRut(snapshot.data())
+      }
+      else {
+        console.log('No data available');
+      }
+    })
+  }, []);
 
-                                                                                                          
-                                                                                                      
+
+
 
   return (
     <DrawerContentScrollView>
@@ -121,8 +116,8 @@ const [rut, setRut] = useState('')
           style={styles.avatar}
           source={require('../../assets/images/Camara.jpg')}
         />
-        <TouchableOpacity style={{position:'absolute', margin:20, alignSelf:'flex-end', marginVertical:90, paddingRight:10}} onPress={() => navigation.navigate('Profile')}>
-          <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
+        <TouchableOpacity style={{ position: 'absolute', margin: 20, alignSelf: 'flex-end', marginVertical: 90, paddingRight: 10 }} onPress={() => navigation.navigate('Profile')}>
+          <Text style={{ color: '#fff', fontWeight: 'bold' }}>Ver perfil</Text>
         </TouchableOpacity>
         <Text style={styles.avatarText}>
           {rut.rut}
@@ -163,7 +158,7 @@ const [rut, setRut] = useState('')
       </View>
       <View>
         <TouchableOpacity onPress={cerrarSesion}>
-        <Text style={styles.menuTextoCerrarSesion}>Cerrar sesión</Text>
+          <Text style={styles.menuTextoCerrarSesion}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
@@ -172,7 +167,7 @@ const [rut, setRut] = useState('')
             ¿Desea activar o desactivar la detección dinámica?
           </Text>
           <View style={{ alignItems: 'center' }}>
-          
+
           </View>
         </TouchableOpacity>
       </View>
