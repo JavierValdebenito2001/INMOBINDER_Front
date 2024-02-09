@@ -21,7 +21,12 @@ export const MainDrawer = () => {
       drawerContent={(props) => <MenuInterno {...props} />}
       initialRouteName='MapScreen'
     >
-      <Drawer.Screen name="MapScreen" component={MapScreen} />
+      <Drawer.Screen name="MapScreen" 
+        component={MapScreen} 
+        options={{ 
+          title: '', // Oculta el título
+          headerTransparent: true, // Hace que el encabezado sea transparente
+        }} />
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       <Drawer.Screen name="Help" component={Help} />
     </Drawer.Navigator>
