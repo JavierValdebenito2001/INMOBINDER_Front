@@ -7,6 +7,7 @@ import { screen } from '../utils/ScreenName';
 import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
 import{ firebase } from '../../firebase-config';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import {formatRut} from 'rutlib'
 
 
 
@@ -115,7 +116,7 @@ function EditProfile(){
                         {phone}
                     </Text>
                     <Text style={styles.box}>
-                        {rut}
+                        {formatRut(rut)}
                     </Text>
                 </View>
                 <View style={{ paddingTop:30, alignItems:'center'}}>

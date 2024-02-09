@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
+import {formatRut} from 'rutlib'
 
 import CentroDeAyuda from './CentroDeAyuda';
 import { useNavigation } from '@react-navigation/native';
@@ -115,7 +116,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
         </TouchableOpacity>
         <Text style={styles.avatarText}>
-                {rut.rut}
+                {formatRut(rut.rut)}
                  </Text>
                 <Text style={styles.avatarText}>
                 {name.name}
