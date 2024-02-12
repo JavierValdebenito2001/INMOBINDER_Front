@@ -58,7 +58,7 @@ const Details =()=>{
                 <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
             </View>
                 <View style={{flexDirection:'row'}}>
-                    <Image source={property?.imagen} style={styles.avatar}/>
+                {property?.imageUrls && property?.imageUrls.length > 0 && <Image source={{uri: property.imageUrls[0]}} style={styles.avatar}/>}
                     <TouchableOpacity
                         style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'center', margin:20, padding:5}}>
                         <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>

@@ -42,7 +42,7 @@ const MisPublicaciones: React.FC = () => {
     }, []);
   const  renderItem = ({ item }: { item: any }) => (
     <View key={item.id} style={PublicacionStyles.publicacionContainer}>
-      <Image source={item.imagen} style={PublicacionStyles.imagen} />
+      {item.imageUrls && <Image source={{uri : Array.isArray(item.imageUrls) ? item.imageUrls[0] : item.imageUrls}} style={PublicacionStyles.imagen} />}
       <View style={PublicacionStyles.contenidoCentrado}>
         <Text style={PublicacionStyles.subtitulo}>{`Propiedad ${item.Titulo}`}</Text>
         <Text style={PublicacionStyles.precio}>{item.Precio}</Text>

@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, SafeAreaView, TextInput, Alert} from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { styles } from '../styles';
 import { Text, Image } from '@rneui/base';
@@ -13,6 +13,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import SelectDropdown from 'react-native-select-dropdown';
+import { ImageContext } from './Gallery/ImageContext';
 
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
@@ -21,6 +22,7 @@ import { firebase } from '../../../firebase-config.js';
 
 
 export function AddHomeScreen() {
+  const { images } = useContext(ImageContext);
 
   const [Titulo, setTitulo] = useState('');
   const [GastosComunes, setGastosComunes] = useState('');
@@ -36,6 +38,7 @@ export function AddHomeScreen() {
   const [regionSelected, setRegionSelected] = useState("");
   const [comunaSelected, setComunaSelected] = useState("");
   
+  
 
   const regionComuna = new Map();
   const [regiones, setRegiones] = useState([]);
@@ -45,6 +48,9 @@ export function AddHomeScreen() {
 
   const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
   const estados = ['Disponible', 'No disponible'];
+
+  const [image, setImage] = React.useState(null);
+  const [uploading, setUploading] = React.useState(false);
 
   const saveProperty = async () => {
     console.log(Titulo, GastosComunes, Estado, MetrosCuadrados, regionSelected, comunaSelected, Direccion, Precio, Habitaciones, Sanitarios, Descripcion);
@@ -66,13 +72,62 @@ export function AddHomeScreen() {
         createdAt: timestamp,
         userId,
       };
-      await firebase.firestore().collection('properties').add(data);
+      const docRef = await firebase.firestore().collection('properties').add(data);
+  
+      // Subir las imágenes a Firebase
+      const uploadImage = async (uri: string, imageName: string) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const ref = firebase.storage().ref().child(`images/${docRef.id}/${imageName}`);
+        await ref.put(blob);
+        return ref.getDownloadURL(); // Obtener la URL de la imagen
+      };
+  
+      // Generar un nombre único para cada imagen
+      const imageNames = images.map((image, index) => `image_${index}.jpg`);
+  
+      // Subir todas las imágenes
+      const uploadPromises = images.map((image, index) => uploadImage(image, imageNames[index]));
+      const imageUrls = await Promise.all(uploadPromises); // Obtener todas las URLs de las imágenes
+  
+      // Guardar las URLs de las imágenes en la base de datos
+      await docRef.update({ imageUrls });
+  
       Alert.alert('Propiedad guardada correctamente.');
     } catch (error) {
       Alert.alert('Error al guardar la propiedad: ' + error.message);
     }
-  }
-  
+      setUploading(true);    
+       try {
+         const { uri } = await FileSystem.getInfoAsync(image);
+         const blob = await new Promise((resolve, reject) => {
+           const xhr = new XMLHttpRequest();
+           xhr.onload = function() {
+             resolve(xhr.response);
+           };
+           xhr.onerror = function(e) {
+             console.log(e);
+             reject(new TypeError('Network request failed'));
+           };
+           xhr.responseType = 'blob';
+           xhr.open('GET', uri, true);
+           xhr.send(null);
+         });
+    
+         // Use a timestamp to create a unique filename
+         const timestamp = Date.now();
+         const filename = `image_${timestamp}_${uuidv4()}.jpg`;
+         const ref = firebase.storage().ref().child('images/' + filename);
+      
+         await ref.put(blob);
+         setUploading(false);
+         Alert.alert('Imagen subida');
+         setImage(null);
+       } catch(err) {
+         console.log('Error: ', err);
+         setUploading(false);
+       }
+  }  
 
   useEffect(() => {
     const loadPaisData = async () => {
