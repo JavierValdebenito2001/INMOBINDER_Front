@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,21 +14,39 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils/ScreenName";
 import { styles } from "../styles";
-import Data from './Data';
-import Details from "./Details";
+import { firebase } from '../../../firebase-config.js';
 
 
 
-const MisPublicacionesScreen: React.FC = () => {
+const MisPublicaciones: React.FC = () => {
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
+  const [properties, setProperties] = useState([]);
 
+  useEffect(() => {
+    const fetchProperties = async () => {
+      const userId = firebase.auth().currentUser?.uid;
+      const propertiesSnapshot = await firebase.firestore()
+        .collection('properties')
+        .where('userId', '==', userId)
+        .get();
+        
+        const propertiesData = propertiesSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setProperties(propertiesData);
+      };
+  
+      fetchProperties();
+    }, []);
   const  renderItem = ({ item }: { item: any }) => (
     <View key={item.id} style={PublicacionStyles.publicacionContainer}>
       <Image source={item.imagen} style={PublicacionStyles.imagen} />
       <View style={PublicacionStyles.contenidoCentrado}>
-        <Text style={PublicacionStyles.subtitulo}>{`Propiedad #${item.id}`}</Text>
-        <Text style={PublicacionStyles.precio}>{item.precio}</Text>
-        <Text style={PublicacionStyles.direccion}>{item.direccion}</Text>
+        <Text style={PublicacionStyles.subtitulo}>{`Propiedad ${item.Titulo}`}</Text>
+        <Text style={PublicacionStyles.precio}>{item.Precio}</Text>
+        <Text style={PublicacionStyles.direccion}>{item.Direccion}</Text>
         <TouchableOpacity
           style={PublicacionStyles.boton}
           onPress={() => verdetalles(item.id)}
@@ -79,7 +97,7 @@ const MisPublicacionesScreen: React.FC = () => {
       </TouchableOpacity>
 
       <FlatList
-        data={Data}
+        data={properties}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={() => (
@@ -185,4 +203,4 @@ const PublicacionStyles = StyleSheet.create({
   }
 });
 
-export default MisPublicacionesScreen;
+export default MisPublicaciones;

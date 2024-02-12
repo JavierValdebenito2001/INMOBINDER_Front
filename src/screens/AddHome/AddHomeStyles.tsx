@@ -16,7 +16,6 @@ export const AddHomeStyles = StyleSheet.create({
         shadowColor: "rgba(0, 0, 0, 1)",
         backgroundColor: 'rgb(255, 255, 255)',
     },
-
     container:{
         flex: 1,
     },

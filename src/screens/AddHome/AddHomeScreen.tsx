@@ -8,6 +8,7 @@ import { Ionicons} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'

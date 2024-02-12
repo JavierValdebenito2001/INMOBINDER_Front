@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList} from 'react-native'
 import Constants from 'expo-constants'
 import { AddHomeGalleryStyles } from '../AddHome/Gallery/AddHomeGalleryStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName'
-import Data from './Data';
 import { useRoute } from '@react-navigation/native';
+import { firebase } from '../../../firebase-config.js';
 
 const ancho = Dimensions.get('window').width; 
 const alto = Dimensions.get('window').height; 
@@ -17,26 +17,46 @@ const Details =()=>{
     const route = useRoute();
     const { itemId } = route.params;
     const navigation = useNavigation();
+    const [property, setProperty] = useState(null);
+
+    useEffect(() => {
+        const fetchProperty = async () => {
+            const propertyDocument = await firebase.firestore()
+                .collection('properties')
+                .doc(itemId)
+                .get();
+            
+            if (propertyDocument.exists) {
+                setProperty({ id: propertyDocument.id, ...propertyDocument.data() });
+            }
+        };
+
+        fetchProperty();
+    }, []);
+
+    if (!property) {
+        return null;
+    }
 
     function handleBack(){
         navigation.navigate(screen.account.MisPublicaciones);
       }
     
-      const property = Data.find((property) => property.id === itemId);
+
 
     return(
-        <View style={styles.container}>
-            <TouchableOpacity style= {styles.back} onPress={handleBack}>
-                <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
-                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
-            </TouchableOpacity>
-            
-        <View style={styles.containershadow}>
-                <Text style={styles.title}>Propiedad</Text>
-                <View style={{ paddingTop:30, alignItems:'center'}}>
-                    <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {itemId}</Text>
-                    <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
-                </View>
+<View style={styles.container}>
+        <TouchableOpacity style= {styles.back} onPress={handleBack}>
+            <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
+            <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
+        </TouchableOpacity>
+        
+    <View style={styles.containershadow}>
+            <Text style={styles.title}>Propiedad</Text>
+            <View style={{ paddingTop:30, alignItems:'center'}}>
+                <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {property.Titulo}</Text>
+                <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
+            </View>
                 <View style={{flexDirection:'row'}}>
                     <Image source={property?.imagen} style={styles.avatar}/>
                     <TouchableOpacity
@@ -46,29 +66,29 @@ const Details =()=>{
                 </TouchableOpacity>
                 </View>
                 <View style={{alignItems:'center'}}>
-                    <Text>Incluye Gastos comunes por :{property?.gc}</Text>
-                    <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado:{property?.estado}</Text>
-                    <Text>{property?.mcc}</Text>
+                    <Text>Incluye Gastos comunes por :{property.GastosComunes}</Text>
+                    <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado:{property.Estado}</Text>
+                    <Text>{property.MetrosCuadrados}</Text>
                     <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
-                    <Text>{property?.direccion}</Text>
+                    <Text>{property.Direccion}</Text>
                     <View style={{flexDirection:'row'}}>
                         <View style={{marginHorizontal:40, marginVertical:15}}>
                     <Text style={{fontWeight:'bold'}}>Region</Text>
-                    <Text>{property?.region}</Text>
+                    <Text>{property.regionSelected}</Text>
                         </View>
                         <View style={{marginHorizontal:40, marginVertical:15}}>
                     <Text style={{fontWeight:'bold'}}>Comuna</Text>
-                    <Text>{property?.comuna}</Text>
+                    <Text>{property?.comunaSelected}</Text>
                         </View>
                     </View>
-                    <Text>Dsiponible por: {property?.precio}</Text>
+                    <Text>Disponible por: {property?.Precio}</Text>
                     <View style={{flexDirection:'row', }}>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.habitaciones}</Text>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.baños}</Text>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Habitaciones}</Text>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Sanitarios}</Text>
                     </View>
                     <Text style={{fontWeight:'bold'}}>Descripcion</Text>
                     
-                    <Text>{property?.descripcion}</Text>
+                    <Text>{property?.Descripcion}</Text>
                 </View>
                 
                 
