@@ -66,9 +66,9 @@ const Details =()=>{
                 </TouchableOpacity>
                 </View>
                 <View style={{alignItems:'center'}}>
-                    <Text>Incluye Gastos comunes por :{property.GastosComunes}</Text>
+                    <Text>Incluye Gastos comunes por :${property.GastosComunes}</Text>
                     <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado:{property.Estado}</Text>
-                    <Text>{property.MetrosCuadrados}</Text>
+                    <Text>{property.MetrosCuadrados} metros cuadrados construidos</Text>
                     <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
                     <Text>{property.Direccion}</Text>
                     <View style={{flexDirection:'row'}}>
@@ -81,13 +81,12 @@ const Details =()=>{
                     <Text>{property?.comunaSelected}</Text>
                         </View>
                     </View>
-                    <Text>Disponible por: {property?.Precio}</Text>
+                    <Text>Disponible por: ${property?.Precio}</Text>
                     <View style={{flexDirection:'row', }}>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Habitaciones}</Text>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Sanitarios}</Text>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Habitaciones} Habitaciones</Text>
+                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.Sanitarios} Baños</Text>
                     </View>
                     <Text style={{fontWeight:'bold'}}>Descripcion</Text>
-                    
                     <Text>{property?.Descripcion}</Text>
                 </View>
                 
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
         },
     avatar: {
         width: 200,
-        height: 150,      
+        height:150,      
         resizeMode: 'contain'
     },
     imagen: {

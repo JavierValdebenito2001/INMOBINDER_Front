@@ -28,6 +28,7 @@ const AccountStack = {
     IndependentBrokerScreen: 'IndependentBrokerScreen',  
     BrokerageAgencyScreen: 'BrokerageAgencyScreen',
     ProfileVerificationBA: 'ProfileVerificationBA',
+    FilteredProperty: 'FilteredProperty',
   };
 
 const HomeStack = {

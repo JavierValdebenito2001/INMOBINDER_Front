@@ -29,6 +29,7 @@ import ProfileVerificationScreen from "../screens/Register/RunnersRegistration/P
 import { IndependentBrokerScreen } from "../screens/Register/RunnersRegistration/IndependentBroker/IndependentBrokerScreen";
 import { BrokerageAgencyScreen } from "../screens/Register/RunnersRegistration/BrokerageAgency/BrokerageAgencyScreen";
 import ProfileVerificationBA from "../screens/Register/RunnersRegistration/ProfileVerificationBA/ProfileVerificationBA";
+import FilteredProperty from "../screens/WishProperty/FilteredProperty";
 
 
 
@@ -52,6 +53,11 @@ export function AccountStack() {
             <Stack.Screen 
                 name={screen.account.EditProfile} 
                 component={EditProfile}        
+            />
+             
+            <Stack.Screen 
+                name={screen.account.FilteredProperty} 
+                component={FilteredProperty}        
             />
 
             <Stack.Screen 

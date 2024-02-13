@@ -10,10 +10,13 @@ import { screen } from '../../utils/ScreenName';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import SelectDropdown from 'react-native-select-dropdown';
-import { ImageContext } from './Gallery/ImageContext';
+import { ImageContext } from '../AddHome/Gallery/ImageContext.tsx';
 
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
@@ -23,6 +26,7 @@ import { firebase } from '../../../firebase-config.js';
 
 export function AddHomeScreen() {
   const { images } = useContext(ImageContext);
+  const { setImages } = useContext(ImageContext);
 
   const [Titulo, setTitulo] = useState('');
   const [GastosComunes, setGastosComunes] = useState('');
@@ -53,6 +57,12 @@ export function AddHomeScreen() {
   const [uploading, setUploading] = React.useState(false);
 
   const saveProperty = async () => {
+    // Verificar que todos los campos estén llenos
+    if (!Titulo || !GastosComunes || !Estado || !MetrosCuadrados || !regionSelected || !comunaSelected || !Direccion || !Precio || !Habitaciones || !Sanitarios || !Descripcion) {
+      Alert.alert('Todos los campos son obligatorios.');
+      return; // Salir de la función
+    }
+    let blob; // Define blob here
     console.log(Titulo, GastosComunes, Estado, MetrosCuadrados, regionSelected, comunaSelected, Direccion, Precio, Habitaciones, Sanitarios, Descripcion);
     try {
       const timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -92,42 +102,14 @@ export function AddHomeScreen() {
   
       // Guardar las URLs de las imágenes en la base de datos
       await docRef.update({ imageUrls });
-  
+      setImages([]);
       Alert.alert('Propiedad guardada correctamente.');
+  
     } catch (error) {
       Alert.alert('Error al guardar la propiedad: ' + error.message);
     }
-      setUploading(true);    
-       try {
-         const { uri } = await FileSystem.getInfoAsync(image);
-         const blob = await new Promise((resolve, reject) => {
-           const xhr = new XMLHttpRequest();
-           xhr.onload = function() {
-             resolve(xhr.response);
-           };
-           xhr.onerror = function(e) {
-             console.log(e);
-             reject(new TypeError('Network request failed'));
-           };
-           xhr.responseType = 'blob';
-           xhr.open('GET', uri, true);
-           xhr.send(null);
-         });
-    
-         // Use a timestamp to create a unique filename
-         const timestamp = Date.now();
-         const filename = `image_${timestamp}_${uuidv4()}.jpg`;
-         const ref = firebase.storage().ref().child('images/' + filename);
-      
-         await ref.put(blob);
-         setUploading(false);
-         Alert.alert('Imagen subida');
-         setImage(null);
-       } catch(err) {
-         console.log('Error: ', err);
-         setUploading(false);
-       }
-  }  
+  }
+  
 
   useEffect(() => {
     const loadPaisData = async () => {
@@ -218,6 +200,11 @@ export function AddHomeScreen() {
     setComunasData(comunas.get(selectedItem));
   }}
   defaultButtonText={regionSelected || 'Región'}
+  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
+                  buttonTextStyle={AddHomeStyles.text2}
+                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
+                  rowStyle={AddHomeStyles.dropdown2RowStyle}
+                  rowTextStyle={AddHomeStyles.text2}
 />
 
 <SelectDropdown
@@ -226,6 +213,11 @@ export function AddHomeScreen() {
     setComunaSelected(selectedItem);
   }}
   defaultButtonText={comunaSelected || 'Comuna'}
+  buttonStyle={AddHomeStyles.dropdown2BtnStyle}
+                  buttonTextStyle={AddHomeStyles.text2}
+                  dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
+                  rowStyle={AddHomeStyles.dropdown2RowStyle}
+                  rowTextStyle={AddHomeStyles.text2}
 />
               </View>
 

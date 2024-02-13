@@ -44,6 +44,20 @@ export const WishPropertyScreen: React.FC<WishPropertyScreenProps> = () => {
   function handleBack() {
     navigation.navigate(screen.account.MainDrawer);
   }
+  function filterProperty() {
+    navigation.navigate(screen.account.FilteredProperty, {
+      minPrice,
+      maxPrice,
+      minBedrooms,
+      maxBedrooms,
+      minBathrooms,
+      maxBathrooms,
+      minCommonExpenses,
+      maxCommonExpenses,
+      minBuiltArea,
+      maxBuiltArea,
+    });
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -119,6 +133,9 @@ export const WishPropertyScreen: React.FC<WishPropertyScreenProps> = () => {
           onMinValueChange={setMinBuiltArea}
           onMaxValueChange={setMaxBuiltArea}
         />
+        <TouchableOpacity style={WishPropertyStyles.SectionInputBox} onPress={filterProperty}>
+          <Text >Buscar</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
