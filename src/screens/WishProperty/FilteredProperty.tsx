@@ -24,31 +24,30 @@ const FilteredProperty: React.FC = ({ route }) => {
     const [properties, setProperties] = useState([]);
 
     useEffect(() => {
-        const fetchProperties = async () => {
-          const userId = firebase.auth().currentUser?.uid;
-          const propertiesSnapshot = await firebase.firestore().collection('properties').where('userId', '==', userId).get();
-            
-          let propertiesData = propertiesSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
-      
-          if (minPrice) propertiesData = propertiesData.filter(property => property.Precio >= Number(minPrice));
-          if (maxPrice) propertiesData = propertiesData.filter(property => property.Precio <= Number(maxPrice));
-          if (minBedrooms) propertiesData = propertiesData.filter(property => property.Dormitorios >= Number(minBedrooms));
-          if (maxBedrooms) propertiesData = propertiesData.filter(property => property.Dormitorios <= Number(maxBedrooms));
-          if (minBathrooms) propertiesData = propertiesData.filter(property => property.Baños >= Number(minBathrooms));
-          if (maxBathrooms) propertiesData = propertiesData.filter(property => property.Baños <= Number(maxBathrooms));
-          if (minCommonExpenses) propertiesData = propertiesData.filter(property => property.GastosComunes >= Number(minCommonExpenses));
-          if (maxCommonExpenses) propertiesData = propertiesData.filter(property => property.GastosComunes <= Number(maxCommonExpenses));
-          if (minBuiltArea) propertiesData = propertiesData.filter(property => property.MetrosConstruidos >= Number(minBuiltArea));
-          if (maxBuiltArea) propertiesData = propertiesData.filter(property => property.MetrosConstruidos <= Number(maxBuiltArea));
-      
-          setProperties(propertiesData);
-        };
-      
-        fetchProperties();
-      }, []);
+      const fetchProperties = async () => {
+        const propertiesSnapshot = await firebase.firestore().collection('properties').get();
+          
+        let propertiesData = propertiesSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+    
+        if (minPrice) propertiesData = propertiesData.filter(property => property.Precio >= Number(minPrice));
+        if (maxPrice) propertiesData = propertiesData.filter(property => property.Precio <= Number(maxPrice));
+        if (minBedrooms) propertiesData = propertiesData.filter(property => property.Dormitorios >= Number(minBedrooms));
+        if (maxBedrooms) propertiesData = propertiesData.filter(property => property.Dormitorios <= Number(maxBedrooms));
+        if (minBathrooms) propertiesData = propertiesData.filter(property => property.Baños >= Number(minBathrooms));
+        if (maxBathrooms) propertiesData = propertiesData.filter(property => property.Baños <= Number(maxBathrooms));
+        if (minCommonExpenses) propertiesData = propertiesData.filter(property => property.GastosComunes >= Number(minCommonExpenses));
+        if (maxCommonExpenses) propertiesData = propertiesData.filter(property => property.GastosComunes <= Number(maxCommonExpenses));
+        if (minBuiltArea) propertiesData = propertiesData.filter(property => property.MetrosConstruidos >= Number(minBuiltArea));
+        if (maxBuiltArea) propertiesData = propertiesData.filter(property => property.MetrosConstruidos <= Number(maxBuiltArea));
+    
+        setProperties(propertiesData);
+      };
+    
+      fetchProperties();
+    }, []);
 
 
   const  renderItem = ({ item }: { item: any }) => (
