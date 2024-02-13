@@ -1,64 +1,79 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import React,{ useState, useEffect, useLayoutEffect, useCallback} from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput} from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
 import { screen } from '../utils/ScreenName';
 import Constants from 'expo-constants'
+import { collection, addDoc, orderBy, query, onSnapshot, doc} from 'firebase/firestore';
+import { firebase } from '../../firebase-config';
+import { AntDesign } from '@expo/vector-icons';
+import { GiftedChat } from 'react-native-gifted-chat';
+import { auth } from '../../firebase-config';
+import {signOut} from 'firebase/auth';
 
 const Mensajes = () => {
 
+    const [messages, setMessages] = useState([]);
     const navigation = useNavigation();
+    
+    const onSignOut = () => {
+        signOut(auth).catch((error) => console.log(error))};
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity style={{marginRight: 20}} onPress={onSignOut}>
+                    <AntDesign name="logout" size={24} color="black" />
+                </TouchableOpacity>
+                )
+            })}, [navigation]);
+
+    useLayoutEffect(() => {
+        const collectionRef = collection(firebase.firestore(), 'chats');
+        const q = query(collectionRef, orderBy('createdAt', 'desc'));
+    
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            console.log('snapshot');
+            setMessages(snapshot.docs.map(doc => ({
+                _id: doc.id,
+                createdAt: doc.data().createdAt.toDate(),
+                text: doc.data().text,
+                user: doc.data().user
+            })));
+        });
+    
+        return () => unsubscribe(); // remember to unsubscribe on cleanup
+    }, []);
+
+
+    const onSend = useCallback((messages = []) => {
+        setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
+        
+        const {_id, createdAt, text, user } = messages[0];
+        addDoc(collection(firebase.firestore(), 'chats'),{
+            _id,
+            createdAt,
+            text,
+            user
+        });
+    }, []);
+
     function handleBack() {
         navigation.navigate(screen.account.MainDrawer);
     }
 
     return (
-        <View style={styles.container2}>
-            <TouchableOpacity style={styles.back} onPress={handleBack}>
-                <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
-                <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
-            </TouchableOpacity>
-            <View style={styles.container}>
-                <Text style={styles.title} >Mensajes</Text>
-                <View style={styles.subcontainer}>
-                    <TouchableOpacity style={styles.chat}>
-                        <View style={styles.InnerOval}>
-                            <Text style={styles.messageText}>3 mensajes nuevos</Text>
-                        </View>
-                        <View style={styles.innerCircle}></View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.chat}>
-                        <View style={styles.InnerOval}>
-                            <Text style={styles.messageText}>2 mensajes nuevos</Text>
-                        </View>
-                        <View style={styles.innerCircle}></View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.chat}>
-                        <View style={styles.InnerOval}>
-                            <Text style={styles.messageText}>3 mensajes nuevos</Text>
-                        </View>
-                        <View style={styles.innerCircle}></View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.chat}>
-                        <View style={styles.InnerOval}>
-                            <Text style={styles.messageText}>1 mensajes nuevos</Text>
-                        </View>
-                        <View style={styles.innerCircle}></View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.chat}>
-                        <View style={styles.InnerOval}>
-                            <Text style={styles.messageText}>4 mensajes nuevos</Text>
-                        </View>
-                        <View style={styles.innerCircle}></View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+        <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+            _id: auth.currentUser.uid,
+            avatar:'https://i.pravatar.cc/300',
+        }}
+        messagesContainerStyle={{backgroundColor: '#FFF'}}
+        
+        />
     )
 }
 
@@ -68,7 +83,8 @@ const styles = StyleSheet.create({
         paddingTop: 50,
     },
     container2 : {
-        marginTop: Constants.statusBarHeight
+        marginTop: Constants.statusBarHeight,
+        flex:1
     },
     title: {
         fontSize: 30,
@@ -127,6 +143,21 @@ const styles = StyleSheet.create({
     logoBack: {
         color: 'rgb(0,0,0)',
         marginRight: -10,
+    },inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+    },
+    input: {
+        flex: 1,
+        borderWidth: 1,
+        marginRight: 10,
+    },
+    sendButton: {
+        padding: 10,
+        backgroundColor: '#4CAF50',
+        borderRadius: 5,
     },
 });
 export default Mensajes

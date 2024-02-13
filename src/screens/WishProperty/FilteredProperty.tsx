@@ -57,6 +57,7 @@ const FilteredProperty: React.FC = ({ route }) => {
         <Text style={PublicacionStyles.subtitulo}>{`Propiedad ${item.Titulo}`}</Text>
         <Text style={PublicacionStyles.precio}>{item.Precio}</Text>
         <Text style={PublicacionStyles.direccion}>{item.Direccion}</Text>
+        <View style={{flexDirection:'row'}}>
         <TouchableOpacity
           style={PublicacionStyles.boton}
           onPress={() => verdetalles(item.id)}
@@ -66,6 +67,16 @@ const FilteredProperty: React.FC = ({ route }) => {
             <FontAwesome name="edit" size={12} color="black" /> Ver Detalles
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={PublicacionStyles.boton}
+          onPress={() => contactar(item.userId)}
+        >
+          <Text style={PublicacionStyles.textoBoton}>
+            {" "}
+            <FontAwesome name="edit" size={12} color="black" /> Contactar
+          </Text>
+        </TouchableOpacity>
+        </View>
         {showDeleteIcons && (
           <TouchableOpacity
             style={PublicacionStyles.eliminarIconContainer}
@@ -81,6 +92,10 @@ const FilteredProperty: React.FC = ({ route }) => {
 
   function verdetalles(itemId: string) {
     navigation.navigate('Details', { itemId });
+  }
+
+  function contactar(userId: string) {
+    navigation.navigate('Mensajes', { userId });
   }
 
   const handleDetalles = (item: any) => {
