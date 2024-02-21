@@ -45,7 +45,6 @@ export function LoginScreen() {
       navigation.navigate('MainDrawer' as never);
     } catch (error) {
       Alert.alert('Error al autenticar el usuario: ' + error);
-      console.log(email, password);
     }
   };
 

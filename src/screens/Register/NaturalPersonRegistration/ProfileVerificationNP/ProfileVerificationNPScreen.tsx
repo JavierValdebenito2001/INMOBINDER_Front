@@ -41,7 +41,7 @@ export default function ProfileVerificationNPScreen() {
   const guardarArchivo = async (userId: string, documento: DocumentoType) => {
     const storageRef = firebase.storage().ref();
     const userFileRef = storageRef.child(`userFiles/${userId}/${documento.name}`);
-
+    
     try {
       const snapshot = await userFileRef.put(documento as never );
       Alert.alert(`Archivo ${documento.name} subido con éxito`);
@@ -51,7 +51,7 @@ export default function ProfileVerificationNPScreen() {
     }
   };
 
-  const go = () => {
+  const handleContinuer = () => {
     navigation.navigate('MainDrawer' as never);
   };
 
@@ -81,7 +81,7 @@ export default function ProfileVerificationNPScreen() {
 
         <View style={styleIndependient.containerbtns}>
           <View>
-            <Text style={{ ...styleIndependient.textOmitir }} onPress={() => {go}}> Omitir </Text>
+            <Text style={{ ...styleIndependient.textOmitir }} onPress={handleContinuer}> Omitir </Text>
           </View>
 
           <Button buttonStyle={styleIndependient.btnStyle2} onPress={() => documento && guardarArchivo(userId ?? '', documento)}>

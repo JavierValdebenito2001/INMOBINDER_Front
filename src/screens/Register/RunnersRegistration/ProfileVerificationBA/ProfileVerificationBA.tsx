@@ -1,6 +1,6 @@
 // Importa las bibliotecas necesarias
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity} from 'react-native'; 
+import { Text, View, SafeAreaView, TouchableOpacity, Alert} from 'react-native'; 
 import { Button, Image } from '@rneui/base';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import { styles } from '../../../styles';
 import { styleIndependient } from './ProfileVerificationBAStyles';
 import { screen } from '../../../../utils/ScreenName';
 import { Ionicons } from '@expo/vector-icons';
+import {firebase } from '../../../../../firebase-config';
+
 
 // Define el tipo para el documento
 type DocumentoType = {
@@ -22,12 +24,9 @@ type DocumentoType = {
 // Componente de la pantalla de verificación de perfil
 export default function ProfileVerificationBA() {
   
-  function handleContinuer(){
-    navigation.navigate('MainDrawer' as never);
-  }
-
   // Inicializa el estado para el documento
-  const [documento, setDocumento] = useState<DocumentoType | null>(null);
+  const [documentos, setDocumentos] = useState<DocumentoType[]>([]);
+  const userId = firebase.auth().currentUser?.uid;
 
   // Configura la navegación
   const navigation = useNavigation();
@@ -36,8 +35,26 @@ export default function ProfileVerificationBA() {
   const seleccionarArchivo = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     if (!result.canceled && result.assets.length > 0) {
-      setDocumento(result.assets[0] as DocumentoType);
+        setDocumentos(prevDocumentos => [...prevDocumentos, result.assets[0] as DocumentoType]);
     }
+  }
+  const guardarArchivos = async (userId: string, documentos: DocumentoType[]) => {
+    const storageRef = firebase.storage().ref();
+
+    for (const documento of documentos) {
+        const userFileRef = storageRef.child(`userFiles/${userId}/${documento.name}`);
+        try {
+            const snapshot = await userFileRef.put(documento as never);
+            Alert.alert(`Archivo ${documento.name} subido con éxito`);
+        } catch (error) {
+            Alert.alert(`Error al subir el archivo ${documento.name}: `, String(error));
+        }
+    }
+    navigation.navigate('MainDrawer' as never);
+  };
+  
+  function handleContinuer(){
+    navigation.navigate('MainDrawer' as never);
   }
   
   // Renderiza el componente
@@ -58,7 +75,9 @@ export default function ProfileVerificationBA() {
           <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
             <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
           </Button>
-          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> 
+          {documentos.length > 0 ? documentos.map(doc => doc.name).join(', ') : 'Ningún archivo seleccionado'}
+          </Text>
         </View>
         <View style={styleIndependient.contenttext}>
           <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
@@ -71,7 +90,9 @@ export default function ProfileVerificationBA() {
           <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
             <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
           </Button>
-          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> 
+          {documentos.length > 0 ? documentos.map(doc => doc.name).join(', ') : 'Ningún archivo seleccionado'}
+          </Text>
         </View>
         <View style={styleIndependient.contenttext}>
           <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
@@ -84,7 +105,9 @@ export default function ProfileVerificationBA() {
           <Button containerStyle={styleIndependient.containerBtn} buttonStyle={styleIndependient.btnStyle} onPress={seleccionarArchivo}>
             <Text style={{ ...styleIndependient.textBtn, fontFamily: 'Cairo_400Regular'}}> Seleccionar Archivo</Text>
           </Button>
-          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> {documento ? documento.name : 'Ningún archivo seleccionado'}</Text>
+          <Text style={{ ...styleIndependient.textContainer, fontFamily: 'Cairo_400Regular'}}> 
+          {documentos.length > 0 ? documentos.map(doc => doc.name).join(', ') : 'Ningún archivo seleccionado'}
+          </Text>
         </View>
         <View style={styleIndependient.contenttext}>
           <Text style={{ ...styleIndependient.text}}>Tipo de archivos permitidos: PDF, DOC, DOCX</Text>
@@ -94,9 +117,9 @@ export default function ProfileVerificationBA() {
         {/* Botones para omitir y enviar */}
         <View style={styleIndependient.containerbtns}>
           <View >
-            <Text style={{ ...styleIndependient.textOmitir}}> Omitir</Text>
+            <Text style={{ ...styleIndependient.textOmitir}} onPress={handleContinuer}> Omitir</Text>
           </View>
-          <Button buttonStyle={styleIndependient.btnStyle2} onPress={handleContinuer}>
+          <Button buttonStyle={styleIndependient.btnStyle2} onPress={() => documentos.length > 0 && guardarArchivos(userId ?? '', documentos)}>
             <Text style={{ ...styleIndependient.textBtn2, fontFamily: 'Cairo_700Bold'}}> Enviar</Text>
           </Button>
         </View>

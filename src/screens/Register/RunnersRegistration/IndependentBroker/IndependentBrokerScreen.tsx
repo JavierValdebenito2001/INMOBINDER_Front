@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native';
 import { styles } from '../../../styles';
 import { styleIndependient } from './IndependentBrokerStyles';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,7 +7,8 @@ import { Button, Input, Text, Image } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation} from '@react-navigation/native';
 import { screen } from '../../../../utils/ScreenName';
-import { db} from '../../../../../firebase-config';
+import {firebase } from '../../../../../firebase-config';
+import {validateRut, cleanRut } from 'rutlib'
 
 export function IndependentBrokerScreen({route}: {route: any}) {
   // Inicializar la navegación
@@ -19,17 +20,18 @@ export function IndependentBrokerScreen({route}: {route: any}) {
     Cairo_400Regular,
   });
 
+  // Obtener el correo electrónico de la pantalla de registro.
+  const correo  = route.params.email;
+  
   // Estado local para almacenar los valores de los campos de entrada
   const [state, setState] = useState({
+    correo: correo,
     nomb: '',
     apellido: '',
     rut: '',
     telefono: '',
     clave: '',
   });
-
-  // Obtener el correo electrónico de la pantalla de registro.
-  const correo  = route.params;
   
   // Verificar si las fuentes están cargadas
   if (!fontsLoaded) {
@@ -46,26 +48,60 @@ export function IndependentBrokerScreen({route}: {route: any}) {
     setState({ ...state, [name]: value });
   };
 
-  const CreateNewUser = () => {
-    if (state.nomb === '' || state.apellido === '' || state.rut === '' || state.telefono === '' || state.clave === '') {
-      console.log('Faltan datos');   
-    } else {
-        db.collection('users').add({
-          correo: correo.email,
-          name: state.nomb,
-          lastName: state.apellido,
-          rut: state.rut,
-          phone: state.telefono,
-          password: state.clave,
-          type: 'broker',
-          verified: false,
-        })
-        
-        console.log('Valores del estado:', state);
-        console.log('Usuario creado');
-        navigation.navigate(screen.account.ProfileVerificationScreen as never);
-    };
+  // Función para validar el numero de Telefono
+  function validarTelefono(phone: string) {
+    const regex = /^\d{9}$/;
+    return regex.test(phone);
   }
+
+  const rutYaRegistrado = async (rut: string) => {
+    const usuarios = firebase.firestore().collection('users');
+    const snapshot = await usuarios.where('rut', '==', rut).get();
+
+    if (snapshot.empty) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  // Función para Registrar el usuario y ir a la pagina de verificación
+  const handleContinue = async (email: string, password: string, name: string, lastname: string,  phone: string, rut: string ) => {
+    
+    if (!validateRut(rut)) { // Verificar si el RUT es válido
+      Alert.alert('El RUT ingresado no es válido.');
+      return;
+    }
+    if( await rutYaRegistrado(rut)){
+      Alert.alert('El RUT ingresado ya está registrado.');
+      return;
+    }
+    if (!validarTelefono(phone)) { // Verificar si el número de teléfono es válido
+      Alert.alert('El número de teléfono ingresado no es válido.');
+      return;
+    }
+    const creationDate = new Date(); 
+    try {
+      await firebase.auth().createUserWithEmailAndPassword(correo, password);
+      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({
+        name,
+        lastname,
+        phone, 
+        rut: cleanRut(rut), 
+        email, 
+        type: 3, // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores  
+        status: 0, // 0 para usuario no verificado -- 1 para usuario verificado
+        creationDate: creationDate.toDateString()
+      });
+      Alert.alert('Usuario registrado correctamente.');
+      navigation.navigate(screen.account.ProfileVerificationScreen as never);
+    } catch (error) {
+      Alert.alert('Error al registrar el usuario: ' + error);
+    }
+  }
+
+
+
 
   // Renderizar el componente
   return (
@@ -129,7 +165,7 @@ export function IndependentBrokerScreen({route}: {route: any}) {
           />
 
           {/* Botón para continuar */}
-          <Button buttonStyle={styleIndependient.btn} containerStyle={styleIndependient.footer} onPress={CreateNewUser}>
+          <Button buttonStyle={styleIndependient.btn} containerStyle={styleIndependient.footer} onPress={() => handleContinue( state.correo , state.clave, state.nomb, state.apellido, state.telefono, state.rut)}>
             <Text style={styleIndependient.textBtn}>Registrarse</Text>
           </Button>
         </View>

@@ -118,8 +118,7 @@ return (
         {/* Botones para omitir y enviar */}
         <View style={styleIndependient.containerbtns}>
             <View >
-                <Text style={{ ...styleIndependient.textOmitir}} onPress={() => {handleContinuer} }> Oxditir</Text>
-            </View>
+            <Text style={{ ...styleIndependient.textOmitir}} onPress={handleContinuer}> Omitir</Text>            </View>
             <Button buttonStyle={styleIndependient.btnStyle2} onPress={() => documentos.length > 0 && guardarArchivos(userId ?? '', documentos)}>
                 <Text style={{ ...styleIndependient.textBtn2, fontFamily: 'Cairo_700Bold'}}> Enviar</Text>
             </Button>
