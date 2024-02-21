@@ -12,8 +12,8 @@ const Config =()=>{
     const navigation = useNavigation();
 
     function handleBack(){
-        navigation.navigate(screen.account.MainDrawer);
-      }
+        navigation.navigate(screen.account.MainDrawer as never);
+    }
     
     return(
         <View style={styles.container}>
@@ -67,11 +67,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginRight: "auto",
         alignItems: "center",
-      },
+    },
     logoBack: {
         color: 'rgb(0,0,0)',
         marginRight: -10,
-      },
+    },
 })
 
 export default Config

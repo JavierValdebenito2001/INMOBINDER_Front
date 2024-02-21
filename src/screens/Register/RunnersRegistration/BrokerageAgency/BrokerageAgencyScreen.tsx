@@ -6,9 +6,11 @@ import { Button, Input, Text, Image } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { screen } from '../../../../utils/ScreenName'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation} from '@react-navigation/native'
+import { db} from '../../../../../firebase-config';
 
-export function BrokerageAgencyScreen() {
+
+export function BrokerageAgencyScreen({route}: {route: any}) {
 
   const navigation = useNavigation();
 
@@ -23,6 +25,9 @@ export function BrokerageAgencyScreen() {
     teléfono: '',
     password: '',
   });
+  
+  // Obtener el correo electrónico de la pantalla de registro.
+  const correo  = route.params;
 
   if (!fontsLoaded) {
     return null;
@@ -32,14 +37,29 @@ export function BrokerageAgencyScreen() {
     setState({ ...state, [name]: value });
   };
 
-  function handleBack(){
+  const handleBack = () => {
     navigation.navigate(screen.account.registerPropertyBroker as never );
   }
+  
 
-  function handleContinue(){
-    console.log('Valores del estado:', state);
-    navigation.navigate(screen.account.ProfileVerificationBA as never );
-  }
+  const CreateNewUser = () => {
+    if (state.nombre === '' || state.rut === '' || state.teléfono === '' || state.password === '') {
+      console.log('Faltan datos');   
+    } else {
+      db.collection('users').add({
+        correo: correo.email,
+        name: state.nombre,
+        rut: state.rut,
+        phone: state.teléfono,
+        password: state.password,
+        type: 'brokerageAgency',
+        verified: false,
+      });
+        console.log('Valores del estado:', state);
+        console.log('Usuario creado');
+        navigation.navigate(screen.account.ProfileVerificationBA as never );
+    }
+  };
 
   return (
 
@@ -84,7 +104,7 @@ export function BrokerageAgencyScreen() {
             secureTextEntry={true}
             onChangeText={(value) => handleChange('password', value)}/>
 
-            <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={handleContinue}> 
+            <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={CreateNewUser}> 
             <Text style={{ ...styleAgencyRE.textBtn, fontFamily: 'Cairo_700Bold'}}>Registrarse</Text> 
             </Button>            
           </View>

@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView , Alert} from 'react-native';
 import React, { useState } from 'react';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { styles } from '../styles';
@@ -7,10 +7,7 @@ import { LoginStyles } from './LoginScreenStyles';
 import { Ionicons, Entypo, FontAwesome } from '@expo/vector-icons';
 import { Input, Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../../../firebase-config';
+import { firebase } from '../../../firebase-config.js';
 
 export function LoginScreen() {
   const navigation = useNavigation();
@@ -22,8 +19,8 @@ export function LoginScreen() {
   });
 
   // Estado para almacenar el correo electrónico y la contraseña
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('');
 
   // Si las fuentes no están cargadas, se devuelve nulo
   if (!fontsLoaded) {
@@ -32,52 +29,29 @@ export function LoginScreen() {
 
   // Función para manejar el botón de retroceso
   const handleBack = () => {
-    navigation.goBack();
+    navigation.navigate('WelcomeScreen' as never);
   };
 
   // Función para manejar la activación de la cuenta
   const handleActivation = () => {
-    // navigation.navigate(screen.account.optionRegister);
-  };
+
+    };
 
   // Función para manejar el inicio de sesión
-  const handleLogin = async () => {
+  const LoginUser = async (email: string, password: string) => {
     try {
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("Inicio de sesión exitoso", user);
-
-      // Navegar a MainDrawer después del inicio de sesión exitoso
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      Alert.alert('Usuario autenticado correctamente.');
       navigation.navigate('MainDrawer' as never);
-
-      // Aquí puedes realizar acciones adicionales después del inicio de sesión exitoso
     } catch (error) {
-      console.error("Error al iniciar sesión");
-      // Aquí puedes manejar errores y proporcionar retroalimentación al usuario
-    }
-  };
-
-  // Función para manejar el registro de nuevos usuarios
-  const handleRegister = async () => {
-    try {
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("Registro exitoso", user);
-      // Aquí puedes realizar acciones adicionales después del registro exitoso
-    } catch (error) {
-      console.error("Error al registrar usuario");
-      // Aquí puedes manejar errores y proporcionar retroalimentación al usuario
+      Alert.alert('Error al autenticar el usuario: ' + error);
+      console.log(email, password);
     }
   };
 
   // Función para manejar el inicio de sesión con Google
   const handleLoginWithGoogle = () => {
     console.log("Ingresar con Google");
-    navigation.navigate('MainDrawer' as never);
   };
 
   // Función para manejar la recuperación de contraseña
@@ -106,15 +80,10 @@ export function LoginScreen() {
         <Input onChange={(event) => setPassword(event.nativeEvent.text)} placeholder='Contraseña' containerStyle={LoginStyles.input} leftIcon={<FontAwesome name='lock' size={30} />} />
         <Text style={{ ...LoginStyles.text2, fontFamily: 'Cairo_400Regular' }}> Mantener la sesión iniciada</Text>
 
-        {/* Botón de inicio de sesión */}
         <View>
-          <Button containerStyle={LoginStyles.containerBtn} buttonStyle={LoginStyles.btnStyle} onPress={handleLogin}>
+          {/* Botón de inicio de sesión */}
+          <Button containerStyle={LoginStyles.containerBtn} buttonStyle={LoginStyles.btnStyle}  onPress={()=> LoginUser(email,password)}>
             <Text style={{ ...LoginStyles.textBtn, fontFamily: 'Cairo_700Bold' }}>Continuar </Text>
-          </Button>
-
-          {/* Registro de nuevos usuarios */}
-          <Button containerStyle={LoginStyles.containerBtn} buttonStyle={LoginStyles.btnStyle} onPress={handleRegister}>
-            <Text style={{ ...LoginStyles.textBtn, fontFamily: 'Cairo_700Bold' }}>Registrarse </Text>
           </Button>
 
           {/* Inicio de sesión con Google */}

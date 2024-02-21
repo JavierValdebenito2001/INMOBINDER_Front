@@ -5,10 +5,11 @@ import { styleIndependient } from './IndependentBrokerStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Input, Text, Image } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation} from '@react-navigation/native';
 import { screen } from '../../../../utils/ScreenName';
+import { db} from '../../../../../firebase-config';
 
-export function IndependentBrokerScreen() {
+export function IndependentBrokerScreen({route}: {route: any}) {
   // Inicializar la navegación
   const navigation = useNavigation();
 
@@ -27,6 +28,9 @@ export function IndependentBrokerScreen() {
     clave: '',
   });
 
+  // Obtener el correo electrónico de la pantalla de registro.
+  const correo  = route.params;
+  
   // Verificar si las fuentes están cargadas
   if (!fontsLoaded) {
     return null;
@@ -42,18 +46,31 @@ export function IndependentBrokerScreen() {
     setState({ ...state, [name]: value });
   };
 
-  // Función para manejar la navegación hacia adelante (puede ser a la página de inicio en tu caso)
-  const handleContinue = () => {
-    // Imprimir los valores del estado en la consola
-    console.log('Valores del estado:', state);
-
-    // Navegar a la siguiente pantalla (Pagina de verificacion de perfil)
-    navigation.navigate(screen.account.ProfileVerificationScreen as never);
-  };
+  const CreateNewUser = () => {
+    if (state.nomb === '' || state.apellido === '' || state.rut === '' || state.telefono === '' || state.clave === '') {
+      console.log('Faltan datos');   
+    } else {
+        db.collection('users').add({
+          correo: correo.email,
+          name: state.nomb,
+          lastName: state.apellido,
+          rut: state.rut,
+          phone: state.telefono,
+          password: state.clave,
+          type: 'broker',
+          verified: false,
+        })
+        
+        console.log('Valores del estado:', state);
+        console.log('Usuario creado');
+        navigation.navigate(screen.account.ProfileVerificationScreen as never);
+    };
+  }
 
   // Renderizar el componente
   return (
     <SafeAreaView style={{ justifyContent: 'center' }}>
+
       {/* Botón para navegar hacia atrás */}
       <TouchableOpacity style={styles.back} onPress={handleBack}>
         <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
@@ -112,7 +129,7 @@ export function IndependentBrokerScreen() {
           />
 
           {/* Botón para continuar */}
-          <Button buttonStyle={styleIndependient.btn} containerStyle={styleIndependient.footer} onPress={handleContinue}>
+          <Button buttonStyle={styleIndependient.btn} containerStyle={styleIndependient.footer} onPress={CreateNewUser}>
             <Text style={styleIndependient.textBtn}>Registrarse</Text>
           </Button>
         </View>

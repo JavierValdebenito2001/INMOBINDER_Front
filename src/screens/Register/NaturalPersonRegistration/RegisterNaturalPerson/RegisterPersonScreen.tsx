@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView} from 'react-native';
 import { styles } from '../../../styles.tsx';
 import { stylePerson } from './RegisterPersonStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
-import { Button, Image, Input, Text } from '@rneui/base';
+import { Button, Image, Input, Text} from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../../utils/ScreenName.tsx';
 
+
 export function RegisterPersonScreen() {
+
   // Inicializar la navegación
   const navigation = useNavigation();
 
@@ -43,11 +45,11 @@ export function RegisterPersonScreen() {
 
   // Función para manejar la navegación hacia la pantalla de registro independiente
   const handleContinuer = () => {
+
     // Imprimir el valor del campo de entrada en la consola
     console.log('Correo electrónico:', email);
-
     // Navegar a la siguiente pantalla (puede ser a la pantalla de registro independiente en tu caso)
-    navigation.navigate(screen.account.personIndependient as never);
+    navigation.navigate(screen.account.personIndependient,  {email: email });
   };
 
   return (

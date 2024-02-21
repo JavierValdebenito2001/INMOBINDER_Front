@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { styles } from '../../../styles'
 import { styleRealEstate } from './RegisterRealEstateStyles'
 import { Ionicons } from '@expo/vector-icons';
@@ -17,11 +17,13 @@ export function RegisterRealEstateScreen() {
     Cairo_700Bold,
     Cairo_400Regular,
   });
-
+  // Estado local para almacenar el valor del campo de entrada
+  const [email, setEmail] = useState('');
+  
   if (!fontsLoaded) {
     return null;
   }
-
+  
   function handleBack(){
     navigation.navigate(screen.account.optionRegister as never);
   }
@@ -31,7 +33,7 @@ export function RegisterRealEstateScreen() {
   }
 
   function handleContinuer(){
-    navigation.navigate(screen.account.agencyRealEstate as never );
+    navigation.navigate(screen.account.agencyRealEstate, {email: email } );
   }
 
 
@@ -53,7 +55,9 @@ export function RegisterRealEstateScreen() {
         <View style= {styleRealEstate.container}>
             <Text style= {{ ...styleRealEstate.textRegister, fontFamily: 'Cairo_700Bold'}}> Regístrate </Text>
             <Text style= {{ ...styleRealEstate.textRegisterEmail, fontFamily: 'Cairo_700Bold'}}> Registro mediante correo electrónico</Text>
-            <Input placeholder='Ingresa el correo electrónico.' containerStyle={styleRealEstate.inputEmail}/>
+            
+            <Input placeholder='Ingresa el correo electrónico.' containerStyle={styleRealEstate.inputEmail} onChangeText={(value) => setEmail(value)} />
+
             <Text style={{ ...styleRealEstate.text, fontFamily: 'Cairo_400Regular'}}> Al hacer clic en Continuar, aceptas los <Text style={{ ...styleRealEstate.text1, fontFamily:'Cairo_700Bold'}} onPress={handleTermsPress}>Términos y condiciones de uso </Text>de Inmobinder.</Text>
 
             <Button containerStyle={styleRealEstate.containerBtn} buttonStyle={styleRealEstate.btnStyle} onPress={handleContinuer}>

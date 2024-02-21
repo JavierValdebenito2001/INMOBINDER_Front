@@ -8,18 +8,18 @@ import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryS
 
 
 
-const ancho = Dimensions.get('window').width; 
-const alto = Dimensions.get('window').height; 
+    const ancho = Dimensions.get('window').width; 
+    const alto = Dimensions.get('window').height; 
 
-const EditProfile =()=>{
+    const EditProfile =()=>{
 
-    const navigation = useNavigation();
+        const navigation = useNavigation();
 
-function handleBack(){
-    navigation.navigate(screen.account.MainDrawer);
-  }
+    function handleBack(){
+        navigation.navigate(screen.account.MainDrawer as never);
+    }
 
-  const [text, onChangeText] = React.useState('');
+    const [text, onChangeText] = React.useState('');
 
 
     return(
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     logoBack: {
         color: 'rgb(0,0,0)',
         marginRight: -10,
-      },
+    },
     back:{
         marginTop: Constants.statusBarHeight,
         flexDirection: "row",
@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
         width: "90%",
         height: "70%",
         borderRadius: 20,
-        height:alto*0.85,
         alignSelf: "center",
         alignItems:'center',
         shadowOpacity: 1,

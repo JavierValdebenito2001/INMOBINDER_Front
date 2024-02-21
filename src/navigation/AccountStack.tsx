@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { screen } from "../utils/ScreenName";
 import { LoginScreen } from "../screens/Login/LoginScreen";
-import { Home } from "../screens/Register/Welcome/WelcomeScreen";
+import { WelcomeScreen } from "../screens/Register/Welcome/WelcomeScreen";
 import { RegisterScreen } from "../screens/Register/RegisterScreen/RegisterScreen";
 import { RegisterPersonScreen } from "../screens/Register/NaturalPersonRegistration/RegisterNaturalPerson/RegisterPersonScreen";
 import { PersonIndependientScreen } from "../screens/Register/NaturalPersonRegistration/PersonIndependient/PersonIndependientScreen";
@@ -47,8 +47,8 @@ export function AccountStack() {
         }}>
             {/* Definición de pantallas */}
             <Stack.Screen 
-                name={screen.account.home} 
-                component={Home}        
+                name={screen.account.WelcomeScreen}
+                component={WelcomeScreen}
             />
 
             <Stack.Screen 
