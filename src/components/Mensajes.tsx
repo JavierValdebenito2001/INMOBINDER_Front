@@ -10,7 +10,7 @@ const Mensajes = () => {
 
     const navigation = useNavigation();
     function handleBack() {
-        navigation.navigate(screen.account.MainDrawer);
+        navigation.navigate(screen.account.MainDrawer as never);
     }
 
     return (

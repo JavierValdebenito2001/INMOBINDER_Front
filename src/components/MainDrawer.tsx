@@ -5,15 +5,13 @@ import React, { useState } from 'react';
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
-
 import CentroDeAyuda from './CentroDeAyuda';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import MapScreen from '../screens/Home/MapScreen';
-
-
+import{ firebase } from '../../firebase-config';
+import { screen } from '../utils/ScreenName';
 
 const Drawer = createDrawerNavigator();
-
 
 export const MainDrawer = () => {
   return (
@@ -48,7 +46,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
             onPress: () => {
               // Agregar lógica para la opción "Sí" aquí
               // Por ejemplo, mostrar propiedades cercanas
-             
+            
 
               // Por ejemplo, navegar a la pantalla de propiedades cercanas
               navigation.navigate('MisPublicaciones');
@@ -74,23 +72,44 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
 
     // Mostrar el mensaje con las opciones después de cambiar el estado
     Alert.alert(mensajeDespues, '', opcionesBotonDespues as any);
-   
+  
 
   };
 
   const cerrarSesion = () => {
-
-    // Agregar lógica para cerrar sesión aquí
-  
-    // Mostrar un mensaje al usuario
-    Alert.alert('Has cerrado sesión.');
-
-  
-  
-    // Redirigir al usuario a la pantalla de inicio de sesión
-    navigation.navigate('login');
+    firebase.auth().signOut().then(() => {
+      console.log('User signed out');
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            { name: screen.account.login }, // Replace 'Login' with the actual name of your login screen
+          ],
+        })
+      ); 
+    }).catch((error) => {
+      console.error('Sign out error', error);
+    });
   };
   
+//Recuperar nombre y rut del usuario
+const [name, setName] = useState('');
+const [rut, setRut] = useState('');
+const [lastname, setLastname] = useState('');
+const user = firebase.auth().currentUser;
+const docRef = firebase.firestore().collection('users').doc(user?.uid); 
+
+docRef.get().then((doc) => {
+  if (doc.exists) {
+    setName(doc.get('name'));
+    setRut(doc.get('rut'));
+    setLastname(doc.get('lastname'));
+  } else {
+    console.log("No such document!");
+  }
+}).catch((error) => {
+  console.log("Error getting document:", error);
+});
 
   return (
     <DrawerContentScrollView>
@@ -102,8 +121,10 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         <TouchableOpacity style={{position:'absolute', margin:20, alignSelf:'flex-end', marginVertical:90, paddingRight:10}} onPress={() => navigation.navigate('Profile')}>
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
         </TouchableOpacity>
-        <Text style={styles.avatarText}>17.111.111-k</Text>
-        <Text style={styles.avatarText}>Nombre Nombre Apellido Apellido</Text>
+        <Text style={styles.avatarText}>{name} {lastname}	
+        </Text>
+        <Text style={styles.avatarText}>{rut}
+        </Text>
       </View>
       <View style={styles.menuContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>

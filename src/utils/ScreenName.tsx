@@ -1,8 +1,5 @@
-import Profile from "../components/Profile";
-
 const AccountStack = {
     login: 'login',
-    home: 'home',
     tab: 'tab',
     optionRegister: 'option register',
     Config: 'Config',
@@ -32,13 +29,12 @@ const AccountStack = {
     ProfileVerificationBA: 'ProfileVerificationBA',
     ProfileVerificationRE: 'ProfileVerificationRE',
     ProfileVerificationNPScreen: 'ProfileVerificationNPScreen',
+    WelcomeScreen: 'WelcomeScreen',
   };
 
 const HomeStack = {
     home: 'home'
 }
-
-
 
 export const screen = {
   account: AccountStack,

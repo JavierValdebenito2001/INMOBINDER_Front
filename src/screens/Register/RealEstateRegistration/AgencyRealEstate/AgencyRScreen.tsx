@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../../../styles'
 import { styleAgencyRE } from './AgencyREStyle'
@@ -8,8 +8,10 @@ import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/ca
 import { screen } from '../../../../utils/ScreenName'
 import { useNavigation } from '@react-navigation/native'
 import { Image } from '@rneui/base'
+import {firebase } from '../../../../../firebase-config';
+import {validateRut, cleanRut } from 'rutlib'
 
-export function AgencyREScreen() {
+export function AgencyREScreen({route}: {route: any}) {
 
   const navigation = useNavigation();
 
@@ -18,8 +20,11 @@ export function AgencyREScreen() {
     Cairo_400Regular,
   });
   
+  const correo  = route.params.email;
+
   // Estado local para almacenar los valores de los campos de entrada
   const [state, setState] = useState({
+    correo: correo,
     nomb: '',
     rut: '',
     telefono: '',
@@ -38,9 +43,58 @@ export function AgencyREScreen() {
     setState({ ...state, [name]: value });
   };
 
-  function handleContinue(){
-    console.log('Valores del estado:', state);
-    navigation.navigate(screen.account.ProfileVerificationRE  as never);
+  function validarTelefono(phone: string) {
+    const regex = /^\d{9}$/;
+    return regex.test(phone);
+  }
+
+  const rutYaRegistrado = async (rut: string) => {
+    const usuarios = firebase.firestore().collection('users');
+    const snapshot = await usuarios.where('rut', '==', rut).get();
+
+    if (snapshot.empty) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleContinue = async (email: string, password: string, password2: string,  name: string, phone: string, rut: string ) => {
+    
+    if (!validateRut(rut)) { 
+      Alert.alert('El RUT ingresado no es válido.');
+      return;
+    }
+    if( await rutYaRegistrado(rut)){
+      Alert.alert('El RUT ingresado ya está registrado.');
+      return;
+    }
+    if (!validarTelefono(phone)) { 
+      Alert.alert('El número de teléfono ingresado no es válido.');
+      return;
+    }
+    if(password != password2){
+      Alert.alert('Las contraseñas no coinciden');
+      return;
+    }
+    const creationDate = new Date(); 
+    try {
+      await firebase.auth().createUserWithEmailAndPassword(correo, password);
+      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({
+        name, 
+        phone, 
+        rut: cleanRut(rut), 
+        email, 
+        type: 2, // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores  
+        status: 0, // 0 para usuario no verificado -- 1 para usuario verificado
+        creationDate: creationDate.toDateString()
+      });
+      Alert.alert('Usuario registrado correctamente.');
+      navigation.navigate(screen.account.ProfileVerificationRE as never);
+    } catch (error) {
+      Alert.alert('Error al registrar el usuario: ' + error);
+      console.log(error);
+    }
   }
 
   return (
@@ -102,8 +156,9 @@ export function AgencyREScreen() {
                 onChangeText={(value) => handleChange('clave2', value)}
                 />
 
-                <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={handleContinue}> 
-                    <Text style={{ ...styleAgencyRE.textBtn, fontFamily: 'Cairo_700Bold'}}>Registrarse</Text> 
+                <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} 
+                  onPress={() => handleContinue(state.correo, state.clave, state.clave2, state.nomb, state.telefono, state.rut)}>
+                  <Text style={{ ...styleAgencyRE.textBtn, fontFamily: 'Cairo_700Bold'}}>Registrarse</Text> 
                 </Button>
             
         </View>

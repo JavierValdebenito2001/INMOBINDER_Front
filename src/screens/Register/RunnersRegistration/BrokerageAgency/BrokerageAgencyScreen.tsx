@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import { View, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'react-native'
 import { styles } from '../../../styles'
 import { styleAgencyRE } from './BrokerageAgencyStyles'
 import { Button, Input, Text, Image } from '@rneui/base';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { screen } from '../../../../utils/ScreenName'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation} from '@react-navigation/native'
+import {firebase } from '../../../../../firebase-config';
+import {validateRut, cleanRut } from 'rutlib'
 
-export function BrokerageAgencyScreen() {
+
+export function BrokerageAgencyScreen({route}: {route: any}) {
 
   const navigation = useNavigation();
 
@@ -17,7 +20,11 @@ export function BrokerageAgencyScreen() {
     Cairo_400Regular,
   });
 
+  // Obtener el correo electrónico de la pantalla de registro.
+  const correo  = route.params.email;
+
   const [state, setState] = useState({
+    correo: correo,
     nombre: '',
     rut: '',
     teléfono: '',
@@ -32,13 +39,59 @@ export function BrokerageAgencyScreen() {
     setState({ ...state, [name]: value });
   };
 
-  function handleBack(){
+  const handleBack = () => {
     navigation.navigate(screen.account.registerPropertyBroker as never );
   }
 
-  function handleContinue(){
-    console.log('Valores del estado:', state);
-    navigation.navigate(screen.account.ProfileVerificationBA as never );
+  // Función para validar el numero de Telefono
+  function validarTelefono(phone: string) {
+    const regex = /^\d{9}$/;
+    return regex.test(phone);
+  }
+
+  const rutYaRegistrado = async (rut: string) => {
+    const usuarios = firebase.firestore().collection('users');
+    const snapshot = await usuarios.where('rut', '==', rut).get();
+
+    if (snapshot.empty) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  // Función para Registrar el usuario y ir a la pagina de verificación
+  const handleContinue = async (email: string, password: string, name: string, phone: string, rut: string ) => {
+    
+    if (!validateRut(rut)) { // Verificar si el RUT es válido
+      Alert.alert('El RUT ingresado no es válido.');
+      return;
+    }
+    if( await rutYaRegistrado(rut)){
+      Alert.alert('El RUT ingresado ya está registrado.');
+      return;
+    }
+    if (!validarTelefono(phone)) { // Verificar si el número de teléfono es válido
+      Alert.alert('El número de teléfono ingresado no es válido.');
+      return;
+    }
+    const creationDate = new Date(); 
+    try {
+      await firebase.auth().createUserWithEmailAndPassword(correo, password);
+      await firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).set({
+        name,
+        phone, 
+        rut: cleanRut(rut), 
+        email, 
+        type: 3, // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores  
+        status: 0, // 0 para usuario no verificado -- 1 para usuario verificado
+        creationDate: creationDate.toDateString()
+      });
+      Alert.alert('Usuario registrado correctamente.');
+      navigation.navigate(screen.account.ProfileVerificationBA as never);
+    } catch (error) {
+      Alert.alert('Error al registrar el usuario: ' + error);
+    }
   }
 
   return (
@@ -84,9 +137,10 @@ export function BrokerageAgencyScreen() {
             secureTextEntry={true}
             onChangeText={(value) => handleChange('password', value)}/>
 
-            <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={handleContinue}> 
+            <Button buttonStyle={styleAgencyRE.btn} containerStyle= {styleAgencyRE.footer} onPress={() => handleContinue(state.correo, state.password, state.nombre, state.teléfono, state.rut)}> 
             <Text style={{ ...styleAgencyRE.textBtn, fontFamily: 'Cairo_700Bold'}}>Registrarse</Text> 
-            </Button>            
+            </Button> 
+            
           </View>
         </ScrollView>
     </SafeAreaView>

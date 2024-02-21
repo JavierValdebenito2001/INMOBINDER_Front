@@ -1,6 +1,6 @@
 // Importa las bibliotecas necesarias
 import React, { useState } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity} from 'react-native'; 
+import { Text, View, SafeAreaView, TouchableOpacity, Alert} from 'react-native'; 
 import { Button, Image } from '@rneui/base';
 import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import { styles } from '../../../styles';
 import { styleIndependient } from './ProfileVerificationStyles';
 import { screen } from '../../../../utils/ScreenName';
 import { Ionicons } from '@expo/vector-icons';
+import {firebase } from '../../../../../firebase-config';
+
 
 // Define el tipo para el documento
 type DocumentoType = {
@@ -22,12 +24,9 @@ type DocumentoType = {
 // Componente de la pantalla de verificación de perfil
 export default function ProfileVerificationScreen() {
   
-  function handleContinuer(){
-    navigation.navigate('MainDrawer' as never);
-  }
-
   // Inicializa el estado para el documento
   const [documento, setDocumento] = useState<DocumentoType | null>(null);
+  const userId = firebase.auth().currentUser?.uid;
 
   // Configura la navegación
   const navigation = useNavigation();
@@ -39,7 +38,24 @@ export default function ProfileVerificationScreen() {
       setDocumento(result.assets[0] as DocumentoType);
     }
   }
-  
+
+  const guardarArchivo = async (userId: string, documento: DocumentoType) => {
+    const storageRef = firebase.storage().ref();
+    const userFileRef = storageRef.child(`userFiles/${userId}/${documento.name}`);
+
+    try {
+      const snapshot = await userFileRef.put(documento as never );
+      Alert.alert(`Archivo ${documento.name} subido con éxito`);
+      navigation.navigate('MainDrawer' as never);
+    } catch (error) {
+      Alert.alert(`Error al subir el archivo ${documento.name}: `, String(error));
+    }
+  };
+
+  function handleContinuer(){
+    navigation.navigate('MainDrawer' as never);
+  }
+
   // Renderiza el componente
   return (
     <SafeAreaView style={styles.container}>
@@ -66,9 +82,9 @@ export default function ProfileVerificationScreen() {
 
         <View style={styleIndependient.containerbtns}>
           <View >
-            <Text style={{ ...styleIndependient.textOmitir}}> Omitir</Text>
+            <Text style={{ ...styleIndependient.textOmitir}} onPress={handleContinuer}> Omitir</Text>
           </View>
-          <Button buttonStyle={styleIndependient.btnStyle2} onPress={handleContinuer}>
+          <Button buttonStyle={styleIndependient.btnStyle2} onPress={() => documento && guardarArchivo(userId ?? '', documento)}>
             <Text style={{ ...styleIndependient.textBtn2, fontFamily: 'Cairo_700Bold'}}> Enviar</Text>
           </Button>
         </View>     

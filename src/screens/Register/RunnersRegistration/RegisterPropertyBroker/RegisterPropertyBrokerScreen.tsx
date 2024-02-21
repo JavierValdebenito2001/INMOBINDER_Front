@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { styles } from '../../../styles'
 import { styleProperty } from './RegisterPropertyBrokerStyles'
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +8,6 @@ import { Button, Image } from '@rneui/base';
 import { useFonts, Cairo_700Bold, Cairo_400Regular } from '@expo-google-fonts/cairo';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../../../utils/ScreenName';
-
 
 export function RegisterPropertyBrokerScreen() {
 
@@ -31,6 +30,8 @@ export function RegisterPropertyBrokerScreen() {
         Cairo_400Regular,
     });
     
+    const [email, setEmail] = useState('');
+
     if (!fontsLoaded) {
         return null;
     }
@@ -44,9 +45,9 @@ export function RegisterPropertyBrokerScreen() {
     }
     function handleContinuer() {
         if (checked) {
-            navigation.navigate(screen.account.BrokerageAgencyScreen as never);
+            navigation.navigate(screen.account.BrokerageAgencyScreen,  {email: email });
         } else if (checked1) {
-        navigation.navigate(screen.account.IndependentBrokerScreen as never);
+            navigation.navigate(screen.account.IndependentBrokerScreen, {email: email });
         } else {
             console.log("Por favor, selecciona al menos una opción.");
         }
@@ -68,7 +69,7 @@ return (
         
             <Text style={{ ...styleProperty.textRegister, fontFamily: 'Cairo_700Bold'}}> Regístrate </Text>
             <Text style={{ ...styleProperty.textRegisterEmail, fontFamily: 'Cairo_700Bold'}}> Registro mediante correo electrónico</Text>
-            <Input placeholder='Ingresa el correo electrónico.' containerStyle={styleProperty.inputEmail}/>
+            <Input placeholder='Ingresa el correo electrónico.' containerStyle={styleProperty.inputEmail} onChangeText={(value) => setEmail(value)}/>
             <Text style={{ ...styleProperty.text, fontFamily: 'Cairo_400Regular'}}> Al hacer clic en Continuar, aceptas los<Text style={{ ...styleProperty.text1, fontFamily: 'Cairo_700Bold'}} onPress={handleTermsPress}> Términos y condiciones de uso </Text>de Inmobinder.</Text>
             <Text style={{ ...styleProperty.textOptionTitle, fontFamily: 'Cairo_700Bold'}}> Seleccione la opción con la que se identifica: </Text>
 

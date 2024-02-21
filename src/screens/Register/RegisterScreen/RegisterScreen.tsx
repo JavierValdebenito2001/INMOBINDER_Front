@@ -52,7 +52,7 @@ export function RegisterScreen() {
         </TouchableOpacity>
   
         <View style={styles.header}>
-           <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
+          <Image source={require('../../../../assets/images/INMOBINDER-03.png')} style={styles.imgLogo} />
         </View>
   
         <View style={styleRegister.registerContainer}>
