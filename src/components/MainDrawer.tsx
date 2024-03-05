@@ -1,6 +1,6 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
 import { Image, Switch, Text, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
@@ -76,6 +76,8 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
 
   };
 
+  //
+
   const cerrarSesion = () => {
     firebase.auth().signOut().then(() => {
       console.log('User signed out');
@@ -83,48 +85,80 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
         CommonActions.reset({
           index: 0,
           routes: [
-            { name: screen.account.login }, // Replace 'Login' with the actual name of your login screen
+            { name: screen.account.login }, 
           ],
         })
       ); 
     }).catch((error) => {
-      console.error('Sign out error', error);
+      Alert.alert('Sign out error', error);
     });
   };
-  
+
+  function formatRut(rut: number) {
+    let rutStr = rut.toString();
+    let rutBody = rutStr.slice(0, -1);
+    let rutDv = rutStr.slice(-1);
+    let rutFormat = '';
+    let count = 0;
+    for (let i = rutBody.length - 1; i >= 0; i--) {
+      if (count % 3 === 0 && count !== 0) {
+        rutFormat = '.' + rutFormat;
+      }
+      rutFormat = rutBody.charAt(i) + rutFormat;
+      count++;
+    }
+    rutFormat = rutFormat + '-' + rutDv;
+    return rutFormat;
+  }
+
 //Recuperar nombre y rut del usuario
 const [name, setName] = useState('');
 const [rut, setRut] = useState('');
 const [lastname, setLastname] = useState('');
 const user = firebase.auth().currentUser;
-const docRef = firebase.firestore().collection('users').doc(user?.uid); 
+const docRef = firebase.firestore().collection('users').doc(user?.uid);
+const [userPhotoUrl, setUserPhotoUrl] = useState(''); 
+
 
 docRef.get().then((doc) => {
   if (doc.exists) {
     setName(doc.get('name'));
-    setRut(doc.get('rut'));
+    setRut(formatRut(doc.get('rut'))); // Formatear el RUT antes de establecerlo
     setLastname(doc.get('lastname'));
   } else {
-    console.log("No such document!");
+    Alert.alert("No such document!");
   }
 }).catch((error) => {
-  console.log("Error getting document:", error);
+    Alert.alert("Error getting document:", error);
 });
+
+useEffect(() => {
+  const fetchUserPhotoUrl = async () => {
+      const user = firebase.auth().currentUser;
+      const storageRef = firebase.storage().ref(`userPhotos/${user?.uid}`);
+      const url = await storageRef.getDownloadURL();
+      setUserPhotoUrl(url);
+  };
+
+  fetchUserPhotoUrl();
+}, []);
 
   return (
     <DrawerContentScrollView>
       <View style={styles.avatarContainer}>
         <Image
-          style={styles.avatar}
-          source={require('../../assets/images/Camara.jpg')}
+            style={styles.avatar}
+            source={{ uri: userPhotoUrl || '../../assets/images/Camara.jpg' }}
         />
-        <TouchableOpacity style={{position:'absolute', margin:20, alignSelf:'flex-end', marginVertical:90, paddingRight:10}} onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity style={{position:'absolute', alignSelf:'flex-end', marginVertical: 90, width: 80 }} onPress={() => navigation.navigate('Profile')}>
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
         </TouchableOpacity>
-        <Text style={styles.avatarText}>{name} {lastname}	
-        </Text>
+        <View style={{marginBottom: 10}}>
         <Text style={styles.avatarText}>{rut}
         </Text>
+        <Text style={styles.avatarText}>{name} {lastname}	
+        </Text>
+        </View>
       </View>
       <View style={styles.menuContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>

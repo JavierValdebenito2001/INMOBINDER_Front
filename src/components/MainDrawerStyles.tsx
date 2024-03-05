@@ -11,14 +11,14 @@ export const styles = StyleSheet.create({
         width: 100,
         height: 100,      
         marginTop: 50,
-        marginBottom: 50,
+        marginBottom: 20,
         borderRadius: 50,
         alignSelf: 'center',
         resizeMode: 'contain'
         
     },
     avatarText: {
-        fontSize: 10,
+        fontSize: 12,
         fontWeight: 'bold',        // Negrita
         color: '#FFFFFF',         // Color del texto
         marginVertical: 5,      // Margen vertical (espacio arriba y abajo)
@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
     toggleSwitch: {
         alignSelf: 'center',
         transform: [{ scaleX: 2 }, { scaleY: 2 }] // Aumentar el tamaño del botón
-   },
+    },
     
     
     

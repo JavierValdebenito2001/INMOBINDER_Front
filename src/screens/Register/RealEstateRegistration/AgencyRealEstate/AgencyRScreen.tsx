@@ -61,6 +61,10 @@ export function AgencyREScreen({route}: {route: any}) {
 
   const handleContinue = async (email: string, password: string, password2: string,  name: string, phone: string, rut: string ) => {
     
+    if (!name || !rut || !phone || !email || !password) {
+      Alert.alert('Por favor, complete todos los campos.');
+      return;
+    }
     if (!validateRut(rut)) { 
       Alert.alert('El RUT ingresado no es válido.');
       return;

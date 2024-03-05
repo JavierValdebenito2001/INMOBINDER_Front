@@ -31,6 +31,8 @@ import { BrokerageAgencyScreen } from "../screens/Register/RunnersRegistration/B
 import ProfileVerificationBA from "../screens/Register/RunnersRegistration/ProfileVerificationBA/ProfileVerificationBA";
 import ProfileVerificationRE from "../screens/Register/RealEstateRegistration/ProfileVerificationRE/ProfileVerificationRE";
 import ProfileVerificationNPScreen from "../screens/Register/NaturalPersonRegistration/ProfileVerificationNP/ProfileVerificationNPScreen";
+import EditPasword from "../components/EditPassword";
+import Verification from "../components/Verification";
 
 
 
@@ -181,6 +183,14 @@ export function AccountStack() {
                 <Stack.Screen 
                 name={screen.account.ProfileVerificationNPScreen}
                 component={ProfileVerificationNPScreen}
+            />
+                <Stack.Screen
+                name={screen.account.EditPasword}
+                component={EditPasword}
+            />
+                <Stack.Screen
+                name={screen.account.verification}
+                component={Verification}
             />
             
         </Stack.Navigator>    

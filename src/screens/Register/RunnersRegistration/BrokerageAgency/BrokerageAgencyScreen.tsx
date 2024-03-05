@@ -62,7 +62,12 @@ export function BrokerageAgencyScreen({route}: {route: any}) {
 
   // Función para Registrar el usuario y ir a la pagina de verificación
   const handleContinue = async (email: string, password: string, name: string, phone: string, rut: string ) => {
-    
+
+    if (!name || !rut || !phone || !email || !password) {
+      Alert.alert('Por favor, complete todos los campos.');
+      return;
+    }
+
     if (!validateRut(rut)) { // Verificar si el RUT es válido
       Alert.alert('El RUT ingresado no es válido.');
       return;
