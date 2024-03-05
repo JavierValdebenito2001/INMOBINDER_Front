@@ -30,6 +30,8 @@ const AccountStack = {
     ProfileVerificationRE: 'ProfileVerificationRE',
     ProfileVerificationNPScreen: 'ProfileVerificationNPScreen',
     WelcomeScreen: 'WelcomeScreen',
+    EditPasword: 'EditPasword',
+    verification: 'verification',
   };
 
 const HomeStack = {
