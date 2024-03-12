@@ -6,7 +6,6 @@ import Constants from 'expo-constants'
 import { screen } from '../utils/ScreenName';
 import { AddHomeGalleryStyles } from '../screens/AddHome/Gallery/AddHomeGalleryStyles';
 import{ firebase } from '../../firebase-config';
-import { Numeric } from 'i18n-js';
 
 const ancho = Dimensions.get('window').width; 
 
@@ -46,10 +45,10 @@ const Profile =()=>{
     const [createdAt, setCreatedAt] = useState(''); 
     const [tipoUser, setTipoUser] = useState('');
     const [userPhotoUrl, setUserPhotoUrl] = useState(''); 
-    const [estadouser, setEstadouser] = useState('');
+    const [estadouser, setEstadouser] = useState(0);
 
 
-function TipoUserName (tipoUser: Numeric){
+function TipoUserName (tipoUser : Number){
     if (tipoUser === 1){
         return 'Persona Natural'
     }
@@ -59,11 +58,14 @@ function TipoUserName (tipoUser: Numeric){
     else if (tipoUser === 3){
         return 'Corredor de Propiedades'
     }
+    else if (tipoUser === 3.1){
+        return 'Agencia de Corretaje'
+    }
     else{
         return 'Usuario no definido'
     }
 }
-function EstadoUser(estadouser: Numeric){
+function EstadoUser(estadouser: Number){
     if (estadouser === 1){
         return '[Usuario Verificado]'
     }
@@ -125,8 +127,8 @@ return(
                     <View style={{alignItems:'center'}}>
                         <Image
                             style={styles.avatar}
-                            source={{ uri: userPhotoUrl || '../../assets/images/Camara.jpg' }}
-                        />
+                            source={userPhotoUrl ? { uri: userPhotoUrl } : require('../../assets/images/Camara.jpg')}
+                            />
                         <View>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Ionicons style={{ paddingRight: 5 }} size={30} name="calendar-outline" />

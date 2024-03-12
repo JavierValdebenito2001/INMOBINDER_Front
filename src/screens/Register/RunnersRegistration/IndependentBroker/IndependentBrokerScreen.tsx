@@ -94,7 +94,7 @@ export function IndependentBrokerScreen({route}: {route: any}) {
         phone, 
         rut: cleanRut(rut), 
         email, 
-        type: 3, // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores  
+        type: 3, // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores independientes -- 3.1 para agencias de corretaje
         status: 0, // 0 para usuario no verificado -- 1 para usuario verificado
         creationDate: creationDate.toDateString()
       });

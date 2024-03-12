@@ -5,8 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from '../screens/Home/Dashboard';
 import Help from '../screens/Home/Help';
 import { styles } from './MainDrawerStyles';
-import CentroDeAyuda from './CentroDeAyuda';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { CommonActions} from '@react-navigation/native';
 import MapScreen from '../screens/Home/MapScreen';
 import{ firebase } from '../../firebase-config';
 import { screen } from '../utils/ScreenName';
@@ -27,11 +26,12 @@ export const MainDrawer = () => {
 }
 
 const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
-  const [deteccionDinamica, setDeteccionDinamica] = useState(false);
+  
+  const [deteccionDinamica, setDetecciónDinamica] = useState(false);
 
   const toggleDeteccionDinamica = () => {
     // Cambiar el estado de deteccionDinamica antes de mostrar el mensaje
-    setDeteccionDinamica((prev) => !prev);
+    setDetecciónDinamica((prev) => !prev);
 
     // Mensaje a mostrar después de cambiar el estado
     const mensajeDespues = !deteccionDinamica
@@ -78,7 +78,7 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
 
   //
 
-  const cerrarSesion = () => {
+  const cerrarSesión = () => {
     firebase.auth().signOut().then(() => {
       console.log('User signed out');
       navigation.dispatch(
@@ -115,9 +115,12 @@ const MenuInterno = ({ navigation }: DrawerContentComponentProps) => {
 const [name, setName] = useState('');
 const [rut, setRut] = useState('');
 const [lastname, setLastname] = useState('');
+const [userType, setUserType] = useState(0);
 const user = firebase.auth().currentUser;
 const docRef = firebase.firestore().collection('users').doc(user?.uid);
 const [userPhotoUrl, setUserPhotoUrl] = useState(''); 
+const [isEnabled, setIsEnabled] = useState(false);
+const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
 
 docRef.get().then((doc) => {
@@ -125,6 +128,7 @@ docRef.get().then((doc) => {
     setName(doc.get('name'));
     setRut(formatRut(doc.get('rut'))); // Formatear el RUT antes de establecerlo
     setLastname(doc.get('lastname'));
+    setUserType(doc.get('type'));
   } else {
     Alert.alert("No such document!");
   }
@@ -148,7 +152,7 @@ useEffect(() => {
       <View style={styles.avatarContainer}>
         <Image
             style={styles.avatar}
-            source={{ uri: userPhotoUrl || '../../assets/images/Camara.jpg' }}
+            source={userPhotoUrl ? { uri: userPhotoUrl } : require('../../assets/images/Camara.jpg')}
         />
         <TouchableOpacity style={{position:'absolute', alignSelf:'flex-end', marginVertical: 90, width: 80 }} onPress={() => navigation.navigate('Profile')}>
           <Text style={{color:'#fff', fontWeight:'bold'}}>Ver perfil</Text>
@@ -160,51 +164,139 @@ useEffect(() => {
         </Text>
         </View>
       </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>
-          <Text style={styles.menuTexto}>Mis publicaciones</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('AddHome')}>
-          <Text style={styles.menuTexto}>Añadir propiedad</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('WishProperty')}>
-          <Text style={styles.menuTexto}>Propiedad deseada</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Mensajes')}>
-          <Text style={styles.menuTexto}>Mensajes</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Config')}>
-          <Text style={styles.menuTexto}>Configuración</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('CentroDeAyuda')}>
-          <Text style={styles.menuTexto}>Centro de ayuda</Text>
-        </TouchableOpacity>
-      </View>
+
       <View>
-        <TouchableOpacity onPress={cerrarSesion}>
-        <Text style={styles.menuTextoCerrarSesion}>Cerrar sesión</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity>
-          <Text style={styles.menuTextoDeteccionDianamica}>
-            ¿Desea activar o desactivar la detección dinámica?
-          </Text>
-          <View style={{ alignItems: 'center' }}>
-          
+        {(userType === 3.1 || userType === 3) && (
+          <>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <Text style={styles.menuTexto}>Mis Publicaciones</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <Text style={styles.menuTexto}>Agregar Publicación</Text>
+            </TouchableOpacity>
+          </View>
+
+          {userType === 3 && (
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('')}>
+                <Text style={styles.menuTexto}>Mis Clientes</Text>
+              </TouchableOpacity>
+            </View>            
+          )}
+
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <Text style={styles.menuTexto}>Mis Agentes</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <Text style={styles.menuTexto}>Agenda</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Mensajes')}>
+              <Text style={styles.menuTexto}>Mensajes</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('Config')}>
+              <Text style={styles.menuTexto}>Configuración</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={() => navigation.navigate('CentroDeAyuda')}>
+              <Text style={styles.menuTexto}>Centro de ayuda</Text>
+            </TouchableOpacity>
+          </View>
+
+          {userType === 3 && (
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('')}>
+                <Text style={styles.menuTexto}>Agencia</Text>
+              </TouchableOpacity>
+            </View>            
+          )}
+
+          <View style={styles.menuContainer}>
+            <TouchableOpacity onPress={cerrarSesión}>
+              <Text style={styles.menuTexto}>Cerrar sesión</Text>
+            </TouchableOpacity>
+          </View>          
+
+          </>
+        )}
       </View>
+
+      <View> 
+        {(userType === 1) && (
+          <>
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('MisPublicaciones')}>
+                <Text style={styles.menuTexto}>Mis publicaciones</Text> 
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('AddHome')}>
+                <Text style={styles.menuTexto}>Añadir propiedad</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('WishProperty')}>
+                <Text style={styles.menuTexto}>Propiedad deseada</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('Mensajes')}>
+                <Text style={styles.menuTexto}>Mensajes</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('Config')}>
+                <Text style={styles.menuTexto}>Configuración</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('CentroDeAyuda')}>
+                <Text style={styles.menuTexto}>Centro de ayuda</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity onPress={cerrarSesión}>
+                <Text style={styles.menuTexto}>Cerrar sesión</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.menuContainer}>
+              <TouchableOpacity>
+                <Text style={styles.menuTextoDeteccionDinamica}>
+                ¿Desea activar o desactivar la detección dinámica?
+                </Text>
+                <View style={{ alignItems: 'center'}}>
+                  <Switch
+                    style={{ transform: [{ scaleX: 2.1 }, { scaleY: 2 }] }}
+                    trackColor={{ false: "#767577", true: "rgba(4, 199, 242, 1)" }}
+                    thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            </>
+            )}
+      </View>
+
     </DrawerContentScrollView>
   );
 };

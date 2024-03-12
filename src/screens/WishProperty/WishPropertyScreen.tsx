@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
   SafeAreaView,
 } from "react-native";
 import { WishPropertyStyles } from "./WishPropertyStyles";
@@ -42,7 +41,7 @@ export const WishPropertyScreen: React.FC<WishPropertyScreenProps> = () => {
   const navigation = useNavigation();
 
   function handleBack() {
-    navigation.navigate(screen.account.MainDrawer);
+    navigation.navigate(screen.account.MainDrawer as never);
   }
 
   return (

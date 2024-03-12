@@ -23,23 +23,23 @@ export function RegisterScreen() {
     }
 
     function handleLoginPress(){
-      navigation.navigate(screen.account.login);
+      navigation.navigate(screen.account.login as never);
     }
 
     function handleBack(){
-      navigation.navigate(screen.account.home);
+      navigation.navigate(screen.account.WelcomeScreen as never);
     }
 
     function handlePerson(){
-      navigation.navigate(screen.account.registerPerson);
+      navigation.navigate(screen.account.registerPerson as never);
     }
 
     function handleRealEstate(){
-      navigation.navigate(screen.account.registerRealEstate);
+      navigation.navigate(screen.account.registerRealEstate as never);
     }
 
     function handlePropertyBroker(){
-      navigation.navigate(screen.account.registerPropertyBroker);
+      navigation.navigate(screen.account.registerPropertyBroker as never);
     }
   
     return (

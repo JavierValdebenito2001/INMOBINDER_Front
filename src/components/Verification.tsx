@@ -25,7 +25,7 @@ const Verification =()=>{
             setLastname(doc.get('lastname'));
             setEstadouser(doc.get('status'));     
             setTypeuser(doc.get('type'));
-        } else {
+            } else {
             Alert.alert("No such document!");
         }
         }).catch((error) => {
@@ -38,21 +38,6 @@ const Verification =()=>{
         }
         else{
             return '[Usuario no Verificado]'
-        }
-    }
-    function TypeUser(type: number){
-        // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores
-        if (type === 1){
-            return 'Persona Natural'
-        }
-        else if (type === 2){
-            return 'Inmobiliaria'
-        }
-        else if (type === 3){
-            return 'Corredor'
-        }
-        else{
-            return 'Usuario no registrado'
         }
     }
 
@@ -83,7 +68,7 @@ const Verification =()=>{
                 <TouchableOpacity
                         style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', margin:20, padding:5}}
                         onPress={() => {
-                            // 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores
+// 1 para persona natural -- 2 para Inmobiliaria --  3 para corredores independientes -- 3.1 para agencias de corretaje
                             switch(typeuser) {
                                 case 1:
                                     navigation.navigate(screen.account.ProfileVerificationNPScreen as never);
@@ -93,6 +78,9 @@ const Verification =()=>{
                                     break;
                                 case 3:
                                     navigation.navigate(screen.account.ProfileVerificationScreen as never);
+                                    break;
+                                case 3.1:
+                                    navigation.navigate(screen.account.ProfileVerificationBA as never);
                                     break;
                                 default:
                                     console.log('Tipo de usuario desconocido');
