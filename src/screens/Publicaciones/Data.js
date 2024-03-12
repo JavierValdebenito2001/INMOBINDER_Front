@@ -20,7 +20,7 @@ export default[
       imagen: require("../../../assets/images/propiedad2.png"),
       precio: "$150,000",
       direccion: "Otra Calle, Otra Ciudad",
-      gc: "$30.000",
+      gc: "$30.000", //gastos comunes
       estado: "no disponible",
       mcc: "120 metros cuadrados construidos",
       comuna:"Los Angeles",

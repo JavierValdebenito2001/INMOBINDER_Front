@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, SafeAreaView} from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, Alert} from 'react-native';
 import { styles } from '../../../styles.tsx';
 import { stylePerson } from './RegisterPersonStyles.tsx';
 import { Ionicons } from '@expo/vector-icons';
@@ -45,9 +45,14 @@ export function RegisterPersonScreen() {
 
   // Función para manejar la navegación hacia la pantalla de registro independiente
   const handleContinuer = () => {
+    // Expresión para validar el correo electrónico
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-    // Imprimir el valor del campo de entrada en la consola
-    console.log('Correo electrónico:', email);
+    // Validar el correo electrónico
+    if (!emailRegex.test(email)) {
+        Alert.alert('Por favor, ingrese un correo electrónico válido.');
+        return;
+    }
     // Navegar a la siguiente pantalla (puede ser a la pantalla de registro independiente en tu caso)
     navigation.navigate(screen.account.personIndependient,  {email: email });
   };

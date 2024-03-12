@@ -58,13 +58,13 @@ export const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
 
-    menuTextoDeteccionDianamica: {
+    menuTextoDeteccionDinamica: {
         fontSize: 12,
         fontWeight: 'bold',        // Negrita
         color: '#000000',         // Color del texto
         marginVertical: 10,      // Margen vertical (espacio arriba y abajo)
         marginHorizontal:0,     // Margen horizontal (espacio a los lados)
-        alignSelf: 'flex-start'     // Posicionamiento propio en el extremo derecho
+        textAlign: 'center',  
     },
 
     toggleSwitch: {

@@ -6,23 +6,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName'
 import Data from './Data';
-import { useRoute } from '@react-navigation/native';
 
 const ancho = Dimensions.get('window').width; 
-const alto = Dimensions.get('window').height; 
 
+const Details =({route}: {route: any})=>{
 
-const Details =()=>{
-
-    const route = useRoute();
-    const { itemId } = route.params;
+    const itemId  = route.params.itemId;
     const navigation = useNavigation();
 
     function handleBack(){
-        navigation.navigate(screen.account.MisPublicaciones);
-      }
+        navigation.navigate(screen.account.MisPublicaciones as never);
+    }
     
-      const property = Data.find((property) => property.id === itemId);
+    const property = Data.find((property) => property.id === itemId);
 
     return(
         <View style={styles.container}>
@@ -98,7 +94,7 @@ const styles = StyleSheet.create({
     logoBack: {
         color: 'rgb(0,0,0)',
         marginRight: -10,
-      },
+    },
     back:{
         marginTop: Constants.statusBarHeight,
         flexDirection: "row",
@@ -115,7 +111,7 @@ const styles = StyleSheet.create({
         height: 200,
         resizeMode: "cover",
         marginBottom: 10,
-      },
+    },
     input:{
         height:40,
         borderWidth:2,
@@ -133,7 +129,6 @@ const styles = StyleSheet.create({
         width: "90%",
         height: "70%",
         borderRadius: 20,
-        height:alto*0.85,
         alignSelf: "center",
         alignItems:'center',
         shadowOpacity: 1,

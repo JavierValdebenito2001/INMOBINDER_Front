@@ -104,8 +104,8 @@ import {launchImageLibrary } from 'react-native-image-picker';
                 <View style={{ flexDirection: 'row', alignItems: 'center' , marginBottom: 10, marginLeft: 20}}>
                     <Image
                         style={styles.avatar}
-                        source={{ uri: userPhotoUrl || '../../assets/images/Camara.jpg' }}
-                    />
+                        source={userPhotoUrl ? { uri: userPhotoUrl } : require('../../assets/images/Camara.jpg')}
+                        />
                     <TouchableOpacity onPress={() => navigation.navigate(screen.account.verification as never)}>
                         <Image
                             style={styles.verificationlogo}

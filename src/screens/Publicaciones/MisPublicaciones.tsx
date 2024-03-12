@@ -15,16 +15,17 @@ import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils/ScreenName";
 import { styles } from "../styles";
 import Data from './Data';
-import Details from "./Details";
-
-
 
 const MisPublicacionesScreen: React.FC = () => {
+
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
 
   const  renderItem = ({ item }: { item: any }) => (
+
     <View key={item.id} style={PublicacionStyles.publicacionContainer}>
+      
       <Image source={item.imagen} style={PublicacionStyles.imagen} />
+
       <View style={PublicacionStyles.contenidoCentrado}>
         <Text style={PublicacionStyles.subtitulo}>{`Propiedad #${item.id}`}</Text>
         <Text style={PublicacionStyles.precio}>{item.precio}</Text>
@@ -52,12 +53,8 @@ const MisPublicacionesScreen: React.FC = () => {
   const navigation = useNavigation();
 
   function verdetalles(itemId: string) {
-    navigation.navigate('Details', { itemId });
+    navigation.navigate('Details', { itemId: itemId });
   }
-
-  const handleDetalles = (item: any) => {
-    console.log(`Detalles de la propiedad ${item.id}`);
-  };
 
   const handleEliminarPropiedad = (id: string) => {
     console.log(`Propiedad eliminada: ${id}`);
@@ -68,11 +65,12 @@ const MisPublicacionesScreen: React.FC = () => {
   };
 
   function handleBack() {
-    navigation.navigate(screen.account.MainDrawer);
+    navigation.navigate(screen.account.MainDrawer as never);
   }
 
   return (
     <SafeAreaView style={PublicacionStyles.safeArea}>
+      
       <TouchableOpacity style={styles.back} onPress={handleBack}>
         <Ionicons name="chevron-back" size={45} style={styles.logoBack} />
         <Text style={PublicacionStyles.backText}>atrás</Text>

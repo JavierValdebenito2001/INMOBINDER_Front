@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, TouchableOpacity, SafeAreaView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../../../styles'
 import { styleRealEstate } from './RegisterRealEstateStyles'
@@ -33,6 +33,14 @@ export function RegisterRealEstateScreen() {
   }
 
   function handleContinuer(){
+    // Expresión para validar el correo electrónico
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+    // Validar el correo electrónico
+    if (!emailRegex.test(email)) {
+        Alert.alert('Por favor, ingrese un correo electrónico válido.');
+        return;
+    }
     navigation.navigate(screen.account.agencyRealEstate, {email: email } );
   }
 
