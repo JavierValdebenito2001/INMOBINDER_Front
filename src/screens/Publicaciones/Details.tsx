@@ -14,7 +14,7 @@ const Details =({route}: {route: any})=>{
 
     const { itemId } = route.params;
     
-    const [property, setProperty] = useState<any>(null); // Update the type of property to 'any'
+    const [property, setProperty] = useState<any>(null); 
     const navigation = useNavigation();
 
     function handleBack(){
@@ -59,29 +59,29 @@ const Details =({route}: {route: any})=>{
                             </TouchableOpacity>
                         </View>
                         <View style={{alignItems:'center'}}>
-                            <Text>Incluye Gastos comunes por : {(property as any)?.gastosComunes}</Text> // Fix: Add type assertion to access 'gastosComunes'
-                            <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado: {(property as any)?.estado}</Text> // Fix: Add type assertion to access 'estado'
-                            <Text>{(property as any)?.metrosCuadrados} Metros Cuadrados Construidos</Text> // Fix: Add type assertion to access 'metrosCuadrados'
+                            <Text>Incluye Gastos comunes por : {(property as any)?.gastosComunes}</Text> 
+                            <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado: {(property as any)?.estado}</Text>
+                            <Text>{(property as any)?.metrosCuadrados} Metros Cuadrados Construidos</Text> 
                             <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
-                            <Text>{(property as any)?.direccion}</Text> // Fix: Add type assertion to access 'direccion'
+                            <Text>{(property as any)?.direccion}</Text> 
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginHorizontal:40, marginVertical:15}}>
                             <Text style={{fontWeight:'bold'}}>Region</Text>
-                            <Text>{(property as any)?.region}</Text> // Fix: Add type assertion to access 'region'
+                            <Text>{(property as any)?.region}</Text> 
                                 </View>
                                 <View style={{marginHorizontal:40, marginVertical:15}}>
                             <Text style={{fontWeight:'bold'}}>Comuna</Text>
-                            <Text>{(property as any)?.comuna}</Text> // Fix: Add type assertion to access 'comuna'
+                            <Text>{(property as any)?.comuna}</Text>
                                 </View>
                             </View>
-                            <Text>Disponible por: ${(property as any)?.precio}</Text> // Fix: Correct the typo in "Disponible"
+                            <Text>Disponible por: ${(property as any)?.precio}</Text> 
                             <View style={{flexDirection:'row', }}>
-                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.habitaciones} Habitaciones</Text> // Fix: Add type assertion to access 'habitaciones'
-                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.sanitarios} Baños</Text> // Fix: Add type assertion to access 'sanitarios'
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.habitaciones} Habitaciones</Text> 
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.sanitarios} Baños</Text> 
                             </View>
                             <Text style={{fontWeight:'bold'}}>Descripcion</Text>
                             
-                            <Text>{(property as any)?.descripcion}</Text> // Fix: Add type assertion to access 'descripcion'
+                            <Text>{(property as any)?.descripcion}</Text> 
                         </View>            
                     </View>
                 </ScrollView>
