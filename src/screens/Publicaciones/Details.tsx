@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList, ScrollView} from 'react-native'
+import React, {useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView} from 'react-native'
 import Constants from 'expo-constants'
 import { AddHomeGalleryStyles } from '../AddHome/Gallery/AddHomeGalleryStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName'
-import Data from './Data';
 import { db }  from '../../../firebase-config.js';
 import { doc, getDoc } from "firebase/firestore";
 
@@ -15,7 +14,7 @@ const Details =({route}: {route: any})=>{
 
     const { itemId } = route.params;
     
-    const [property, setProperty] = useState(null);
+    const [property, setProperty] = useState<any>(null); // Update the type of property to 'any'
     const navigation = useNavigation();
 
     function handleBack(){
@@ -30,7 +29,7 @@ const Details =({route}: {route: any})=>{
         if (docSnap.exists()) {
             setProperty(docSnap.data() as any);
         } else {
-            console.log("No exista la propiedad!");
+            console.log("No existe la propiedad!");
         }
     };
     fetchData();
@@ -48,41 +47,41 @@ const Details =({route}: {route: any})=>{
                     
                         <Text style={styles.title}>Propiedad</Text>
                         <View style={{ paddingTop:30, alignItems:'center'}}>
-                            <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {property?.titulo}</Text>
+                            <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {(property as any)?.titulo}</Text>
                             <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
                         </View>
                         <View style={{flexDirection:'row'}}>
-                            <Image source={{ uri: property?.imageUrl }} style={styles.avatar} />
+                            <Image source={{ uri: (property as any)?.imageUrl }} style={styles.avatar} />
                             <TouchableOpacity
                                 style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'center', margin:20, padding:5}}>
                                 <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>
                                 <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
                         </View>
                         <View style={{alignItems:'center'}}>
-                            <Text>Incluye Gastos comunes por : {property?.gastosComunes}</Text>
-                            <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado: {property?.estado}</Text>
-                            <Text>{property?.metrosCuadrados} Metros Cuadrados Construidos</Text>
+                            <Text>Incluye Gastos comunes por : {(property as any)?.gastosComunes}</Text> // Fix: Add type assertion to access 'gastosComunes'
+                            <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado: {(property as any)?.estado}</Text> // Fix: Add type assertion to access 'estado'
+                            <Text>{(property as any)?.metrosCuadrados} Metros Cuadrados Construidos</Text> // Fix: Add type assertion to access 'metrosCuadrados'
                             <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
-                            <Text>{property?.direccion}</Text>
+                            <Text>{(property as any)?.direccion}</Text> // Fix: Add type assertion to access 'direccion'
                             <View style={{flexDirection:'row'}}>
                                 <View style={{marginHorizontal:40, marginVertical:15}}>
                             <Text style={{fontWeight:'bold'}}>Region</Text>
-                            <Text>{property?.region}</Text>
+                            <Text>{(property as any)?.region}</Text> // Fix: Add type assertion to access 'region'
                                 </View>
                                 <View style={{marginHorizontal:40, marginVertical:15}}>
                             <Text style={{fontWeight:'bold'}}>Comuna</Text>
-                            <Text>{property?.comuna}</Text>
+                            <Text>{(property as any)?.comuna}</Text> // Fix: Add type assertion to access 'comuna'
                                 </View>
                             </View>
-                            <Text>Dsiponible por: ${property?.precio}</Text>
+                            <Text>Disponible por: ${(property as any)?.precio}</Text> // Fix: Correct the typo in "Disponible"
                             <View style={{flexDirection:'row', }}>
-                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.habitaciones} Habitaciones</Text>
-                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.sanitarios} Baños</Text>
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.habitaciones} Habitaciones</Text> // Fix: Add type assertion to access 'habitaciones'
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.sanitarios} Baños</Text> // Fix: Add type assertion to access 'sanitarios'
                             </View>
                             <Text style={{fontWeight:'bold'}}>Descripcion</Text>
                             
-                            <Text>{property?.descripcion}</Text>
+                            <Text>{(property as any)?.descripcion}</Text> // Fix: Add type assertion to access 'descripcion'
                         </View>            
                     </View>
                 </ScrollView>
