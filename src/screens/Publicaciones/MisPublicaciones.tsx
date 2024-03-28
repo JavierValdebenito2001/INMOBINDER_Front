@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,21 +14,52 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { screen } from "../../utils/ScreenName";
 import { styles } from "../styles";
-import Data from './Data';
+import { firebase, db }  from '../../../firebase-config.js';
+import { getDocs, collection, query, where } from 'firebase/firestore';
 
 const MisPublicacionesScreen: React.FC = () => {
 
+  const userId = firebase.auth().currentUser?.uid;
   const [showDeleteIcons, setShowDeleteIcons] = useState(false);
 
-  const  renderItem = ({ item }: { item: any }) => (
+  const fetchData = async () => {
+    // Obtiene una referencia a la colección de propiedades
+    const propertiesRef = collection(db, "properties");
+
+    // Crea una consulta para obtener solo las propiedades del usuario logeado
+    const queryRef = query(propertiesRef, where("userId", "==", userId));
+
+    // Obtiene todos los documentos que cumplen con la consulta
+    const snapshot = await getDocs(queryRef);
+
+    // Crea un array para almacenar las propiedades
+    const properties: { id: string; [key: string]: any }[] = [];
+
+    // Itera sobre los documentos y agrega cada propiedad al array
+    snapshot.forEach((doc) => {
+      properties.push({ id: doc.id, ...doc.data() });
+    });
+
+    // Actualiza el estado de las propiedades
+    setProperties(properties);
+  };
+
+  const [properties, setProperties] = useState<{ id: string; [key: string]: any }[]>([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(properties);
+  const renderItem = ({ item }: { item: any }) => (
 
     <View key={item.id} style={PublicacionStyles.publicacionContainer}>
       
-      <Image source={item.imagen} style={PublicacionStyles.imagen} />
+      <Image source={{ uri: item.imageUrl }} style={PublicacionStyles.imagen} />
 
       <View style={PublicacionStyles.contenidoCentrado}>
-        <Text style={PublicacionStyles.subtitulo}>{`Propiedad #${item.id}`}</Text>
-        <Text style={PublicacionStyles.precio}>{item.precio}</Text>
+        <Text style={PublicacionStyles.subtitulo}>{`Propiedad ${item.titulo}`}</Text>
+        <Text style={PublicacionStyles.precio}>{`$${item.precio}`}</Text>
         <Text style={PublicacionStyles.direccion}>{item.direccion}</Text>
         <TouchableOpacity
           style={PublicacionStyles.boton}
@@ -50,9 +81,11 @@ const MisPublicacionesScreen: React.FC = () => {
       </View>
     </View>
   );
+
   const navigation = useNavigation();
 
   function verdetalles(itemId: string) {
+    console.log(`Ver detalles de la propiedad: ${itemId}`);
     navigation.navigate('Details', { itemId: itemId });
   }
 
@@ -77,13 +110,14 @@ const MisPublicacionesScreen: React.FC = () => {
       </TouchableOpacity>
 
       <FlatList
-        data={Data}
+        data={properties}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={() => (
           <Text style={PublicacionStyles.titulo}>Listado de Propiedades</Text>
         )}
       />
+
       <TouchableOpacity
         style={PublicacionStyles.botonEliminar}
         onPress={handleToggleDeleteIcons}

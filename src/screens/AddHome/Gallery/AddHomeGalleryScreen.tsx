@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, SafeAreaView, TextInput} from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { styles } from '../../styles';
 import { Text, Image } from '@rneui/base';
 import { Ionicons} from '@expo/vector-icons';
@@ -15,6 +15,7 @@ import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 export function AddHomeGalleryScreen() {
 
+    const [image, setImage] = useState<string | undefined>();
     const navigation = useNavigation();
 
     const pickImage = async () => {
@@ -34,7 +35,7 @@ export function AddHomeGalleryScreen() {
     };
 
     function handleBack(){
-      navigation.navigate(screen.account.addHome);
+      navigation.navigate(screen.account.addHome as never);
     } 
 
   return (

@@ -1,86 +1,103 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, FlatList} from 'react-native'
+import React, {useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView} from 'react-native'
 import Constants from 'expo-constants'
 import { AddHomeGalleryStyles } from '../AddHome/Gallery/AddHomeGalleryStyles';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName'
-import Data from './Data';
+import { db }  from '../../../firebase-config.js';
+import { doc, getDoc } from "firebase/firestore";
 
 const ancho = Dimensions.get('window').width; 
 
 const Details =({route}: {route: any})=>{
 
-    const itemId  = route.params.itemId;
+    const { itemId } = route.params;
+    
+    const [property, setProperty] = useState<any>(null); // Update the type of property to 'any'
     const navigation = useNavigation();
 
     function handleBack(){
         navigation.navigate(screen.account.MisPublicaciones as never);
     }
-    
-    const property = Data.find((property) => property.id === itemId);
+
+    const fetchData = async () => {
+        const docRef = doc(db, "properties", itemId);
+
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setProperty(docSnap.data() as any);
+        } else {
+            console.log("No existe la propiedad!");
+        }
+    };
+    fetchData();
 
     return(
         <View style={styles.container}>
+
             <TouchableOpacity style= {styles.back} onPress={handleBack}>
                 <Ionicons name="chevron-back" size={45} style={styles.logoBack}/>
                 <Text style={AddHomeGalleryStyles.backText}>atrás</Text>
             </TouchableOpacity>
             
-        <View style={styles.containershadow}>
-                <Text style={styles.title}>Propiedad</Text>
-                <View style={{ paddingTop:30, alignItems:'center'}}>
-                    <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {itemId}</Text>
-                    <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
-                </View>
-                <View style={{flexDirection:'row'}}>
-                    <Image source={property?.imagen} style={styles.avatar}/>
-                    <TouchableOpacity
-                        style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'center', margin:20, padding:5}}>
-                        <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>
-                        <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
-                </TouchableOpacity>
-                </View>
-                <View style={{alignItems:'center'}}>
-                    <Text>Incluye Gastos comunes por :{property?.gc}</Text>
-                    <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado:{property?.estado}</Text>
-                    <Text>{property?.mcc}</Text>
-                    <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
-                    <Text>{property?.direccion}</Text>
-                    <View style={{flexDirection:'row'}}>
-                        <View style={{marginHorizontal:40, marginVertical:15}}>
-                    <Text style={{fontWeight:'bold'}}>Region</Text>
-                    <Text>{property?.region}</Text>
-                        </View>
-                        <View style={{marginHorizontal:40, marginVertical:15}}>
-                    <Text style={{fontWeight:'bold'}}>Comuna</Text>
-                    <Text>{property?.comuna}</Text>
-                        </View>
-                    </View>
-                    <Text>Dsiponible por: {property?.precio}</Text>
-                    <View style={{flexDirection:'row', }}>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.habitaciones}</Text>
-                    <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{property?.baños}</Text>
-                    </View>
-                    <Text style={{fontWeight:'bold'}}>Descripcion</Text>
+            <ScrollView contentContainerStyle={{alignItems: 'center', justifyContent: 'center', }}>                
+                <View style={styles.containershadow}>
                     
-                    <Text>{property?.descripcion}</Text>
-                </View>
-                
-                
-            </View>
+                        <Text style={styles.title}>Propiedad</Text>
+                        <View style={{ paddingTop:30, alignItems:'center'}}>
+                            <Text style={{fontWeight:'bold', fontSize:15}}>Propiedad {(property as any)?.titulo}</Text>
+                            <Text style={{color:'#C1C4CA', marginBottom:20}}>Tipo de propiedad</Text>
+                        </View>
+                        <View style={{flexDirection:'row'}}>
+                            <Image source={{ uri: (property as any)?.imageUrl }} style={styles.avatar} />
+                            <TouchableOpacity
+                                style={{backgroundColor:'#ADAFB2',flexDirection:'row' , alignItems:'center', justifyContent:'center', alignSelf:'center', margin:20, padding:5}}>
+                                <Ionicons style={{paddingRight:5, color:'#100'}} size={20} name="pencil-outline"/>
+                                <Text style={{color:'#100', fontWeight:'bold'}}>Cambiar foto</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{alignItems:'center'}}>
+                            <Text>Incluye Gastos comunes por : {(property as any)?.gastosComunes}</Text> 
+                            <Text style={{fontWeight:'bold', paddingVertical:10}}>Estado: {(property as any)?.estado}</Text> 
+                            <Text>{(property as any)?.metrosCuadrados} Metros Cuadrados Construidos</Text> 
+                            <Text style={{fontWeight:'bold', paddingTop:20, paddingVertical:5}}>Direccion</Text>
+                            <Text>{(property as any)?.direccion}</Text> 
+                            <View style={{flexDirection:'row'}}>
+                                <View style={{marginHorizontal:40, marginVertical:15}}>
+                            <Text style={{fontWeight:'bold'}}>Region</Text>
+                            <Text>{(property as any)?.region}</Text> 
+                                </View>
+                                <View style={{marginHorizontal:40, marginVertical:15}}>
+                            <Text style={{fontWeight:'bold'}}>Comuna</Text>
+                            <Text>{(property as any)?.comuna}</Text> 
+                                </View>
+                            </View>
+                            <Text>Disponible por: ${(property as any)?.precio}</Text> 
+                            <View style={{flexDirection:'row', }}>
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.habitaciones} Habitaciones</Text>
+                            <Text style={{fontWeight:'bold', paddingHorizontal:40, paddingVertical:15}}>{(property as any)?.sanitarios} Baños</Text> 
+                            </View>
+                            <Text style={{fontWeight:'bold'}}>Descripcion</Text>
+                            
+                            <Text>{(property as any)?.descripcion}</Text> 
+                        </View>            
+                    </View>
+                </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container:{
+        height:'100%',
         marginTop:Constants.statusBarHeight
     },
     title:{
         fontWeight:'bold',
         fontSize:30,
-        paddingBottom:15,
+        paddingBottom: 5,
         borderBottomWidth:1, 
         width:ancho*0.8,
         textAlign: 'center',    
@@ -89,7 +106,7 @@ const styles = StyleSheet.create({
     text:{
         fontSize:18,
         fontWeight:'bold',
-        margin:20
+        margin:10
     },
     logoBack: {
         color: 'rgb(0,0,0)',
@@ -102,15 +119,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         },
     avatar: {
-        width: 200,
+        width: 150,
         height: 150,      
         resizeMode: 'contain'
-    },
-    imagen: {
-        width: "100%",
-        height: 200,
-        resizeMode: "cover",
-        marginBottom: 10,
     },
     input:{
         height:40,
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
     },
     containershadow:{    
         width: "90%",
-        height: "70%",
+        height: "100%",
         borderRadius: 20,
         alignSelf: "center",
         alignItems:'center',
@@ -140,7 +151,7 @@ const styles = StyleSheet.create({
         },
         shadowColor: "rgba(0, 0, 0, 1)",
         backgroundColor: 'rgb(255, 255, 255)',
-},
+    },
 })
 
 export default Details

@@ -9,67 +9,20 @@ import { useNavigation } from '@react-navigation/native';
 import { screen } from '../../utils/ScreenName';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import SelectDropdown from 'react-native-select-dropdown';
-
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 import { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons/faSquareCheck'
-
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../../../firebase-config';
-
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { firebase }  from '../../../firebase-config.js';
+import { db } from '../../../firebase-config.js';
+import { getDocs, collection } from 'firebase/firestore';
 
 export function AddHomeScreen() {
 
   const navigation = useNavigation();
+  const creationDate = new Date(); 
 
-  //FOTO PRINCIPAL
-
-  const [image, setImage] = useState(null);
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      const [image, setImage] = useState<string | undefined>();
-    }
-  };
-
-  //CONEXION A FIRESTORE
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const querySnapshot = getDocs(collection(db, "Pais"));
-
-  const regionComuna = new Map();
-  const regiones = new Array();
-
-  querySnapshot.then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      regionComuna.set(doc.data().region, doc.data().comunas);
-      regiones.push(doc.data().region);
-    });
-  });
-
-  const [comunasData, setComunasData] = useState([]);
-  const [regionSelected, setRegionSelected] = useState("");
-  const [comunaSelected, setComunaSelected] = useState("");
-
-  const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
-  const estados = ['Disponible', 'No disponible'];
-
-  //ESTADO LOCAL
 
   const [state, setState] = useState({
     titulo: '',
@@ -83,11 +36,64 @@ export function AddHomeScreen() {
     habitaciones: '',
     sanitarios: '',
     descripcion: '',
+    creationDate: creationDate.toDateString()
   });
+
+  const [image, setImage] = useState<string | undefined>();
+
+  const [comunasData, setComunasData] = useState([]); // comunas[regionSelected
+  const [regionSelected, setRegionSelected] = useState("");
+  const [comunasSelected, setComunasSelected] = useState("");
+
+  const querySnapshot = getDocs(collection(db, "Pais")); 
+
+  const regionComuna = new Map();
+  const regionesArray= new Array();
+
+  querySnapshot.then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      regionComuna.set(doc.data().region, doc.data().comunas);
+      regionesArray.push(doc.data().region);
+    });
+  });
+
 
   const handleChangeState = (name: string, value: any) => {
     setState({...state, [name]: value});
   };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    console.log(result);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const uploadImage = async (uri: string, docId: string) => {
+    // Crea una referencia al archivo que quieres subir
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const ref = firebase.storage().ref().child(`images/${docId}/${Date.now()}`);
+    
+    // Sube el archivo a Firebase Storage
+    const snapshot = await ref.put(blob);
+  
+    // Obtiene la URL de descarga del archivo subido
+    const downloadURL = await snapshot.ref.getDownloadURL();
+  
+    return downloadURL;
+  };
+  
+  const numbers = ['1', '2', '3', '4', '5', '6', '7', '+7'];
+  const estados = ['Disponible', 'No disponible'];
 
   const [fontsLoaded] = useFonts({
     Cairo_700Bold,
@@ -97,12 +103,6 @@ export function AddHomeScreen() {
   if (!fontsLoaded) {
     return null;
   }
-
-  function handleLog(){
-    console.log(state);
-  };
-
-  //NAVEGACION
 
   function handleBack(){
     navigation.navigate(screen.account.MainDrawer as never);
@@ -115,6 +115,34 @@ export function AddHomeScreen() {
   function handleVideos(){
     navigation.navigate(screen.account.addHomeVideos  as never);
   }
+
+  async function handleLog(){ 
+    // Comprueba si todos los valores del estado no están vacíos
+    if (Object.values(state).every(value => value)) {
+      // Obtiene el ID del usuario logueado
+      const userId = firebase.auth().currentUser?.uid;
+  
+      if (userId) {
+        // Agrega el ID del usuario al estado
+        const stateWithUserId = { ...state, userId };
+  
+        // Crea el documento en Firestore sin la URL de la imagen
+        const docRef = await db.collection('properties').add(stateWithUserId);
+  
+        // Sube la imagen a Firebase Storage y obtiene la URL de descarga
+        const imageUrl = await uploadImage(image!, docRef.id);
+  
+        // Actualiza el documento en Firestore con la URL de la imagen
+        await docRef.update({ imageUrl });
+  
+        console.log("Document Guardado con Id:", docRef.id);
+      } else {
+        console.error("Error: No hay ningún usuario logueado");
+      }
+    } else {
+      console.error("Error: Todos los campos deben estar llenos");
+    }
+  };
 
   return (
 
@@ -178,18 +206,23 @@ export function AddHomeScreen() {
 
               <View style={AddHomeStyles.btnList}>
 
-                <SelectDropdown
-                  data={regiones}
+              <SelectDropdown
+                  data={regionesArray}
                   onSelect={(selectedItem, index) => {
-                    setRegionSelected(selectedItem as string);
-                    setComunaSelected("");
-                    setComunasData(regionComuna.get(selectedItem));
-                    console.log(selectedItem, index);
+                    setRegionSelected(selectedItem);
+                    const newComunas = regionComuna.get(selectedItem);
+                    setComunasData(newComunas);
+                    if (newComunas && newComunas.length > 0) {
+                      const firstComuna = newComunas[0];
+                      setComunasSelected(firstComuna);
+                      handleChangeState('comuna', firstComuna);
+                    } else {
+                      setComunasSelected("");
+                    }
                     handleChangeState('region', selectedItem);
                   }}
-                  defaultButtonText={regionSelected || 'Región'}
+                  defaultButtonText={ regionSelected || 'Región'}
                   buttonTextAfterSelection={(selectedItem, index) => {
-                    console.log(selectedItem, index);
                     return selectedItem;
                   }}
                   rowTextForSelection={(item, index) => {
@@ -201,15 +234,14 @@ export function AddHomeScreen() {
                   rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
                   rowTextStyle={AddHomeStyles.text2}
                 />
-
                 <SelectDropdown
                   data={comunasData}
                   onSelect={(selectedItem, index) => {
+                    setComunasSelected(selectedItem);
                     console.log(selectedItem, index);
-                    setComunaSelected(selectedItem);
                     handleChangeState('comuna', selectedItem);
                   }}
-                  defaultButtonText={comunaSelected || 'Comuna'}
+                  defaultButtonText={comunasSelected ||  'Comuna'}
                   buttonTextAfterSelection={(selectedItem, index) => {
                     return selectedItem;
                   }}
@@ -221,9 +253,8 @@ export function AddHomeScreen() {
                   dropdownStyle={AddHomeStyles.dropdown2DropdownStyle} // estilo del dropdown
                   rowStyle={AddHomeStyles.dropdown2RowStyle} // contenido de cada item
                   rowTextStyle={AddHomeStyles.text2}
-                />
-
-              </View>
+                /> 
+              </View> 
 
               <Text style = {AddHomeStyles.text2}>Disponible por</Text>
               <TextInput style={AddHomeStyles.inputGastosComunes} placeholder='$000.000' maxLength={6} keyboardType='numeric' onChangeText={(value)=>handleChangeState('precio', value)}>
@@ -234,7 +265,6 @@ export function AddHomeScreen() {
                 <SelectDropdown
                   data={numbers}
                   onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index);
                     handleChangeState('habitaciones', selectedItem)
                   }}
                   defaultButtonText={'Habitaciones'}
@@ -291,7 +321,7 @@ export function AddHomeScreen() {
               </View>
 
               <Text>¿Deseas activar la detección dinámica en esta publicación?</Text>
-             
+            
               <TouchableOpacity style={{...AddHomeStyles.btnStyle2, marginTop: 10}} onPress={handleLog}>
                 <FontAwesomeIcon icon = {faSquareCheck} size={20} style={AddHomeStyles.btnIcons}/>
                 <Text style={AddHomeStyles.text2}> Guardar propiedad </Text>
